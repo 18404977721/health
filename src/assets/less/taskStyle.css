@@ -1,0 +1,17 @@
+.ant-table-thead > tr > th{
+  padding: 10px !important;
+
+}
+.ant-table-tbody > tr > td {
+  padding: 10px !important;
+  max-width: 12em;
+  min-width: 2em;
+}
+.newInput{
+  height:53px;
+  padding:10px;
+  margin: 0px auto;
+  text-align: center;
+  border-right: 1px solid #a4b7dc;
+  border-bottom: 1px solid #a4b7dc
+}
