@@ -5,14 +5,7 @@ import { UserLayout, TabLayout, BlankLayout } from '@/components/layouts'
  * @type {[null,null]}
  */
 export const asyncRouterMap = [
-  {
-    path: '/',
-    name: 'homepage',
-    component: TabLayout,
-    meta: { title: '首页' },
-    redirect: '/homepage',
-    children: []
-  },
+  
   {
     path: '*', redirect: '/404', hidden: true
   }
@@ -23,6 +16,28 @@ export const asyncRouterMap = [
  * @type { *[] }
  */
 export const constantRouterMap = [
+	{
+	  path: '/',
+	  name: 'homepage',
+	  component: TabLayout,
+	  meta: { title: '首页' },
+	  redirect: '/homepage',
+	  children: [
+			{
+			  path: 'homepage',
+			  name: 'homepage',
+			  component: () => import(/* webpackChunkName: "user" */ '@/views/homepage')
+			}
+		]
+	},
+	{//移动端注册页
+	  path: '/register',
+	  name:'register',
+	  params:{
+	
+	  },
+	  component: () => import(/* webpackChunkName: "fail" */ '@/views/user/register')
+	},
   {
     path: '/user',
     component: UserLayout,
