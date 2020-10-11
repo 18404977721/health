@@ -21,8 +21,8 @@
 				v-bind="formItemLayout"
 				label="手机号"
 			>
-				<a-row :gutter="24">
-					<a-col :span="12">
+				<a-row :gutter="8">
+					<a-col :span="13" >
 						<a-input
 							v-decorator="[
 								'captcha',
@@ -30,7 +30,7 @@
 							]"
 						/>
 					</a-col>
-					<a-col :span="12">
+					<a-col :span="5">
 						<a-button>发送验证码</a-button>
 					</a-col>
 				</a-row>
@@ -83,11 +83,9 @@
 			</a-form-item>
 			<a-radio v-model="readValue" @click="onReadChange">我已阅读并同意<<大健康产业联盟>></a-radio>
 			<a-form-item>
-				<div style="text-align:center;">
-					<a-button type="primary" html-type="submit">
-						同意条款并提交
-					</a-button>
-				</div>
+				<a-button type="primary" html-type="submit" style="width:100%;">
+					同意条款并提交
+				</a-button>
 			</a-form-item>
 		</a-form>
 	</div>
@@ -108,12 +106,12 @@
 				readValue:false,
 				formItemLayout: {
 					labelCol: {
-						xs: { span: 6 },
-						sm: { span: 6 },
+						xs: { span: 6,offset: 0 },
+						sm: { span: 6,offset: 0 },
 					},
 					wrapperCol: {
-						xs: { span: 18 },
-						sm: { span: 18 },
+						xs: { span: 17,offset: 1 },
+						sm: { span: 17,offset: 1 },
 					},
 				},
 				options: [
@@ -244,5 +242,8 @@
 	.wrap {
 		padding:20px;
 	}
-
+	.ant-form >>> .ant-form-item-label {
+	    text-align: right;
+		line-height:none;
+	}
 </style>
