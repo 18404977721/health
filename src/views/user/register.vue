@@ -1,6 +1,7 @@
 <template>
 	<div class="wrapper">
 		<div class="content-scroll">
+			<p style="font-size:0.2rem;">字号</p>
 			<a-radio-group v-model="value" @change="onChange">
 				<a-radio :style="radioStyle" :value="1">
 					我是企业用户
@@ -221,7 +222,7 @@
 	}
 
 	.wrapper {
-		width: 7.5rem;
+		width: 100%;
 		height: 100%;
 		margin: 0 auto;
 		display: flex;
