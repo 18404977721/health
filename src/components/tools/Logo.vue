@@ -1,8 +1,7 @@
 <template>
   <div class="logo">
     <router-link :to="{name:'homepage'}">
-      <img style="margin-bottom: 10px" src="~@/assets/dh.png" alt="logo">
-      <h1 style="margin-bottom: 10px;font-weight:bold;" v-if="showTitle">山西省13710后台管理系统</h1>
+      <h1 style="margin-bottom: 10px;font-weight:bold;" v-if="showTitle">大健康产业联盟系统</h1>
     </router-link>
   </div>
 </template>

@@ -17,7 +17,7 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click.native="toggle"/>
 
-      <span v-if="device === 'desktop'">欢迎进入 山西省13710后台管理系统</span>
+      <span v-if="device === 'desktop'">欢迎进入 大健康产业联盟系统</span>
       <span v-else>13710</span>
 
       <user-menu :theme="theme"/>
@@ -25,7 +25,6 @@
 
     <!-- 顶部导航栏模式 -->
     <div v-else :class="['top-nav-header-index', theme]">
-      <div ref="elememt" class="header_top"><img src="@/assets/top-banner.png" style="width:100%;height:auto;" alt=""/></div>
       <div style="height:59px;">
         <div style="margin:auto;width:100%;background: rgba(174,0,0,1);"  :class="{'fix':!topBanner}">
           <div class="header-index-wide" style="margin:auto;width:1315px;padding: 0;">
@@ -341,8 +340,5 @@
     }
   }
   .fix{position:fixed;top:0;left:0;z-index:100;background:#001529;}
-  .header_top{width:100%;text-align:center;}
-  .header_top .center{margin:0 auto;background-size:cover;width:100%;height:338px;background:url('~@/assets/top-banner.png') no-repeat;position:relative;}
-  /* update_end author:sunjianlei date:20190408 for: 修改顶部导航栏滚动条的样式 */
   .ant-menu{font-size:20px;font-weight:bold;}
 </style>

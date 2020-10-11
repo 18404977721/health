@@ -2,15 +2,11 @@
   <div id="userLayout" :class="['user-layout-wrapper', device]">
     <div class="container">
       <div class="top">
-        <div class="header">
-            <img src="~@/assets/dh.png" class="logo" alt="logo">
-        </div>
         <div class="lg-zh">
-          <span class="title">山西省13710后台管理系统</span>
+          <span class="title">大健康产业联盟系统</span>
         </div>
         <div class="lg-eg">
-          <span class="title">Shanxi Province 13710 Background Management System
-</span>
+            <span class="title"></span>
         </div>
       </div>
 
