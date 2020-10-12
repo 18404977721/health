@@ -12,7 +12,7 @@
 			<img src="@assets/step_yd.png" alt="" style="width:100%;margin:20px 0;">
 		 <a-form :form="form" @submit="handleSubmit">
 			<!-- 个人 -->
-			<div v-show="userType==0">
+			<div v-if="userType==0">
 				<a-form-item
 				  label="姓名"
 					v-bind="formItemLayout"
@@ -94,7 +94,7 @@
 				</a-form-item>
 			</div>
 			<!-- 企业 -->
-			<div v-show="userType==1">
+			<div v-if="userType==1">
 				<a-form-item
 				  label="行业分类"
 					v-bind="formItemLayout1"
@@ -103,7 +103,7 @@
 						:options="industryTypeOption"
 						placeholder="请选择" 
 						v-decorator="[
-							'userRegion1',
+							'industryClass',
 							{ rules: [{ required: true, message: '请选择行业分类' }] },
 						]"
 					/>
@@ -113,7 +113,7 @@
 					v-bind="formItemLayout1"
 				>
 					<a-input
-						v-decorator="['gsmc', { rules: [{ required: true, message: '请输入公司名称' }] }]"
+						v-decorator="['businessName', { rules: [{ required: true, message: '请输入公司名称' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -121,7 +121,7 @@
 					v-bind="formItemLayout1"
 				>
 					<a-input
-						v-decorator="['gsdz', { rules: [{ required: true, message: '请输入公司地址' }] }]"
+						v-decorator="['businessAddr', { rules: [{ required: true, message: '请输入公司地址' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -129,7 +129,10 @@
 					v-bind="formItemLayout1"
 				>
 					<a-input
-						v-decorator="['gsdh', { rules: [{ required: true, message: '请输入公司电话' }] }]"
+						v-decorator="[
+							'businessPhone',
+							{ rules: [{ required: true, message: '请输入公司电话' }] },
+						]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -137,7 +140,7 @@
 					v-bind="formItemLayout1"
 				>
 					<a-input
-						v-decorator="['dzyx', { rules: [{ required: true, message: '请输入电子邮箱' }] }]"
+						v-decorator="['businessEmail', { rules: [{ required: true, message: '请输入电子邮箱' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -146,7 +149,7 @@
 				>
 					<a-select
 						v-decorator="[
-							'gsxz',
+							'businessNature',
 							{ rules: [{ required: true, message: '请选择公司性质' }] },
 						]"
 					>
@@ -160,7 +163,7 @@
 					v-bind="formItemLayout1"
 				>
 					<a-input
-						v-decorator="['ygzs', { rules: [{ required: false, message: '请输入员工总数' }] }]"
+						v-decorator="['businessNum', { rules: [{ required: false, message: '请输入员工总数' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -169,7 +172,7 @@
 				>
 					<a-input
 					  v-decorator="[
-					    'taskCurrentMoney',
+					    'businessAccount',
 					    {rules: [{ required: true, message: '请输入注册基金' }],
 					    }
 					  ]"
@@ -180,7 +183,7 @@
 					v-bind="formItemLayout1"
 				>
 					<a-input
-						v-decorator="['xm', { rules: [{ required: true, message: '请输入联系人姓名' }] }]"
+						v-decorator="['usernameQy', { rules: [{ required: true, message: '请输入联系人姓名' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -191,7 +194,7 @@
 						:options="options"
 						placeholder="请选择" 
 						v-decorator="[
-							'address1',
+							'userRegionQy',
 							{ rules: [{ required: true, message: '请选择个人住址' }] },
 						]"
 					/>
@@ -220,7 +223,7 @@
 					v-bind="formItemLayout1"
 				>
 					<a-input
-						v-decorator="['note11', { rules: [{ required: true, message: '请输入验证码' }] }]"
+						v-decorator="['codeQy', { rules: [{ required: true, message: '请输入验证码' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -229,7 +232,7 @@
 				>
 					<a-input
 						v-model="passwordQy"
-						v-decorator="['note21', { rules: [{ required: true, message: '请输入密码' }] }]"
+						v-decorator="['passwordQy', { rules: [{ required: true, message: '请输入密码' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -239,7 +242,7 @@
 					<a-input
 						v-model="password1Qy"
 						@blur="inputBlur('企业')"
-						v-decorator="['note3', { rules: [{ required: true, message: '请输入确认密码' }] }]"
+						v-decorator="['password1Qy', { rules: [{ required: true, message: '请输入确认密码' }] }]"
 					/>
 				</a-form-item>
 				<img src="@assets/dash.png" alt="" style="width:100%;margin:20px 0;">
@@ -249,7 +252,7 @@
 					v-bind="formItemLayout2"
 				>
 					<a-input
-						v-decorator="['note31', { rules: [{ required: true, message: '请输入法定代表人姓名' }] }]"
+						v-decorator="['businessLegalName', { rules: [{ required: true, message: '请输入法定代表人姓名' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -257,7 +260,7 @@
 					v-bind="formItemLayout2"
 				>
 					<a-input
-						v-decorator="['note3d1', { rules: [{ required: true, message: '请输入身份证号' }] }]"
+						v-decorator="['businessLegalCard', { rules: [{ required: true, message: '请输入身份证号' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item 
@@ -370,11 +373,13 @@
 				passwordQy:'',
 				password1Qy:'',
 				queryList:[],
+				industryTypeOption:[],
 			}
 		},
 		created() {
 			this.getRegionTree()
 			this.getQueryList()
+			this.getlistTree()
 		},
 		methods: {
 			//确认密码
@@ -430,7 +435,7 @@
 				})
 			},
 			//行业类别
-			getRegionTree(){
+			getlistTree(){
 				var url = '/sysIndustryType/listTree';
 				getAction(url).then((res) => {
 				  this.industryTypeOption = res.result;
@@ -477,7 +482,21 @@
 							obj.password = values.password
 							obj.recommend = values.recommend
 						}else{//企业
-							
+							obj.industryClass  = values.industryClass[values.industryClass.length-1]
+							obj.businessName = values.businessName
+							obj.businessAddr = values.businessAddr
+							obj.businessPhone = values.businessPhone
+							obj.businessEmail = values.businessEmail
+							obj.businessNature = values.businessNature
+							obj.businessNum = values.businessNum
+							obj.businessAccount = values.businessAccount
+							obj.username = values.usernameQy
+							obj.userRegion = values.userRegionQy[values.userRegionQy.length-1]
+							obj.phone = values.phoneQy
+							obj.code = values.codeQy
+							obj.password = values.passwordQy
+							obj.businessLegalName = values.businessLegalName
+							obj.businessLegalCard = values.businessLegalCard
 						}
 			      
 			      let url = "/sys/user/register";
