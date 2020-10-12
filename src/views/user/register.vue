@@ -12,7 +12,7 @@
 			<img src="@assets/step_yd.png" alt="" style="width:100%;margin:20px 0;">
 		 <a-form :form="form" @submit="handleSubmit">
 			<!-- 个人 -->
-			<div v-if="userType==0">
+			<div v-show="userType==0">
 				<a-form-item
 				  label="姓名"
 					v-bind="formItemLayout"
@@ -91,7 +91,7 @@
 				</a-form-item>
 			</div>
 			<!-- 企业 -->
-			<div v-if="userType==1">
+			<div v-show="userType==1">
 				<a-form-item
 				  label="行业分类"
 					v-bind="formItemLayout1"
@@ -208,14 +208,15 @@
 					<a-row :gutter="8">
 						<a-col :span="12" >
 							<a-input
+								v-model="phoneQy"
 								v-decorator="[
-									'captch1a',
-									{ rules: [{ required: true, message: '请输入联系人电话' }] },
+									'phoneQy',
+									{ rules: [{ required: true, message: '请输入联系人电话' ,pattern: /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/}] },
 								]"
 							/>
 						</a-col>
 						<a-col :span="4">
-							<a-button>发送验证码</a-button>
+							<a-button @click="getSms()">发送验证码</a-button>
 						</a-col>
 					</a-row>
 				</a-form-item>
@@ -304,6 +305,8 @@
 						<a-button> <a-icon type="upload" /> 选择文件</a-button>
 					</a-upload>
 				</a-form-item>
+				
+				
 				<a-form-item
 					v-bind="formItemLayout2" 
 					label=" "
@@ -366,6 +369,7 @@
 				},
 				options: [],
 				phone:'',
+				phoneQy:'',
 				password:'',
 				password1:'',
 				passwordQy:'',
@@ -406,26 +410,30 @@
 			//发送验证码
 			getSms(){
 				var that = this
-				if(that.phone==''){
-					that.$message.warning('请输入手机号');
-					return
-				}
 				var url = '/sys/sms';
 				let jsonObject = {};
-				jsonObject.mobile = that.phone
-				jsonObject.smsmode = 1
+				if(this.userType==0){
+					if(that.phone==''){
+						that.$message.warning('请输入手机号');
+						return
+					}
+					jsonObject.mobile = that.phone
+					jsonObject.smsmode = 1
+				}else{
+					if(that.phoneQy==''){
+						that.$message.warning('请输入手机号');
+						return
+					}
+					jsonObject.mobile = that.phoneQy
+					jsonObject.smsmode = 1
+				}
 				postAction(url,jsonObject).then(res=>{
 				  if (res.success) {
 						that.$message.success(res.message);
-				    // that.$notification['success']({
-				    //   message: res.message,
-				    //   description: ''
-				    // })
 				  }else{
 				    that.$message.error(res.message);
 				  }
 				})
-				
 			},
 			normFile(e) {
 				console.log('Upload event:', e);
