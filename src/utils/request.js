@@ -7,7 +7,7 @@ import { Authorization } from "@/store/mutation-types"
 
 // 创建 axios 实例
 const service = axios.create({
-  baseURL: '/api-sw13710', // api base_url
+  baseURL: '/jeecg-boot', // api base_url
   timeout: 30000 // 请求超时时间
 })
 
@@ -80,8 +80,6 @@ service.interceptors.request.use(config => {
       config.headers[ 'Authorization' ] = 'bearer ' +token // 让每个请求携带自定义 token 请根据实际情况自行修改
     }
   }
-  config.headers['client_id'] = 'admin';
-  config.headers['client_secret'] = 'admin';
 
   if(config.method=='get'){
     config.params = {

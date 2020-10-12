@@ -1,24 +1,24 @@
 <template>
 	<div class="wrap">
 		<img src="@assets/tab.png" alt="" style="width:100%;margin:0 0 20px;">
-		<a-radio-group v-model="value" @change="onChange">
+		<a-radio-group v-model="userType" @change="onChange">
 		    <a-radio :style="radioStyle" :value="1">
 		      我是企业用户
 		    </a-radio>
-		    <a-radio :style="radioStyle" :value="2">
+		    <a-radio :style="radioStyle" :value="0">
 		      我是个人用户
 		    </a-radio>
 		  </a-radio-group>
 			<img src="@assets/step_yd.png" alt="" style="width:100%;margin:20px 0;">
 		 <a-form :form="form" @submit="handleSubmit">
 			<!-- 个人 -->
-			<div v-if="value==2">
+			<div v-if="userType==0">
 				<a-form-item
 				  label="姓名"
 					v-bind="formItemLayout"
 				>
 					<a-input
-						v-decorator="['note', { rules: [{ required: true, message: '请输入姓名' }] }]"
+						v-decorator="['username', { rules: [{ required: true, message: '请输入姓名' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -28,14 +28,15 @@
 					<a-row :gutter="8">
 						<a-col :span="13" >
 							<a-input
+								v-model="phone"
 								v-decorator="[
-									'captcha',
-									{ rules: [{ required: true, message: '请输入验证码' }] },
+									'phone',
+									{ rules: [{ required: true, message: '请输入正确的手机号码' ,pattern: /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/}] },
 								]"
 							/>
 						</a-col>
 						<a-col :span="5">
-							<a-button>发送验证码</a-button>
+							<a-button @click="getSms">发送验证码</a-button>
 						</a-col>
 					</a-row>
 				</a-form-item>
@@ -47,7 +48,7 @@
 						:options="options"
 						placeholder="请选择" 
 						v-decorator="[
-							'address',
+							'userRegion',
 							{ rules: [{ required: true, message: '请选择个人住址' }] },
 						]"
 					/>
@@ -57,7 +58,7 @@
 					v-bind="formItemLayout"
 				>
 					<a-input
-						v-decorator="['note1', { rules: [{ required: true, message: '请输入验证码' }] }]"
+						v-decorator="['code', { rules: [{ required: true, message: '请输入验证码' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -65,7 +66,8 @@
 					v-bind="formItemLayout"
 				>
 					<a-input
-						v-decorator="['note2', { rules: [{ required: true, message: '请输入密码' }] }]"
+						v-model="password"
+						v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -73,7 +75,9 @@
 					v-bind="formItemLayout"
 				>
 					<a-input
-						v-decorator="['note3', { rules: [{ required: true, message: '请输入确认密码' }] }]"
+						v-model="password1"
+						@blur="inputBlur"
+						v-decorator="['password1', { rules: [{ required: true, message: '请输入确认密码' }] }]"
 					/>
 				</a-form-item>
 				<a-form-item
@@ -82,12 +86,12 @@
 				>
 					<a-input
 						placeholder="请输入您的推荐人的注册手机号"
-						v-decorator="['note3', { rules: [{ required: false, message: '请输入您的推荐人的注册手机号' }] }]"
+						v-decorator="['recommend', { rules: [{ required: false, message: '请输入您的推荐人的注册手机号' }] }]"
 					/>
 				</a-form-item>
 			</div>
 			<!-- 企业 -->
-			<div v-if="value==1">
+			<div v-if="userType==1">
 				<a-form-item
 				  label="行业分类"
 					v-bind="formItemLayout1"
@@ -315,7 +319,7 @@
 </template>
 
 <script>
-	import { getAction } from '@/api/manage';
+	import { getAction,postAction } from '@/api/manage';
 	export default {
 		name: "register",
 		data() {
@@ -325,7 +329,7 @@
 					height: '30px',
 					lineHeight: '30px',
 				},
-				value:1,
+				userType:0,
 				readValue:false,
 				formItemLayout: {
 					labelCol: {
@@ -357,46 +361,62 @@
 						sm: { span: 13,offset: 1 },
 					},
 				},
-				options: [
-					{
-						value: 'zhejiang',
-						label: 'Zhejiang',
-						children: [
-							{
-								value: 'hangzhou',
-								label: 'Hangzhou',
-								children: [
-									{
-										value: 'xihu',
-										label: 'West Lake',
-									},
-								],
-							},
-						],
-					},
-					{
-						value: 'jiangsu',
-						label: 'Jiangsu',
-						children: [
-							{
-								value: 'nanjing',
-								label: 'Nanjing',
-								children: [
-									{
-										value: 'zhonghuamen',
-										label: 'Zhong Hua Men',
-									},
-								],
-							},
-						],
-					},
-				],
+				options: [],
+				phone:'',
+				password:'',
+				password1:'',
 			}
 		},
 		created() {
-			
+			this.getRegionTree()
 		},
 		methods: {
+			inputBlur(){
+				if(this.password!=''&&this.password1!=''&&this.password!=this.password1){
+					this.$notification['info']({
+					  message: '两次输入的密码不同，请重新输入',
+					  description: ''
+					})
+					this.password1 = ''
+					this.form.setFieldsValue({password1:''})
+				}
+			},
+			//获取省市县
+			getRegionTree(){
+				var url = '/sysRegion/regionTree';
+				getAction(url).then((res) => {
+				  this.options = res.result;
+				})
+			},
+			//发送验证码
+			getSms(){
+				var that = this
+				if(that.phone==''){
+					that.$notification['info']({
+					  message: '请输入手机号',
+					  description: ''
+					})
+					return
+				}
+				var url = '/sys/sms';
+				let jsonObject = {};
+				jsonObject.mobile = that.phone
+				jsonObject.smsmode = 1
+				postAction(url,jsonObject).then(res=>{
+				  if (res.success) {
+				    that.$notification['success']({
+				      message: res.message,
+				      description: ''
+				    })
+				  }else{
+				    that.$notification['error']({
+				      message: res.message,
+				      description: ''
+				    })
+				  }
+				})
+				
+			},
 			normFile(e) {
 				console.log('Upload event:', e);
 				if (Array.isArray(e)) {
@@ -415,43 +435,42 @@
 			handleSubmit (e) {
 			  var that = this;
 			  e.preventDefault()
+				if(!that.readValue){
+					that.$notification['info']({
+					  message: '请勾选条款',
+					  description: ''
+					})
+					return
+				}
 			  this.form.validateFields((err, values) => {
 			    if (!err) {
-			      // that.confirmLoading = true;
-			      // let obj =[];
-			      // let params = {};
-			      // params = values
-			      // if(values.attachmentList){
-			      //   let attach = values.attachmentList;
-			      //   for(let j=0;j<attach.length;j++){
-			      //     if(attach[j].status != 'done'){
-			      //       attach.splice(j,1)
-			      //     }else{
-			      //       attach[j].url = attach[j].response.message;
-			      //     }
-			      //   }
-			      //   params.attachmentList = attach;
-			      // }
-			      // obj.push(params)
-			      // let url = "/task/work/add";//重点工作新增
-			      // postAction(url,obj).then((res) => {
-			      //   if (res.success) {
-			      //     this.$notification['success']({
-			      //       message: res.message,
-			      //       description: ''
-			      //     })
-			      //     this.form.resetFields();
-			      //   }else{
-			      //     this.$notification['error']({
-			      //       message: res.message,
-			      //       description: ''
-			      //     })
-			      //   }
-			      // }).finally(() => {
-			      //   that.confirmLoading = false;
-			      //   that.$emit('pageReload');
-			      //   that.close();
-			      // })
+						let obj =[];
+						obj.userType = this.userType
+						if(this.userType==0){//个人
+							obj.userRegion = values.userRegion
+							obj.phone = values.phone
+							obj.userRegion = values.userRegion
+							obj.code = values.code
+							obj.password = values.password
+							obj.recommend = values.recommend
+						}else{//企业
+							
+						}
+			      
+			      let url = "/sys/user/register";
+			      postAction(url,obj).then((res) => {
+			        if (res.success) {
+			          this.$notification['success']({
+			            message: res.message,
+			            description: ''
+			          })
+			        }else{
+			          this.$notification['error']({
+			            message: res.message,
+			            description: ''
+			          })
+			        }
+			      })
 			    }
 			  })
 			},

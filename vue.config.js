@@ -59,12 +59,9 @@ module.exports = {
 
   devServer: {
     port: 3000,
-    proxy: {// 10.21.1.8:8080超
-     '/api*': {
-        //target: 'http://10.21.3.34:8080',
-        //target: 'http://218.26.86.115:8082',
-        //target: 'http://10.21.2.145:8080',
-				target: 'http://10.21.1.91:8080',
+    proxy: {
+     '/jeecg-boot': {
+				target: 'http://49.232.106.88:8080',
         ws: false,
         changeOrigin: true,
         pathRewrite: {

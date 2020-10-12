@@ -47,8 +47,6 @@ export function logout(logoutToken) {
     method: 'post',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',
-      'client_id':'admin',
-      'client_secret':'admin',
       'X-Access-Token':  logoutToken
     }
   })
