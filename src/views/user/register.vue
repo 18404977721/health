@@ -404,7 +404,7 @@
 			getRegionTree(){
 				var url = '/sysRegion/regionTree';
 				getAction(url).then((res) => {
-				  this.options = res.result;
+				  this.options = res.result[0].children;
 				})
 			},
 			//发送验证码
