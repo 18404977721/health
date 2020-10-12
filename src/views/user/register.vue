@@ -277,7 +277,7 @@
 							},
 						]"
 						name="logo"
-						action="/upload.do"
+						action="/jeecg-boot/sys/commonV2/upload"
 						list-type="picture"
 					>
 						<a-button> <a-icon type="upload" /> 选择文件</a-button>
