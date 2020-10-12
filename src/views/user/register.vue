@@ -76,7 +76,7 @@
 				>
 					<a-input
 						v-model="password1"
-						@blur="inputBlur"
+						@blur="inputBlur('个人')"
 						v-decorator="['password1', { rules: [{ required: true, message: '请输入确认密码' }] }]"
 					/>
 				</a-form-item>
@@ -232,6 +232,7 @@
 					v-bind="formItemLayout1"
 				>
 					<a-input
+						v-model="passwordQy"
 						v-decorator="['note21', { rules: [{ required: true, message: '请输入密码' }] }]"
 					/>
 				</a-form-item>
@@ -240,6 +241,8 @@
 					v-bind="formItemLayout1"
 				>
 					<a-input
+						v-model="password1Qy"
+						@blur="inputBlur('企业')"
 						v-decorator="['note3', { rules: [{ required: true, message: '请输入确认密码' }] }]"
 					/>
 				</a-form-item>
@@ -308,7 +311,7 @@
 					<p style="background:#fffcf5;color:#e40005;font-size:12px;line-height:17px;">以上所需要上传电子版资质仅支持JPG、GIF、PNG格式的图片，大小不超过8M，请确保图片清晰，文字可辩并有清晰的红色公章</p>
 				</a-form-item>
 			</div>
-			<a-radio v-model="readValue" @click="onReadChange" style="margin-top:10px;">我已阅读并同意<span style="color:#e40005;"><<大健康产业联盟>></span></a-radio>
+			<a-radio v-model="readValue" @click="onReadChange" style="margin-top:10px;">我已阅读并同意<span style="color:#e40005;" @click="clickTip"><<大健康产业联盟>></span></a-radio>
 			<a-form-item>
 				<a-button type="primary" html-type="submit" style="width:100%;margin-top:30px;height:50px;">
 					同意条款并提交
@@ -365,21 +368,33 @@
 				phone:'',
 				password:'',
 				password1:'',
+				passwordQy:'',
+				password1Qy:'',
 			}
 		},
 		created() {
 			this.getRegionTree()
 		},
 		methods: {
+			clickTip(){
+				this.$router.push({path: '/tip'})
+			},
+			//确认密码
 			inputBlur(){
-				if(this.password!=''&&this.password1!=''&&this.password!=this.password1){
-					this.$notification['info']({
-					  message: '两次输入的密码不同，请重新输入',
-					  description: ''
-					})
-					this.password1 = ''
-					this.form.setFieldsValue({password1:''})
+				if(this.userType==0){
+					if(this.password!=''&&this.password1!=''&&this.password!=this.password1){
+						this.$message.warning('两次输入的密码不同，请重新输入');
+						this.password1 = ''
+						this.form.setFieldsValue({password1:''})
+					}
+				}else{
+					if(this.passwordQy!=''&&this.password1Qy!=''&&this.passwordQy!=this.password1Qy){
+						this.$message.warning('两次输入的密码不同，请重新输入');
+						this.password1Qy = ''
+						this.form.setFieldsValue({password1Qy:''})
+					}
 				}
+				
 			},
 			//获取省市县
 			getRegionTree(){
@@ -392,10 +407,7 @@
 			getSms(){
 				var that = this
 				if(that.phone==''){
-					that.$notification['info']({
-					  message: '请输入手机号',
-					  description: ''
-					})
+					that.$message.warning('请输入手机号');
 					return
 				}
 				var url = '/sys/sms';
@@ -404,15 +416,13 @@
 				jsonObject.smsmode = 1
 				postAction(url,jsonObject).then(res=>{
 				  if (res.success) {
-				    that.$notification['success']({
-				      message: res.message,
-				      description: ''
-				    })
+						that.$message.success(res.message);
+				    // that.$notification['success']({
+				    //   message: res.message,
+				    //   description: ''
+				    // })
 				  }else{
-				    that.$notification['error']({
-				      message: res.message,
-				      description: ''
-				    })
+				    that.$message.error(res.message);
 				  }
 				})
 				
@@ -436,20 +446,17 @@
 			  var that = this;
 			  e.preventDefault()
 				if(!that.readValue){
-					that.$notification['info']({
-					  message: '请勾选条款',
-					  description: ''
-					})
+					that.$message.warning('请勾选条款');
 					return
 				}
 			  this.form.validateFields((err, values) => {
 			    if (!err) {
-						let obj =[];
+						let obj ={};
 						obj.userType = this.userType
 						if(this.userType==0){//个人
-							obj.userRegion = values.userRegion
+							obj.username = values.username
+							obj.userRegion = values.userRegion[values.userRegion.length-1]
 							obj.phone = values.phone
-							obj.userRegion = values.userRegion
 							obj.code = values.code
 							obj.password = values.password
 							obj.recommend = values.recommend
@@ -458,17 +465,12 @@
 						}
 			      
 			      let url = "/sys/user/register";
+						console.log(obj)
 			      postAction(url,obj).then((res) => {
 			        if (res.success) {
-			          this.$notification['success']({
-			            message: res.message,
-			            description: ''
-			          })
+			        	that.$message.success(res.message);
 			        }else{
-			          this.$notification['error']({
-			            message: res.message,
-			            description: ''
-			          })
+			          that.$message.error(res.message);
 			        }
 			      })
 			    }
