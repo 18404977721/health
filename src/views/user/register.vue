@@ -1,7 +1,7 @@
 <template>
 	<div class="wrap">
 		<img src="@assets/tab.png" alt="" style="width:100%;margin:0 0 20px;">
-		<a-radio-group v-model="userType" @change="onChange">
+		<a-radio-group v-model="userType">
 		    <a-radio :style="radioStyle" :value="1">
 		      我是企业用户
 		    </a-radio>
@@ -86,7 +86,10 @@
 				>
 					<a-input
 						placeholder="请输入您的推荐人的注册手机号"
-						v-decorator="['recommend', { rules: [{ required: false, message: '请输入您的推荐人的注册手机号' }] }]"
+						v-decorator="[
+							'recommend',
+							{ rules: [{ required: false, message: '请输入正确的手机号码' ,pattern: /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/}] },
+						]"
 					/>
 				</a-form-item>
 			</div>
@@ -96,19 +99,14 @@
 				  label="行业分类"
 					v-bind="formItemLayout1"
 				>
-					<a-select
+					<a-cascader
+						:options="industryTypeOption"
+						placeholder="请选择" 
 						v-decorator="[
-							'gender',
+							'userRegion1',
 							{ rules: [{ required: true, message: '请选择行业分类' }] },
 						]"
-					>
-						<a-select-option value="male">
-							male
-						</a-select-option>
-						<a-select-option value="female">
-							female
-						</a-select-option>
-					</a-select>
+					/>
 				</a-form-item>
 				<a-form-item
 				  label="公司名称"
@@ -152,12 +150,9 @@
 							{ rules: [{ required: true, message: '请选择公司性质' }] },
 						]"
 					>
-						<a-select-option value="male">
-							male
-						</a-select-option>
-						<a-select-option value="female">
-							female
-						</a-select-option>
+						<template v-for="item in queryList">
+							<a-select-option  :value="item.key">{{item.value}}</a-select-option>
+						</template>
 					</a-select>
 				</a-form-item>
 				<a-form-item
@@ -374,15 +369,14 @@
 				password1:'',
 				passwordQy:'',
 				password1Qy:'',
+				queryList:[],
 			}
 		},
 		created() {
 			this.getRegionTree()
+			this.getQueryList()
 		},
 		methods: {
-			clickTip(){
-				this.$router.push({path: '/tip'})
-			},
 			//确认密码
 			inputBlur(){
 				if(this.userType==0){
@@ -435,6 +429,24 @@
 				  }
 				})
 			},
+			//行业类别
+			getRegionTree(){
+				var url = '/sysIndustryType/listTree';
+				getAction(url).then((res) => {
+				  this.industryTypeOption = res.result;
+				})
+			},
+			//公司性质
+			getQueryList(){
+				var url = '/sys/user/queryList';
+				getAction(url).then((res) => {
+				  this.queryList = res.result;
+				})
+			},
+			//点击条款
+			clickTip(){
+				this.$router.push({path: '/tip'})
+			},
 			normFile(e) {
 				console.log('Upload event:', e);
 				if (Array.isArray(e)) {
@@ -444,10 +456,6 @@
 			},
 			onReadChange(e) {
 				this.readValue = !this.readValue 
-				console.log('radio checked', this.readValue);
-			},
-			onChange(e) {
-				console.log('radio checked', e.target.value);
 			},
 			// 提交数据
 			handleSubmit (e) {
