@@ -1,0 +1,10 @@
+.warp{
+    background:rgba(255,255,255,1);
+    border:0.01rem solid rgba(232,237,243,1);
+    box-shadow:0 0.08rem 0.17rem rgba(0,0,0,0.04);
+    opacity:1;
+    border-radius:0.1rem;  
+    padding: 0.1rem;
+    margin-bottom: 0.2rem;
+    padding: 0;
+  }

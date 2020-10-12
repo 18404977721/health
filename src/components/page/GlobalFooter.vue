@@ -9,8 +9,7 @@
       <!--<a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/">Vue Antd</a>-->
     <!--</div>-->
     <div class="copyright">
-      <span style="margin-right: 30px">主办单位：中共山西省委员会</span>
-      <span >技术支持：山西云时代技术有限公司</span>
+      
     </div>
   </div>
 </template>
