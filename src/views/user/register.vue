@@ -277,7 +277,7 @@
 							},
 						]"
 						name="logo"
-						action="/jeecg-boot/sys/commonV2/upload"
+						action="/jeecg-boot/sys/file/upload"
 						list-type="picture"
 					>
 						<a-button> <a-icon type="upload" /> 选择文件</a-button>
@@ -319,13 +319,19 @@
 				</a-button>
 			</a-form-item>
 		</a-form>
+		<tip ref="tip"></tip>
 	</div>
 </template>
 
 <script>
 	import { getAction,postAction } from '@/api/manage';
+	import tip from "./modules/tip"
+	
 	export default {
 		name: "register",
+		components:{
+		  tip
+		},
 		data() {
 			return {
 				form: this.$form.createForm(this),
@@ -450,7 +456,7 @@
 			},
 			//点击条款
 			clickTip(){
-				this.$router.push({path: '/tip'})
+				this.$refs.tip.showModal();
 			},
 			normFile(e) {
 				console.log('Upload event:', e);

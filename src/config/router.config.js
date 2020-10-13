@@ -38,14 +38,6 @@ export const constantRouterMap = [
 	  },
 	  component: () => import(/* webpackChunkName: "fail" */ '@/views/user/register')
 	},
-	{//条款
-	  path: '/tip',
-	  name:'tip',
-	  params:{
-	
-	  },
-	  component: () => import(/* webpackChunkName: "fail" */ '@/views/content/tip')
-	},
   {
     path: '/user',
     component: UserLayout,
