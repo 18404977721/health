@@ -1,7 +1,8 @@
 <template>
   <div class="logo">
     <router-link :to="{name:'homepage'}">
-      <h1 style="margin-bottom: 10px;font-weight:bold;" v-if="showTitle">大健康产业联盟系统</h1>
+			<img style="margin:0 10px 11px 0;height:68px;width:68px;display:inline-block;" src="~@/assets/icon_logo.png" alt="logo">
+      <h1 style="font-weight:bold;margin:0;" v-if="showTitle">大健康产业联盟</h1>
     </router-link>
   </div>
 </template>
@@ -25,7 +26,7 @@
 </script>
 <style lang="scss" scoped>
   /*缩小首页布 局顶部的高度*/
-  $height: 59px;
+  $height: 80px;
 
   .sider {
     box-shadow: none !important;

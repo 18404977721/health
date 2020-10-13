@@ -17,23 +17,22 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click.native="toggle"/>
 
-      <span v-if="device === 'desktop'">欢迎进入 大健康产业联盟系统</span>
-      <span v-else>13710</span>
+      <span v-if="device === 'desktop'">欢迎进入 大健康产业联盟</span>
+      <span v-else>大健康产业联盟</span>
 
       <user-menu :theme="theme"/>
     </div>
 
     <!-- 顶部导航栏模式 -->
     <div v-else :class="['top-nav-header-index', theme]">
-      <div style="height:59px;">
-        <div style="margin:auto;width:100%;background: rgba(174,0,0,1);"  :class="{'fix':!topBanner}">
+      <div style="height:80px;">
+        <div style="margin:auto;width:100%;background:linear-gradient(to right, #b90101 , #eb560c,#c10e03);"  :class="{'fix':!topBanner}">
           <div class="header-index-wide" style="margin:auto;width:1315px;padding: 0;">
             <div class="header-index-left" :style="topMenuStyle.headerIndexLeft">
               <logo v-if="!topBanner" class="top-nav-header" :show-title="device !== 'mobile'" :style="topMenuStyle.topNavHeader"/>
               <div v-if="device !== 'mobile'" id="top-nav-scroll-view" :style="topMenuStyle.scrollView">
                 <div id="top-nav-scroll-width" :style="topMenuStyle.scrollWidth">
                   <s-menu
-                    style="background: rgba(174,0,0,1);"
                     @click.native="clickMenu"
                     mode="horizontal"
                     :menu="menus"
@@ -101,7 +100,7 @@
     },
     data() {
       return {
-        topBanner:true,
+        topBanner:false,
         headerBarFixed: false,
         //update-begin--author:sunjianlei---date:20190408------for: 顶部导航栏增加横向滚动条-----
         topMenuStyle: {
@@ -136,7 +135,7 @@
     },
     //update-end--author:sunjianlei---date:20190408------for: 顶部导航栏增加横向滚动条-----
     mounted() {
-      window.addEventListener('scroll', this.handleScroll)
+      //window.addEventListener('scroll', this.handleScroll)
       //update-begin--author:sunjianlei---date:20190408------for: 顶部导航栏增加横向滚动条-----
       if (this.mode === 'topmenu') {
         this.buildTopMenuStyle()
@@ -184,9 +183,9 @@
             this.topMenuStyle.headerIndexLeft = {}
           } else {
             let rightWidth = '80px'
-            this.topMenuStyle.topNavHeader = { 'min-width': '315px' }
+            this.topMenuStyle.topNavHeader = { 'min-width': '325px' }
             this.topMenuStyle.headerIndexRight = { 'min-width': rightWidth }
-            this.topMenuStyle.headerIndexLeft = { 'width': `calc(100% - ${rightWidth})`,'background': 'rgba(174,0,0,1)' }
+            this.topMenuStyle.headerIndexLeft = { 'width': `calc(100% - ${rightWidth})` }
             // 由于首次从mobile设备下切换到desktop设备没有初始化TopMenuScrollWidth，所以这里需要计算一下
             if (this.topMenuStyle.scrollWidth['width'] === '10000px') {
               this.calcTopMenuScrollWidth()
@@ -242,7 +241,7 @@
 <style lang="scss" scoped>
   /* update_begin author:scott date:20190220 for: 缩小首页布局顶部的高度*/
 
-  $height: 59px;
+  $height: 80px;
 
   .layout {
 
@@ -339,6 +338,8 @@
       }
     }
   }
-  .fix{position:fixed;top:0;left:0;z-index:100;background:#001529;}
+  .fix{position:fixed;top:0;left:0;z-index:100;
+		// background:#001529;
+	}
   .ant-menu{font-size:20px;font-weight:bold;}
 </style>

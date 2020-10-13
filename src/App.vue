@@ -65,7 +65,7 @@
     border-radius: 3px;
   }
   .ant-menu-dark .ant-menu-sub{
-    background: #FFFFFF !important;
+    /* background: #FFFFFF !important; */
   }
   .ant-menu-submenu-content> .ant-menu-item > a{
     color: #000 !important;
@@ -86,4 +86,7 @@
     background:#CC0000;
     color:#fff !important;
   }
+	.ant-menu-dark, .ant-menu-dark .ant-menu-sub {
+	  background:rgba(0,0,0,0) !important;
+	}
 </style>

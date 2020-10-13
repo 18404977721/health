@@ -269,7 +269,7 @@
 				>
 					<a-upload
 						v-decorator="[
-							'upload',
+							'attachmentList',
 							{
 								rules: [{ required: true, message: '请上传法人身份证电子版' }],
 								valuePropName: 'fileList',
@@ -289,7 +289,7 @@
 				>
 					<a-upload
 						v-decorator="[
-							'upload1',
+							'attachmentList1',
 							{
 								rules: [{ required: true, message: '请上传营业执照电子版' }],
 								valuePropName: 'fileList',
@@ -297,7 +297,7 @@
 							},
 						]"
 						name="logo"
-						action="/upload.do"
+						action="/jeecg-boot/sys/file/upload"
 						list-type="picture"
 					>
 						<a-button> <a-icon type="upload" /> 选择文件</a-button>
@@ -313,8 +313,8 @@
 				</a-form-item>
 			</div>
 			<a-radio v-model="readValue" @click="onReadChange" style="margin-top:10px;">我已阅读并同意<span style="color:#e40005;" @click="clickTip"><<大健康产业联盟>></span></a-radio>
-			<a-form-item>
-				<a-button type="primary" html-type="submit" style="width:100%;margin-top:30px;height:50px;">
+			<a-form-item style="margin:0 auto;width:90%;position:fixed;bottom:10px;">
+				<a-button type="primary" html-type="submit" style="width:100%;height:50px;font-size:18px;">
 					同意条款并提交
 				</a-button>
 			</a-form-item>
@@ -503,10 +503,36 @@
 							obj.password = values.passwordQy
 							obj.businessLegalName = values.businessLegalName
 							obj.businessLegalCard = values.businessLegalCard
+							
+							var attach = values.attachmentList;
+							if(attach){
+							  for(var i=0;i<attach.length;i++){
+							    if(attach[i].status != 'done'){
+							      attach.splice(i,1)
+							    }else{
+							      attach[i].fileName = attach[i].name;
+										attach[i].filePath = attach[i].response.message;
+										attach[i].fileType = attach[i].type;
+							    }
+							  }
+								obj.idFileList = attach
+							}
+							var attach1 = values.attachmentList1;
+							if(attach1){
+							  for(var i=0;i<attach1.length;i++){
+							    if(attach1[i].status != 'done'){
+							      attach1.splice(i,1)
+							    }else{
+							      attach1[i].fileName = attach1[i].name;
+										attach1[i].filePath = attach1[i].response.message;
+										attach1[i].fileType = attach1[i].type;
+							    }
+							  }
+								obj.businessFileList = attach1
+							}
 						}
 			      
 			      let url = "/sys/user/register";
-						console.log(obj)
 			      postAction(url,obj).then((res) => {
 			        if (res.success) {
 			        	that.$message.success(res.message);
@@ -552,7 +578,7 @@
 	}
 
 	.wrap {
-		padding:20px;
+		padding:20px 20px 80px;
 	}
 	.ant-form >>> .ant-form-item-label {
 	  text-align: right;

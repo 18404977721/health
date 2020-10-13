@@ -3,7 +3,7 @@
     <div class="container">
       <div class="top">
         <div class="lg-zh">
-          <span class="title">大健康产业联盟系统</span>
+          <span class="title">大健康产业联盟</span>
         </div>
         <div class="lg-eg">
             <span class="title"></span>

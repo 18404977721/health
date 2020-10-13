@@ -63,7 +63,7 @@
       />
 
       <!-- layout content -->
-      <a-layout-content :style="{ height: '100%', paddingTop: fixedHeader ? '59px' : '0' }">
+      <a-layout-content :style="{ height: '100%', paddingTop: fixedHeader ? '80px' : '0' }">
         <slot></slot>
       </a-layout-content>
 
@@ -392,7 +392,7 @@
         margin: auto;
         padding: 0 20px 0 0;
         display: flex;
-        height: 59px;
+        height: 80px;
 
         .ant-menu.ant-menu-horizontal {
           border: none;
@@ -406,10 +406,10 @@
 
           .logo.top-nav-header {
             width: 165px;
-            height: 60px;
+            height: 80px;
             font-weight: bold !important;
             position: relative;
-            line-height: 60px;
+            line-height: 80px;
             transition: all .3s;
             overflow: hidden;
 
@@ -420,10 +420,9 @@
             }
 
             h1 {
-              color: #fff;
+              color: #d7bd63;
               display: inline-block;
-              font-size: 16px;
-              margin: 0 0 0 12px;
+              font-size: 34px;
               font-weight: 400;
             }
           }
@@ -431,7 +430,7 @@
 
         .header-index-right {
           float: right;
-          height: 59px;
+          height: 80px;
           overflow: hidden;
           .action:hover {
             background-color: rgba(0, 0, 0, 0.05);
