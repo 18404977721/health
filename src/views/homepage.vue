@@ -2,18 +2,15 @@
 	<div class="wrap">
 		<div class="top">
 			<!-- 轮播图 -->
-			 <a-carousel autoplay>
-			    <div style="background-size:100% 100%; background: url(@assets/banner_01.png) no-repeat;"></div>
-			    <div><h3>2</h3></div>
-			    <div><h3>3</h3></div>
-			    <div><h3>4</h3></div>
-			  </a-carousel>
+			<a-carousel autoplay>
+				<div style="height: 420px;overflow:hidden;"><img class="carouselimg" src="@assets/banner_01.png" alt=""></div>
+				<div style="height: 420px;overflow:hidden;"><img class="carouselimg" src="@assets/banner_01.png" alt=""></div>
+			</a-carousel>
 		</div>
 	</div>
 </template>
 
 <script>
-
 	export default {
 		name: "Homepage",
 		data() {
@@ -22,10 +19,10 @@
 			}
 		},
 		created() {
-			
+
 		},
 		methods: {
-			
+
 		},
 	}
 </script>
@@ -62,17 +59,27 @@
 
 	.wrap {
 		background: #F3F6F9;
-		.top{
-			position:relative;
-			
+
+		.top {
+			position: relative;
+			.carouselimg {
+				/*设置图片宽度和浏览器宽度一致*/
+				width: 100%;
+				height: inherit;
+			}
 		}
 	}
-  .top >>> .ant-carousel >>> .slick-slide {
-			  text-align: center;
-			  height: 420px;
-				width:100%;
-			  line-height: 160px;
-			  background: #364d79;
-			  overflow: hidden;
-			}
+
+	.top>>>.ant-carousel {
+		width: 100%；
+	}
+
+	.top>>>.ant-carousel>>>.slick-slide {
+		text-align: center;
+		height: 420px;
+		width: 100%;
+		line-height: 160px;
+		background: #364d79;
+		overflow: hidden;
+	}
 </style>
