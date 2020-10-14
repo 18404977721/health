@@ -328,7 +328,7 @@
 	import tip from "./modules/tip"
 	
 	export default {
-		name: "MobileRegister",
+		name: "register",
 		components:{
 		  tip
 		},

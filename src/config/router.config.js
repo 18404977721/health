@@ -38,19 +38,31 @@ export const constantRouterMap = [
 	  },
 	  component: () => import(/* webpackChunkName: "fail" */ '@/views/user/register')
 	},
-  {
-    path: '/user',
-    component: UserLayout,
-    redirect: '/user/login',
-    hidden: true,
-    children: [
-      {
-        path: 'login',
-        name: 'login',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
-      },
-    ]
-  },
+	{//pc端注册页
+	  path: '/user',
+	  component: TabLayout,
+	  redirect: '/WebRegister',
+	  children: [
+			{
+			  path: 'WebRegister',
+			  name: 'WebRegister',
+			  component: () => import(/* webpackChunkName: "user" */ '@/views/user/WebRegister')
+			}
+		]
+	},
+  // {
+  //   path: '/user',
+  //   component: UserLayout,
+  //   redirect: '/user/login',
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: 'login',
+  //       name: 'login',
+  //       component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
+  //     },
+  //   ]
+  // },
   {
     path: '/404',
     component: () => import(/* webpackChunkName: "fail" */ '@/views/404')

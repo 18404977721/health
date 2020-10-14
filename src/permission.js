@@ -9,8 +9,7 @@ import { generateIndexRouter } from "@/utils/util"
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/user/login', '/user/register', '/user/register-result',
- '/homepage', '/register'] // no redirect whitelist
+const whiteList = ['/user/login', '/user/register', '/user/register-result'] // no redirect whitelist
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
@@ -58,13 +57,14 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-    if (whiteList.indexOf(to.path) !== -1) {
-      // 在免登录白名单，直接进入
-      next()
-    } else {
-      next({ path: '/user/login', query: { redirect: to.fullPath } })
-      NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
-    }
+    // if (whiteList.indexOf(to.path) !== -1) {
+    //   // 在免登录白名单，直接进入
+    //   next()
+    // } else {
+    //   next({ path: '/user/login', query: { redirect: to.fullPath } })
+    //   NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
+    // }
+		next()
   }
 })
 

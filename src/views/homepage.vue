@@ -19,16 +19,9 @@
 							</ul>
 							<div style="overflow:hidden;margin-bottom:10px;">
 								<span style="float:left;">忘记密码 ?</span>
-								<span style="float:right;">注册</span>
+								<span style="float:right;cursor:pointer;" @click="clickRegister">注册</span>
 							</div>
 							<button type="submit" class="index-login-btn" >登录</button>
-			        <!-- <form class="layui-form" method="POST" action="">
-			          <ul>
-			            <li><input type="text" name="username" required lay-verify="username" placeholder="请输入邮箱或手机号" autocomplete="off" class="layui-input"></li>
-			            <li><input type="password" name="password" required lay-verify="password" placeholder="请输入8-18位数字和字母密码" autocomplete="off" class="layui-input"></li>
-			          </ul>
-			          <button type="submit" class="layui-btn index-login-btn" lay-submit="" lay-filter="loginFrom">立即提交</button>
-			        </form> -->
 			      </div>
 			    </div>
 			  </div>
@@ -755,7 +748,9 @@
 
 		},
 		methods: {
-
+			clickRegister(){
+				this.$router.push({path: '/user/WebRegister'})
+			},
 		},
 	}
 </script>
