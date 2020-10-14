@@ -30,13 +30,26 @@ export const constantRouterMap = [
 			}
 		]
 	},
+	// {//移动端注册页
+	//   path: '/mobile',
+	//   name: 'MobileRegister',
+	//   meta: { title: '首页' },
+	//   redirect: '/MobileRegister',
+	//   children: [
+	// 		{
+	// 		  path: 'MobileRegister',
+	// 		  name: 'MobileRegister',
+	// 		  component: () => import(/* webpackChunkName: "user" */ '@/views/mobile/register')
+	// 		}
+	// 	]
+	// },
 	{//移动端注册页
-	  path: '/register',
-	  name:'register',
+	  path: '/MobileRegister',
+	  name:'MobileRegister',
 	  params:{
 	
 	  },
-	  component: () => import(/* webpackChunkName: "fail" */ '@/views/user/register')
+	  component: () => import(/* webpackChunkName: "fail" */ '@/views/mobile/register')
 	},
   {
     path: '/user',
@@ -48,7 +61,12 @@ export const constantRouterMap = [
         path: 'login',
         name: 'login',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
-      }
+      },
+			// {//移动端注册页
+   //      path: 'register',
+   //      name: 'register',
+   //      component: () => import(/* webpackChunkName: "user" */ '@/views/user/register')
+   //    }
     ]
   },
   {
