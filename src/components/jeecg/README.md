@@ -196,3 +196,317 @@ this.$refs.superQueryModal.show();
         modaltoggleFlag:true,
 ```
 
+# <a-select/> 下拉选项滚动错位的解决方法
+
+## 问题描述
+
+当使用了 `a-modal` 或其他带有滚动条的组件时，使用`a-select`组件并打开下拉框时滚动滚动条，就会导致错位的问题产生。
+
+## 解决方法
+
+大多数情况下，在 `a-select` 上添加一个 `getPopupContainer` 属性，值为`node => node.parentNode`即可解决。
+但是如果遇到 `a-select` 标签层级过深的情况，可能仍然会显示异常，只需要多加几个`.parentNode` （例：node => node.parentNode.parentNode.parentNode）多尝试几次直到解决问题即可。
+
+### 代码示例
+
+```html
+<a-select
+    placeholder="请选择展示模板"
+    :options="dicts.displayTemplate"
+    :getPopupContainer="node => node.parentNode"
+/>
+```
+
+# JAsyncTreeList 异步数列表组件使用说明
+
+## 引入组件
+
+```js
+import JTreeTable from '@/components/jeecg/JTreeTable'
+export default {
+  components: { JTreeTable }
+}
+```
+
+## 所需参数
+
+| 参数        | 类型   | 必填   | 说明                                                         |
+|-------------|--------|--------|--------------------------------------------------------------|
+| rowKey      | String | 非必填 | 表格行 key 的取值，默认为"id"                                |
+| columns     | Array  | 必填   | 表格列的配置描述，具体见Antd官方文档                         |
+| url         | String | 必填   | 数据查询url                                                  |
+| childrenUrl | String | 非必填 | 查询子级时的url，若不填则使用url参数查询子级                 |
+| queryKey    | String | 非必填 | 根据某个字段查询，如果传递 id 就根据 id 查询，默认为parentId |
+| queryParams | Object | 非必填 | 查询参数，当查询参数改变的时候会自动重新查询，默认为{}       |
+| topValue    | String | 非必填 | 查询顶级时的值，如果顶级为0，则传0，默认为null               |
+| tableProps  | Object | 非必填 | 自定义给内部table绑定的props                                 |
+
+## 代码示例
+
+```html
+<template>
+  <a-card :bordered="false">
+    <j-tree-table :url="url" :columns="columns" :tableProps="tableProps"/>
+  </a-card>
+</template>
+
+<script>
+  import JTreeTable from '@/components/jeecg/JTreeTable'
+
+  export default {
+    name: 'AsyncTreeTable',
+    components: { JTreeTable },
+    data() {
+      return {
+        url: '/api/asynTreeList',
+        columns: [
+          { title: '菜单名称', dataIndex: 'name' },
+          { title: '组件', dataIndex: 'component' },
+          { title: '排序', dataIndex: 'orderNum' }
+        ],
+        selectedRowKeys: []
+      }
+    },
+     computed: {
+       tableProps() {
+         let _this = this
+         return {
+           // 列表项是否可选择
+           // 配置项见：https://vue.ant.design/components/table-cn/#rowSelection
+           rowSelection: {
+             selectedRowKeys: _this.selectedRowKeys,
+             onChange: (selectedRowKeys) => _this.selectedRowKeys = selectedRowKeys
+           }
+         }
+       }
+     }
+  }
+</script>
+```
+
+# JCheckbox 使用文档
+  
+###### 说明: antd-vue checkbox组件处理的是数组，用起来不是很方便，特二次封装，使用时只需处理字符串即可
+## 参数配置
+| 参数           | 类型   | 必填 |说明|
+|--------------|---------|----|---------|
+| options      |array   |✔| checkbox需要配置的项，是个数组，数组中每个对象包含两个属性:label(用于显示)和value(用于存储) |
+
+使用示例
+----
+```vue
+<template>
+  <a-form :form="form">
+    <a-form-item label="v-model式用法">
+      <j-checkbox v-model="sport" :options="sportOptions"></j-checkbox><span>{{ sport }}</span>
+    </a-form-item>
+
+    <a-form-item label="v-decorator式用法">
+      <j-checkbox v-decorator="['sport']" :options="sportOptions"></j-checkbox><span>{{ getFormFieldValue('sport') }}</span>
+    </a-form-item>
+  </a-form>
+</template>
+
+<script>
+  import JCheckbox from '@/components/jeecg/JCheckbox'
+  export default {
+    components: {JCheckbox},
+    data() {
+      return {
+        form: this.$form.createForm(this),
+        sport:'',
+        sportOptions:[
+          {
+            label:"足球",
+            value:"1"
+          },{
+            label:"篮球",
+            value:"2"
+          },{
+            label:"乒乓球",
+            value:"3"
+          }]
+      }
+    },
+    methods: {
+     getFormFieldValue(field){
+       return this.form.getFieldValue(field)
+     }
+    }
+  }
+</script>
+```
+
+# JCodeEditor 使用文档
+  
+###### 说明: 一个简易版的代码编辑器，支持语法高亮
+## 参数配置
+| 参数           | 类型   | 必填 |说明|
+|--------------|---------|----|---------|
+| language      |string   | | 表示当前编写代码的类型 javascript/html/css/sql |
+| placeholder      |string   | | placeholder |
+| lineNumbers      |Boolean   | | 是否显示行号 |
+| fullScreen      |Boolean   | | 是否显示全屏按钮 |
+| zIndex      |string   | | 全屏以后的z-index |
+
+使用示例
+----
+```vue
+<template>
+  <div>
+    <j-code-editor
+      language="javascript"
+      v-model="editorValue"
+      :fullScreen="true"
+      style="min-height: 100px"/>
+    {{ editorValue }}
+  </div>
+</template>
+
+<script>
+  import JCodeEditor from '@/components/jeecg/JCodeEditor'
+  export default {
+    components: {JCodeEditor},
+    data() {
+      return {
+        form: this.$form.createForm(this),
+        editorValue:'',
+      }
+    }
+  }
+</script>
+```
+
+# JFormContainer 使用文档
+  
+###### 说明: 暂用于表单禁用
+
+使用示例
+----
+```vue
+<!-- 在form下直接写这个组件，设置disabled为true就能将此form中的控件禁用 -->
+  <a-form layout="inline" :form="form" >
+    <j-form-container disabled>
+      <!-- 表单内容省略..... -->
+    </j-form-container>
+  </a-form>
+```
+
+# JImportModal 使用文档
+  
+###### 说明: 用于列表页面导入excel功能
+
+使用示例
+----
+```vue
+
+<template>
+  <!--  此处省略部分代码...... -->
+  <a-button @click="handleImportXls" type="primary" icon="upload">导入</a-button>
+  <!--  此处省略部分代码...... -->
+  <j-import-modal ref="importModal" :url="getImportUrl()" @ok="importOk"></j-import-modal>
+  <!--  此处省略部分代码...... -->
+</template>
+
+<script>
+  import JCodeEditor from '@/components/jeecg/JCodeEditor'
+  export default {
+    components: {JCodeEditor},
+    data() {
+      return {
+        //省略代码......
+      }
+    },
+    methods:{
+      //省略部分代码......
+      handleImportXls(){
+        this.$refs.importModal.show()
+      },
+      getImportUrl(){
+         return '你自己处理上传业务的后台地址'
+      },
+      importOk(){
+        this.loadData(1)
+      }
+    }
+  }
+</script>
+```
+
+# JSelectMultiple 多选下拉组件
+online用 实际开发请使用components/dict/JMultiSelectTag
+
+# JSlider 滑块验证码
+
+使用示例
+----
+```vue
+<template>
+  <div style="width: 300px">
+    <j-slider @onSuccess="sliderSuccess"></j-slider>
+  </div>
+</template>
+
+<script>
+  import JSlider from '@/components/jeecg/JSlider'
+  export default {
+    components: {JSlider},
+    data() {
+      return {
+        form: this.$form.createForm(this),
+        editorValue:'',
+      }
+    },
+    methods:{
+      sliderSuccess(){
+        console.log("验证完成")
+      }
+    }
+  }
+</script>
+```
+
+
+# JTreeSelect 树形下拉组件
+异步加载的树形下拉组件
+
+## 参数配置
+| 参数           | 类型   | 必填 |说明|
+|--------------|---------|----|---------|
+| placeholder      |string   | | placeholder |
+| dict      |string   | ✔| 表名,显示字段名,存储字段名拼接的字符串 |
+| pidField      |string   | ✔| 父ID的字段名 |
+| pidValue      |string   | | 根节点父ID的值 默认'0' 不可以设置为空,如果想使用此组件，而数据库根节点父ID为空，请修改之 |
+| multiple      |boolean   | |是否支持多选 |
+
+使用示例
+----
+```vue
+<template>
+  <a-form>
+    <a-form-item label="树形下拉测试" style="width: 300px">
+      <j-tree-select
+        v-model="departId"
+        placeholder="请选择部门"
+        dict="sys_depart,depart_name,id"
+        pidField="parent_id">
+      </j-tree-select>
+      {{ departId }}
+    </a-form-item>
+  </a-form >
+</template>
+
+<script>
+  import JTreeSelect from '@/components/jeecg/JTreeSelect'
+  export default {
+    components: {JTreeSelect},
+    data() {
+      return {
+        departId:""
+      }
+    }
+  }
+</script>
+```
+
+

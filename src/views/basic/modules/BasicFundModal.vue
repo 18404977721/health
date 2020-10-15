@@ -110,7 +110,7 @@
     },
     created () {
       const token = Vue.ls.get(Authorization);
-      this.headers = {"Authorization": 'bearer ' +token}
+      this.headers = {"Authorization": 'bearer ' +token,'client_id':'admin','client_secret':'admin'}
       this.getMsg();
     },
     methods: {

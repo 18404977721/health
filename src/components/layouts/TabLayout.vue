@@ -1,7 +1,9 @@
 <template>
-  <global-layout>
-    <contextmenu :itemList="menuItemList" :visible.sync="menuVisible" @select="onMenuSelect"/>
-    <a-tabs
+  <global-layout @dynamicRouterShow="dynamicRouterShow">
+    <!-- update-begin- author:sunjianlei --- date:20191009 --- for: 提升右键菜单的层级 -->
+    <contextmenu :itemList="menuItemList" :visible.sync="menuVisible" style="z-index: 9999;" @select="onMenuSelect"/>
+    <!-- update-end- author:sunjianlei --- date:20191009 --- for: 提升右键菜单的层级 -->
+    <!-- <a-tabs
       @contextmenu.native="e => onContextmenu(e)"
       v-if="multipage"
       :active-key="activePage"
@@ -10,17 +12,20 @@
       :hide-add="true"
       type="editable-card"
       @change="changePage"
+      @tabClick="tabCallBack"
       @edit="editPage">
       <a-tab-pane :id="page.fullPath" :key="page.fullPath" v-for="page in pageList">
         <span slot="tab" :pagekey="page.fullPath">{{ page.meta.title }}</span>
       </a-tab-pane>
-    </a-tabs>
+    </a-tabs> -->
     <div>
       <transition name="page-toggle">
         <keep-alive v-if="multipage">
-          <router-view/>
+          <router-view v-if="reloadFlag"/>
         </keep-alive>
-        <router-view v-else/>
+        <template v-else>
+          <router-view v-if="reloadFlag"/>
+        </template>
       </transition>
     </div>
   </global-layout>
@@ -30,9 +35,9 @@
   import GlobalLayout from '@/components/page/GlobalLayout'
   import Contextmenu from '@/components/menu/Contextmenu'
   import { mixin, mixinDevice } from '@/utils/mixin.js'
-  import { topNavScrollToSelectItem } from '@/utils/util'
+  import { triggerWindowResizeEvent } from '@/utils/util'
 
-  const indexKey = '/homepage'
+  const indexKey = '/dashboard/analysis'
 
   export default {
     name: 'TabLayout',
@@ -48,12 +53,21 @@
         activePage: '',
         menuVisible: false,
         menuItemList: [
+          { key: '4', icon: 'reload', text: '刷 新' },
           { key: '1', icon: 'arrow-left', text: '关闭左侧' },
           { key: '2', icon: 'arrow-right', text: '关闭右侧' },
           { key: '3', icon: 'close', text: '关闭其它' }
-        ]
+        ],
+        reloadFlag:true
       }
     },
+    /* update_begin author:wuxianquan date:20190828 for: 关闭当前tab页，供子页面调用 ->望菜单能配置外链，直接弹出新页面而不是嵌入iframe #428 */
+    provide(){
+      return{
+        closeCurrent:this.closeCurrent
+      }
+    },
+    /* update_end author:wuxianquan date:20190828 for: 关闭当前tab页，供子页面调用->望菜单能配置外链，直接弹出新页面而不是嵌入iframe #428 */
     computed: {
       multipage() {
         //判断如果是手机模式，自动切换为单页面模式
@@ -66,60 +80,105 @@
     },
     created() {
       if (this.$route.path != indexKey) {
-        this.pageList.push({
-          name: 'homepage',
-          path: indexKey,
-          fullPath: indexKey,
-          meta: {
-            icon: 'home',
-            title: '首页'
-          }
-        })
-        this.linkList.push(indexKey)
+        this.addIndexToFirst()
       }
+      // update-begin-author:sunjianlei date:20191223 for: 修复刷新后菜单Tab名字显示异常
+      let storeKey = 'route:title:' + this.$route.fullPath
+      let routeTitle = this.$ls.get(storeKey)
+      if (routeTitle) {
+        this.$route.meta.title = routeTitle
+      }
+      // update-end-author:sunjianlei date:20191223 for: 修复刷新后菜单Tab名字显示异常
       this.pageList.push(this.$route)
       this.linkList.push(this.$route.fullPath)
       this.activePage = this.$route.fullPath
     },
     watch: {
       '$route': function(newRoute) {
+        //console.log("新的路由",newRoute)
         this.activePage = newRoute.fullPath
         if (!this.multipage) {
           this.linkList = [newRoute.fullPath]
-          this.pageList = [newRoute]
-        } else if (this.linkList.indexOf(newRoute.fullPath) < 0) {
+          this.pageList = [Object.assign({},newRoute)]
+        // update-begin-author:taoyan date:20200211 for: TASK #3368 【路由缓存】首页的缓存设置有问题，需要根据后台的路由配置来实现是否缓存
+        } else if(indexKey==newRoute.fullPath) {
+          //首页时 判断是否缓存 没有缓存 刷新之
+          if (newRoute.meta.keepAlive === false) {
+            this.routeReload()
+          }
+        // update-end-author:taoyan date:20200211 for: TASK #3368 【路由缓存】首页的缓存设置有问题，需要根据后台的路由配置来实现是否缓存
+        }else if (this.linkList.indexOf(newRoute.fullPath) < 0) {
           this.linkList.push(newRoute.fullPath)
-          this.pageList.push(newRoute)
+          this.pageList.push(Object.assign({},newRoute))
+          // update-begin-author:sunjianlei date:20200103 for: 如果新增的页面配置了缓存路由，那么就强制刷新一遍
+          if (newRoute.meta.keepAlive) {
+            this.routeReload()
+          }
+          // update-end-author:sunjianlei date:20200103 for: 如果新增的页面配置了缓存路由，那么就强制刷新一遍
         } else if (this.linkList.indexOf(newRoute.fullPath) >= 0) {
           let oldIndex = this.linkList.indexOf(newRoute.fullPath)
-          this.pageList.splice(oldIndex, 1, newRoute)
+          let oldPositionRoute = this.pageList[oldIndex]
+          this.pageList.splice(oldIndex, 1, Object.assign({},newRoute,{meta:oldPositionRoute.meta}))
         }
       },
       'activePage': function(key) {
         let index = this.linkList.lastIndexOf(key)
-        var waitRouter = this.pageList[index]
-        this.$router.push({
-          path: waitRouter.path,
-          name: waitRouter.name,
-          params: waitRouter.params
-        })
+        let waitRouter = this.pageList[index]
+        this.$router.push(Object.assign({},waitRouter));
+        this.changeTitle(waitRouter.meta.title)
       },
       'multipage': function(newVal) {
-        if (!newVal) {
-          this.linkList = [this.$route.fullPath]
-          this.pageList = [this.$route]
+        if(this.reloadFlag){
+          if (!newVal) {
+            this.linkList = [this.$route.fullPath]
+            this.pageList = [this.$route]
+          }
         }
-      }
+      },
+      // update-begin-author:sunjianlei date:20191223 for: 修复从单页模式切换回多页模式后首页不居第一位的 BUG
+      device() {
+        if (this.multipage && this.linkList.indexOf(indexKey) === -1) {
+          this.addIndexToFirst()
+        }
+      },
+      // update-end-author:sunjianlei date:20191223 for: 修复从单页模式切换回多页模式后首页不居第一位的 BUG
     },
     methods: {
+      // update-begin-author:sunjianlei date:20191223 for: 修复从单页模式切换回多页模式后首页不居第一位的 BUG
+      // 将首页添加到第一位
+      addIndexToFirst() {
+        this.pageList.splice(0, 0, {
+          name: 'dashboard-analysis',
+          path: indexKey,
+          fullPath: indexKey,
+          meta: {
+            icon: 'dashboard',
+            title: '首页'
+          }
+        })
+        this.linkList.splice(0, 0, indexKey)
+      },
+      // update-end-author:sunjianlei date:20191223 for: 修复从单页模式切换回多页模式后首页不居第一位的 BUG
+
+      // update-begin-author:sunjianlei date:20200120 for: 动态更改页面标题
+      changeTitle(title) {
+        let projectTitle = "大健康产业联盟"
+        // 首页特殊处理
+        if (this.$route.path === indexKey) {
+          document.title = projectTitle
+        } else {
+          document.title = title + ' · ' + projectTitle
+        }
+      },
+      // update-end-author:sunjianlei date:20200120 for: 动态更改页面标题
+
       changePage(key) {
         this.activePage = key
-        // 只有当前模式是顶部菜单时才执行定位
-        if (this.layoutMode === 'topmenu') {
-          setTimeout(() => {
-            topNavScrollToSelectItem(document)
-          }, 100)
-        }
+      },
+      tabCallBack() {
+        this.$nextTick(() => {
+          triggerWindowResizeEvent()
+        })
       },
       editPage(key, action) {
         this[action](key)
@@ -167,13 +226,21 @@
           case '3':
             this.closeOthers(pageKey)
             break
+          case '4':
+            this.routeReload()
+            break
           default:
             break
         }
       },
+      /* update_begin author:wuxianquan date:20190828 for: 关闭当前tab页，供子页面调用->望菜单能配置外链，直接弹出新页面而不是嵌入iframe #428 */
+      closeCurrent(){
+        this.remove(this.activePage);
+      },
+      /* update_end author:wuxianquan date:20190828 for: 关闭当前tab页，供子页面调用->望菜单能配置外链，直接弹出新页面而不是嵌入iframe #428 */
       closeOthers(pageKey) {
         let index = this.linkList.indexOf(pageKey)
-        if (pageKey == indexKey) {
+        if (pageKey == indexKey || pageKey.indexOf('?ticke=')>=0) {
           this.linkList = this.linkList.slice(index, index + 1)
           this.pageList = this.pageList.slice(index, index + 1)
           this.activePage = this.linkList[0]
@@ -181,7 +248,7 @@
           let indexContent = this.pageList.slice(0, 1)[0]
           this.linkList = this.linkList.slice(index, index + 1)
           this.pageList = this.pageList.slice(index, index + 1)
-          this.linkList.unshift(indexKey)
+          this.linkList.unshift(indexContent.fullPath)
           this.pageList.unshift(indexContent)
           this.activePage = this.linkList[1]
         }
@@ -195,7 +262,7 @@
         let index = this.linkList.indexOf(pageKey)
         this.linkList = this.linkList.slice(index)
         this.pageList = this.pageList.slice(index)
-        this.linkList.unshift(indexKey)
+        this.linkList.unshift(indexContent.fullPath)
         this.pageList.unshift(indexContent)
         if (this.linkList.indexOf(this.activePage) < 0) {
           this.activePage = this.linkList[0]
@@ -208,12 +275,37 @@
         if (this.linkList.indexOf(this.activePage < 0)) {
           this.activePage = this.linkList[this.linkList.length - 1]
         }
+      },
+      //update-begin-author:taoyan date:20190430 for:动态路由title显示配置的菜单title而不是其对应路由的title
+      dynamicRouterShow(key,title){
+        let keyIndex = this.linkList.indexOf(key)
+        if(keyIndex>=0){
+          let currRouter = this.pageList[keyIndex]
+          let meta = Object.assign({},currRouter.meta,{title:title})
+          this.pageList.splice(keyIndex, 1, Object.assign({},currRouter,{meta:meta}))
+          if (key === this.activePage) {
+            this.changeTitle(title)
+          }
+        }
+      },
+      //update-end-author:taoyan date:20190430 for:动态路由title显示配置的菜单title而不是其对应路由的title
+
+      //update-begin-author:taoyan date:20191008 for:路由刷新
+      routeReload(){
+        this.reloadFlag = false
+        let ToggleMultipage = "ToggleMultipage"
+        this.$store.dispatch(ToggleMultipage,false)
+        this.$nextTick(()=>{
+          this.$store.dispatch(ToggleMultipage,true)
+          this.reloadFlag = true
+        })
       }
+      //update-end-author:taoyan date:20191008 for:路由刷新
     }
   }
 </script>
 
-<style lang="scss">
+<style lang="less">
 
   /*
  * The following styles are auto-applied to elements with
@@ -291,7 +383,7 @@
       border-bottom: 1px solid transparent !important;
     }
     .ant-tabs-tab-active {
-      border-color: #1890ff !important;
+      border-color: @primary-color!important;
     }
   }
 

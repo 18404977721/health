@@ -1,7 +1,7 @@
 <template>
   <a-drawer
     title="数据规则/按钮权限配置"
-    width=365
+    width="365"
     :closable="false"
     @close="onClose"
     :visible="visible"
@@ -35,7 +35,7 @@
 <script>
   import ARow from 'ant-design-vue/es/grid/Row'
   import ACol from 'ant-design-vue/es/grid/Col'
-  import { getUsercenterAction,postUsercenterAction } from '@/api/manage'
+  import { getAction,postAction } from '@/api/manage'
 
   export default {
     name: 'RoleDataruleModal',
@@ -62,7 +62,7 @@
     },
     methods:{
       loadData(){
-        getUsercenterAction(`${this.url.datarule}/${this.functionId}/${this.roleId}`).then(res=>{
+        getAction(`${this.url.datarule}/${this.functionId}/${this.roleId}`).then(res=>{
           console.log(res)
           if(res.success){
             this.dataruleList = res.result.datarule
@@ -75,8 +75,7 @@
       },
       saveDataruleForRole(){
         if(!this.dataruleChecked || this.dataruleChecked.length==0){
-          this.$message.warning("请现勾选数据权限然后保存!")
-          return false;
+          this.$message.warning("请注意，现未勾选任何数据权限!")
         }
         let params = {
           permissionId:this.functionId,
@@ -84,7 +83,7 @@
           dataRuleIds:this.dataruleChecked.join(",")
         }
         console.log("保存数据权限",params)
-        postUsercenterAction(this.url.datarule,params).then(res=>{
+        postAction(this.url.datarule,params).then(res=>{
           if(res.success){
             this.$message.success(res.message)
           }else{

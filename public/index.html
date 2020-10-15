@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>大健康产业联盟</title>
   <link rel="icon" href="<%= BASE_URL %>logo.png">
-  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.js"></script>
   <style>
     html,
     body,
@@ -202,7 +202,7 @@
     #loader-wrapper .load_title {
       font-family: 'Open Sans';
       color: #FFF;
-      font-size: 18px;
+      font-size: 14px;
       width: 100%;
       text-align: center;
       z-index: 9999999999999;
@@ -218,27 +218,51 @@
       color: #FFF;
       opacity: 0.5;
     }
+    /* 滚动条优化 start */
+    ::-webkit-scrollbar{
+      width:8px;
+      height:8px;
+    }
+    ::-webkit-scrollbar-track{
+      background: #f6f6f6;
+      border-radius:2px;
+    }
+    ::-webkit-scrollbar-thumb{
+      background: #cdcdcd;
+      border-radius:2px;
+    }
+    ::-webkit-scrollbar-thumb:hover{
+      background: #747474;
+    }
+    ::-webkit-scrollbar-corner {
+      background: #f6f6f6;
+    }
+    /* 滚动条优化 end */
   </style>
   <!-- 全局配置 -->
   <script>
     window._CONFIG = {};
-    window._CONFIG['domianURL'] = 'http://localhost:8080/jeecg-boot';
-    window._CONFIG['imgDomainURL'] = 'http://localhost:8080/overseer/sys/common/view';
+    window._CONFIG['domianURL'] = 'http://127.0.0.1:8080/jeecg-boot';
+    window._CONFIG['casPrefixUrl'] = 'http://cas.example.org:8443/cas';
+    window._CONFIG['onlinePreviewDomainURL'] = 'http://fileview.jeecg.com/onlinePreview'
+    window._CONFIG['staticDomainURL'] = window._CONFIG['domianURL'] + '/sys/common/static';
+    window._CONFIG['pdfDomainURL'] =  window._CONFIG['domianURL'] + '/sys/common/pdf/pdfPreviewIframe';
   </script>
 </head>
 
 <body>
 <!-- built files will be auto injected -->
 <div id="app">
-  <!--<div id="loader-wrapper">-->
-    <!--<div id="loader"></div>-->
-    <!--<div class="loader-section section-left"></div>-->
-    <!--<div class="loader-section section-right"></div>-->
-    <!--<div class="load_title">正在加载 山西省政府“13710”督办平台,请耐心等待-->
+  <div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+    <div class="load_title">正在加载 大健康产业联盟,请耐心等待
 
-    <!--</div>-->
-  <!--</div>-->
+    </div>
+  </div>
 </div>
+
 </body>
 
 </html>

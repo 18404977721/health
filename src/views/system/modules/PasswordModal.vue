@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import {changPassword} from '@/api/api'
+  import {changePassword} from '@/api/api'
 
   export default {
     name: "PasswordModal",
@@ -42,7 +42,9 @@
         validatorRules:{
           password:{
             rules: [{
-              required: true, message: '请输入登陆密码!',
+              required: true,
+              pattern:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
+              message: '密码由8位数字、大小写字母和特殊符号组成!'
             }, {
               validator: this.validateToNextPassword,
             }],
@@ -94,7 +96,7 @@
           if (!err) {
             this.confirmLoading = true;
             let formData = Object.assign(this.model, values);
-            changPassword(formData).then((res)=>{
+            changePassword(formData).then((res)=>{
               if(res.success){
                 this.$message.success(res.message);
                 this.$emit('ok');
@@ -113,6 +115,11 @@
       },
       validateToNextPassword  (rule, value, callback) {
         const form = this.form;
+        const confirmpassword=form.getFieldValue('confirmpassword');
+        console.log("confirmpassword==>",confirmpassword);
+        if (value && confirmpassword && value !== confirmpassword) {
+          callback('两次输入的密码不一样！');
+        }
         if (value && this.confirmDirty) {
           form.validateFields(['confirm'], { force: true })
         }
@@ -130,7 +137,6 @@
         const value = e.target.value
         this.confirmDirty = this.confirmDirty || !!value
       }
-
     }
   }
 </script>

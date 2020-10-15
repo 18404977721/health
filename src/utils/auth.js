@@ -3,7 +3,7 @@
  */
 import { setStore, getStore, clearStore } from "@/utils/storage"
 
-export const TokenKey = 'Authorization'
+export const TokenKey = 'Access-Token'
 
 export function getToken() {
   return getStore(TokenKey)

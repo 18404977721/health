@@ -5,7 +5,18 @@ const FormTypes = {
   checkbox: 'checkbox',
   select: 'select',
   date: 'date',
-  datetime: 'datetime'
+  datetime: 'datetime',
+  upload: 'upload',
+  file: 'file',
+  image: 'image',
+  popup:'popup',
+  list_multi:"list_multi",
+  sel_search:"sel_search",
+  radio:'radio',
+  checkbox_meta:"checkbox_meta",
+
+  slot: 'slot',
+  hidden: 'hidden'
 }
 const VALIDATE_NO_PASSED = Symbol()
 export { FormTypes, VALIDATE_NO_PASSED }

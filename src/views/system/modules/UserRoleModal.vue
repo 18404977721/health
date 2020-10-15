@@ -18,10 +18,11 @@
           :treeData="treeData"
           @expand="onExpand"
           @select="onTreeNodeSelect"
+          :selectedKeys="selectedKeys"
           :expandedKeys="expandedKeysss"
           :checkStrictly="checkStrictly">
-          <span slot="hasDatarule" slot-scope="{slotTitle,icon}">
-            {{ slotTitle }}<a-icon v-if="icon" type="align-left" style="margin-left:5px;color: red;"></a-icon>
+          <span slot="hasDatarule" slot-scope="{slotTitle,ruleFlag}">
+            {{ slotTitle }}<a-icon v-if="ruleFlag" type="align-left" style="margin-left:5px;color: red;"></a-icon>
           </span>
         </a-tree>
       </a-form-item>
@@ -44,7 +45,8 @@
       <a-popconfirm title="确定放弃编辑？" @confirm="close" okText="确定" cancelText="取消">
         <a-button style="margin-right: .8rem">取消</a-button>
       </a-popconfirm>
-      <a-button @click="handleSubmit" type="primary" :loading="loading">提交</a-button>
+      <a-button @click="handleSubmit(false)" type="primary" :loading="loading" ghost style="margin-right: 0.8rem">仅保存</a-button>
+      <a-button @click="handleSubmit(true)" type="primary" :loading="loading">保存并关闭</a-button>
     </div>
 
     <role-datarule-modal ref="datarule"></role-datarule-modal>
@@ -74,11 +76,15 @@
         title:"角色权限配置",
         visible: false,
         loading: false,
+        selectedKeys:[]
       }
     },
     methods: {
       onTreeNodeSelect(id){
-        this.$refs.datarule.show(id[0],this.roleId)
+        if(id && id.length>0){
+          this.selectedKeys = id
+        }
+        this.$refs.datarule.show(this.selectedKeys[0],this.roleId)
       },
       onCheck (o) {
         if(this.checkStrictly){
@@ -129,11 +135,12 @@
       handleCancel () {
         this.close()
       },
-      handleSubmit(){
+      handleSubmit(exit) {
         let that = this;
         let params =  {
+          roleId:that.roleId,
           permissionIds:that.checkedKeys.join(","),
-          roleId:that.roleId
+          lastpermissionIds:that.defaultCheckedKeys.join(","),
         };
         that.loading = true;
         console.log("请求参数：",params);
@@ -141,18 +148,20 @@
           if(res.success){
             that.$message.success(res.message);
             that.loading = false;
-            that.close();
+            if (exit) {
+              that.close()
+            }
           }else {
             that.$message.error(res.message);
             that.loading = false;
-            that.close();
+            if (exit) {
+              that.close()
+            }
           }
+          this.loadData();
         })
       },
-    },
-  watch: {
-    visible () {
-      if (this.visible) {
+      loadData(){
         queryTreeListForRole().then((res) => {
           this.treeData = res.result.treeList
           this.allTreeKeys = res.result.ids
@@ -164,12 +173,18 @@
           })
         })
       }
+    },
+  watch: {
+    visible () {
+      if (this.visible) {
+        this.loadData();
+      }
     }
   }
   }
 
 </script>
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .drawer-bootom-button {
     position: absolute;
     bottom: 0;

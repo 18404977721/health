@@ -4,16 +4,18 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <!-- 搜索区域 -->
-      <a-form layout="inline">
+      <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="名称" :labelCol="{span: 5}" :wrapperCol="{span: 18, offset: 1}">
               <a-input placeholder="请输入名称查询" v-model="queryParam.roleName"></a-input>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
+          <a-col :md="10" :sm="12">
             <a-form-item label="创建时间" :labelCol="{span: 5}" :wrapperCol="{span: 18, offset: 1}">
-              <a-range-picker @change="onChangeDate" v-model="queryParam.createTimeIsRange"/>
+              <j-date v-model="queryParam.createTime_begin" :showTime="true" date-format="YYYY-MM-DD HH:mm:ss" style="width:45%" placeholder="请选择开始时间" ></j-date>
+              <span style="width: 10px;">~</span>
+              <j-date v-model="queryParam.createTime_end" :showTime="true" date-format="YYYY-MM-DD HH:mm:ss" style="width:45%" placeholder="请选择结束时间"></j-date>
             </a-form-item>
           </a-col>
           <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
@@ -28,15 +30,15 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator"  style="margin-top: 5px">
-      <a-button @click="handleAdd" v-has="'btn:add'" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :action="importExcelUrl" @change="handleImportExcel">
+      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('角色信息')">导出</a-button>
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
 
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel" ><a-icon type="delete"/>删除</a-menu-item>
+          <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作 <a-icon type="down" />
@@ -64,18 +66,18 @@
         @change="handleTableChange">
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)" v-has="'btn:edit'">编辑</a>
-
+          <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
+
           <a-dropdown>
             <a class="ant-dropdown-link">
               更多 <a-icon type="down" />
             </a>
             <a-menu slot="overlay">
-              <a-menu-item v-has="'btn:permit'">
+              <a-menu-item>
                 <a @click="handlePerssion(record.id)">授权</a>
               </a-menu-item>
-              <a-menu-item v-has="'btn:delete'">
+              <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                   <a>删除</a>
                 </a-popconfirm>
@@ -99,19 +101,22 @@
   import RoleModal from './modules/RoleModal'
   import UserRoleModal from './modules/UserRoleModal'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+  import JDate from '@/components/jeecg/JDate'
 
   export default {
     name: "RoleList",
     mixins:[JeecgListMixin],
     components: {
       RoleModal,
-      UserRoleModal
+      UserRoleModal,
+      JDate
     },
     data () {
       return {
+
         description: '角色管理页面',
         // 查询条件
-        queryParam: {roleName:'',createTimeIsRange:[]},
+        queryParam: {roleName:'',},
         // 表头
         columns: [
           {
@@ -162,7 +167,7 @@
           list: "/sys/role/list",
           delete: "/sys/role/delete",
           deleteBatch: "/sys/role/deleteBatch",
-          exportXlsUrl: "sys/role/exportXls",
+          exportXlsUrl: "/sys/role/exportXls",
           importExcelUrl: "sys/role/importExcel",
         },
       }
@@ -184,21 +189,5 @@
   }
 </script>
 <style scoped>
-  /** Button按钮间距 */
-  .ant-btn {
-    margin-left: 3px
-  }
-  .ant-card-body .table-operator{
-    margin-bottom: 18px;
-  }
-  .ant-table-tbody .ant-table-row td{
-    padding-top:15px;
-    padding-bottom:15px;
-  }
-  .anty-row-operator button{margin: 0 5px}
-  .ant-btn-danger{background-color: #ffffff}
-
-  .ant-modal-cust-warp{height: 100%}
-  .ant-modal-cust-warp .ant-modal-body{height:calc(100% - 110px) !important;overflow-y: auto}
-  .ant-modal-cust-warp .ant-modal-content{height:90% !important;overflow-y: hidden}
+  @import '~@assets/less/common.less'
 </style>

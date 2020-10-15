@@ -33,6 +33,28 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
+          label="机构类型">
+          <template v-if="seen">
+          <a-radio-group v-decorator="['orgCategory',validatorRules.orgCategory]" placeholder="请选择机构类型">
+            <a-radio value="1">
+              公司
+            </a-radio>
+          </a-radio-group>
+          </template>
+          <template v-else>
+            <a-radio-group v-decorator="['orgCategory',validatorRules.orgCategory]" placeholder="请选择机构类型">
+              <a-radio value="2">
+                部门
+              </a-radio>
+              <a-radio value="3">
+                岗位
+              </a-radio>
+            </a-radio-group>
+          </template>
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
           label="电话">
           <a-input placeholder="请输入电话" v-decorator="['mobile',validatorRules.mobile]" />
         </a-form-item>
@@ -67,7 +89,7 @@
 </template>
 
 <script>
-  import { httpUsercenterAction } from '@/api/manage'
+  import { httpAction } from '@/api/manage'
   import { queryIdTree } from '@/api/api'
   import pick from 'lodash.pick'
   import ATextarea from 'ant-design-vue/es/input/TextArea'
@@ -105,8 +127,9 @@
          mobile:{rules: [{validator:this.validateMobile}]}
         },
         url: {
-          add: "/sysdepart/sysDepart/add",
+          add: "/sys/sysDepart/add",
         },
+        dictDisabled:true,
       }
     },
     created () {
@@ -128,8 +151,10 @@
       add (depart) {
         if(depart){
           this.seen = false;
+          this.dictDisabled = false;
         }else{
           this.seen = true;
+          this.dictDisabled = true;
         }
         this.edit(depart);
       },
@@ -139,8 +164,13 @@
           this.visible = true;
           this.loadTreeData();
           this.model.parentId = record!=null?record.toString():null;
+          if(this.seen){
+            this.model.orgCategory = '1';
+          }else{
+            this.model.orgCategory = '2';
+          }
           this.$nextTick(() => {
-            this.form.setFieldsValue(pick(this.model,'departName','departNameEn','departNameAbbr','departOrder','description','orgType','orgCode','mobile','fax','address','memo','status','delFlag'))
+            this.form.setFieldsValue(pick(this.model,'orgCategory','departName','departNameEn','departNameAbbr','departOrder','description','orgType','orgCode','mobile','fax','address','memo','status','delFlag'))
           });
       },
       close () {
@@ -157,7 +187,7 @@
             let formData = Object.assign(this.model, values);
             //时间格式化
             console.log(formData)
-            httpUsercenterAction(this.url.add,formData,"post").then((res)=>{
+            httpAction(this.url.add,formData,"post").then((res)=>{
               if(res.success){
                 that.$message.success(res.message);
                 that.loadTreeData();

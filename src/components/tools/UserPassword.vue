@@ -128,22 +128,11 @@
         })
       },
       validateToNextPassword  (rule, value, callback) {
-        // const form = this.form;
-        // if (value && this.confirmDirty) {
-        //   form.validateFields(['confirm'], { force: true })
-        // }
-        var flag = false;
-        var m = /(?![0-9A-Z]+$)(?![0-9a-z]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/;
-        if (value.match(m)) {
-          flag =  true;
-        } else {
-          flag =  false;
+        const form = this.form;
+        if (value && this.confirmDirty) {
+          form.validateFields(['confirm'], { force: true })
         }
-        if(!flag&&value!=''){
-          callback('必须包含数字、大小写字母，长度为6至18位!');
-        }else{
-          callback();
-        }
+        callback();
       },
       compareToFirstPassword  (rule, value, callback) {
         const form = this.form;

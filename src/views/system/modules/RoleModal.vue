@@ -31,7 +31,7 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="描述">
-          <a-textarea :rows="5" placeholder="..." v-decorator="[ 'description', {} ]" />
+          <a-textarea :rows="5" placeholder="..." v-decorator="[ 'description', validatorRules.description ]" />
         </a-form-item>
 
       </a-form>
@@ -41,7 +41,7 @@
 
 <script>
   import pick from 'lodash.pick'
-  import {addRole,editRole,checkRoleCode } from '@/api/api'
+  import {addRole,editRole,duplicateCheck } from '@/api/api'
 
   export default {
     name: "RoleModal",
@@ -62,11 +62,20 @@
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
-          roleName:{rules: [{ required: true, message: '请输入角色名称!' }]},
+          roleName:{
+            rules: [
+              { required: true, message: '请输入角色名称!' },
+              { min: 2, max: 30, message: '长度在 2 到 30 个字符', trigger: 'blur' }
+            ]},
           roleCode:{
             rules: [
-              {required: true, message: '请输入角色名称!'},
-              {validator: this.validateRoleCode}
+              { required: true, message: '请输入角色名称!'},
+              { min: 0, max: 64, message: '长度不超过 64 个字符', trigger: 'blur' },
+              { validator: this.validateRoleCode}
+            ]},
+          description:{
+            rules: [
+              { min: 0, max: 126, message: '长度不超过 126 个字符', trigger: 'blur' }
             ]}
         },
       }
@@ -133,14 +142,16 @@
           callback("角色编码不可输入汉字!");
         }else{
           var params = {
-            id:this.model.id,
-            roleCode:value
+            tableName: "sys_role",
+            fieldName: "role_code",
+            fieldVal: value,
+            dataId: this.model.id,
           };
-          checkRoleCode(params).then((res)=>{
+          duplicateCheck(params).then((res)=>{
             if(res.success){
               callback();
             }else{
-              callback("角色编码已存在！");
+              callback(res.message);
             }
           });
         }

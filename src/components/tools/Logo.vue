@@ -2,7 +2,7 @@
   <div class="logo">
     <router-link :to="{name:'homepage'}">
 			<img style="margin:0 10px 11px 0;height:68px;width:68px;display:inline-block;" src="~@/assets/icon_logo.png" alt="logo">
-      <h1 style="font-weight:bold;margin:0;" v-if="showTitle">大健康产业联盟</h1>
+      <h1 style="font-weight:bold;margin:0;font-size:24px;color:#d7bd63;" v-if="showTitle">大健康产业联盟</h1>
     </router-link>
   </div>
 </template>

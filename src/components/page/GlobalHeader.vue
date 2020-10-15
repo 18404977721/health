@@ -26,7 +26,7 @@
     <!-- 顶部导航栏模式 -->
     <div v-else :class="['top-nav-header-index', theme]">
       <div style="height:80px;">
-        <div style="margin:auto;width:100%;background:linear-gradient(to right, #b90101 , #eb560c,#c10e03);"  :class="{'fix':!topBanner}">
+        <div style="margin:auto;width:100%;height:80px;background:linear-gradient(to right, #b90101 , #eb560c,#c10e03);"  :class="{'fix':!topBanner}">
           <div class="header-index-wide" style="margin:auto;width:1315px;padding: 0;">
             <div class="header-index-left" :style="topMenuStyle.headerIndexLeft">
               <logo v-if="!topBanner" class="top-nav-header" :show-title="device !== 'mobile'" :style="topMenuStyle.topNavHeader"/>
@@ -142,6 +142,9 @@
         this.calcTopMenuScrollWidth()
       }
       //update-end--author:sunjianlei---date:20190408------for: 顶部导航栏增加横向滚动条-----
+      // let menuData = []
+      // commit('SET_PERMISSIONLIST', menuData)
+      // console.log(111)
     },
     methods: {
       clickMenu(e){
@@ -183,7 +186,7 @@
             this.topMenuStyle.headerIndexLeft = {}
           } else {
             let rightWidth = '80px'
-            this.topMenuStyle.topNavHeader = { 'min-width': '325px' }
+            this.topMenuStyle.topNavHeader = { 'min-width': '325px','margin-top': '9px' }
             this.topMenuStyle.headerIndexRight = { 'min-width': rightWidth }
             this.topMenuStyle.headerIndexLeft = { 'width': `calc(100% - ${rightWidth})` }
             // 由于首次从mobile设备下切换到desktop设备没有初始化TopMenuScrollWidth，所以这里需要计算一下

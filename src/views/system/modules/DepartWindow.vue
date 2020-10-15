@@ -12,7 +12,7 @@
     <!--部门树-->
     <template>
       <a-form :form="form">
-      <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="所属部门">
+      <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="上级部门">
       <a-tree
         multiple
         treeCheckable="tree"
@@ -23,7 +23,7 @@
         @check="onCheck"
         :dropdownStyle="{maxHeight:'200px',overflow:'auto'}"
         :treeData="departTree"
-        placeholder="请选择所属部门"
+        placeholder="请选择上级部门"
         >
       </a-tree>
       </a-form-item>
@@ -34,7 +34,7 @@
 
 <script>
   import pick from 'lodash.pick'
-  import { getUsercenterAction } from '@/api/manage'
+  import { getAction } from '@/api/manage'
   import { queryIdTree } from '@/api/api'
   import userModal from './UserModal'
   export default {
@@ -99,7 +99,7 @@
           if (!err) {
             that.confirmLoading = true;
             if(this.userId == null){
-              getUsercenterAction(this.url.userId).then((res)=>{
+              getAction(this.url.userId).then((res)=>{
                 if(res.success){
                   let formData = {userId:res.result,
                   departIdList:this.departList}

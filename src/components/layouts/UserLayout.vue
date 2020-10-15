@@ -2,20 +2,27 @@
   <div id="userLayout" :class="['user-layout-wrapper', device]">
     <div class="container">
       <div class="top">
-        <div class="lg-zh">
-          <span class="title">大健康产业联盟</span>
+        <div class="header">
+          <a href="/">
+            <!-- <img src="~@/assets/logo.svg" class="logo" alt="logo"> -->
+            <span class="title">大健康产业联盟</span>
+          </a>
         </div>
-        <div class="lg-eg">
-            <span class="title"></span>
+        <div class="desc">
+          
         </div>
       </div>
 
       <route-view></route-view>
 
       <div class="footer">
-
+        <div class="links">
+          <a href="http://doc.jeecg.com" target="_blank">帮助</a>
+          <a href="https://github.com/zhangdaiscott/jeecg-boot" target="_blank">隐私</a>
+          <a href="https://github.com/zhangdaiscott/jeecg-boot/blob/master/LICENSE" target="_blank">条款</a>
+        </div>
         <div class="copyright">
-          
+          Copyright &copy; 2019 <a href="http://www.jeecg.com" target="_blank">JEECG开源社区</a> 出品
         </div>
       </div>
     </div>
@@ -42,7 +49,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   #userLayout.user-layout-wrapper {
     height: 100%;
 
@@ -58,8 +65,8 @@
     .container {
       width: 100%;
       min-height: 100%;
-      background: #f0f2f5 url(~@/assets/sw-login.png) no-repeat 50%;
-      background-size: 100% 100%;
+      background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
+      background-size: 100%;
       padding: 110px 0 144px;
       position: relative;
 
@@ -71,7 +78,7 @@
         text-align: center;
 
         .header {
-          height: 110px;
+          height: 44px;
           line-height: 44px;
 
           .badge {
@@ -85,30 +92,26 @@
           }
 
           .logo {
-            height: 110px;
+            height: 44px;
             vertical-align: top;
             margin-right: 16px;
             border-style: none;
           }
 
           .title {
-            color:rgba(223,0,0,1);
+            font-size: 33px;
+            color: rgba(0, 0, 0, .85);
             font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
             font-weight: 600;
             position: relative;
             top: 2px;
           }
         }
-        .lg-zh {
-          font-size: 40px;
-          font-weight: bold;
-          color:rgba(223,0,0,1);
-          margin-top: 12px;
-        }
-        .lg-eg {
+        .desc {
           font-size: 14px;
-          color:rgba(223,0,0,1);
-          margin-bottom: 30px;
+          color: rgba(0, 0, 0, 0.45);
+          margin-top: 12px;
+          margin-bottom: 40px;
         }
       }
 
@@ -138,7 +141,7 @@
           }
         }
         .copyright {
-          color: #333;
+          color: rgba(0, 0, 0, 0.45);
           font-size: 14px;
         }
       }

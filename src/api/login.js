@@ -1,6 +1,6 @@
 import api from './index'
 import { axios } from '@/utils/request'
-//import {post} from './manage'
+
 /**
  * login func
  * parameter: {
@@ -14,9 +14,15 @@ import { axios } from '@/utils/request'
  */
 export function login(parameter) {
   return axios({
-    //url: '/sys/login',
-    baseURL:"/api-uaa",
-    url: '/oauth/user/token',
+    url: '/sys/login',
+    method: 'post',
+    data: parameter
+  })
+}
+
+export function phoneLogin(parameter) {
+  return axios({
+    url: '/sys/phoneLogin',
     method: 'post',
     data: parameter
   })
@@ -42,8 +48,7 @@ export function getInfo() {
 
 export function logout(logoutToken) {
   return axios({
-    baseURL:"/api-uaa",
-    url: '/oauth/remove/token',
+    url: '/sys/logout',
     method: 'post',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',

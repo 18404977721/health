@@ -1,5 +1,5 @@
 <template>
-  <a-checkbox-group :options="options" :value="checkboxArray" @change="onChange" />
+  <a-checkbox-group :options="options" :value="checkboxArray" v-bind="$attrs" @change="onChange" />
 </template>
 
 <script>
@@ -10,19 +10,10 @@
         type: String,
         required: false
       },
-      readOnly:{
-        type: Boolean,
-        required: false,
-        default: false
-      },
+      /*label value*/
       options:{
         type: Array,
         required: true
-      },
-      triggerChange:{
-        type: Boolean,
-        required: false,
-        default: false
       }
     },
     data(){
@@ -41,12 +32,12 @@
     },
     methods:{
       onChange (checkedValues) {
-        if(this.triggerChange){
-          this.$emit('change', checkedValues.join(","));
-        }else{
-          this.$emit('input', checkedValues.join(","));
-        }
+        this.$emit('change', checkedValues.join(","));
       },
+    },
+    model: {
+      prop: 'value',
+      event: 'change'
     }
   }
 </script>

@@ -74,12 +74,12 @@
 }
 
 
-.container {
+.container-index {
 	margin-top: 25px;
 	padding-bottom: 3px;
 }
 
-.container .input {
+.container-index .input {
 	position: relative;
 	width: 1085px;
 	height: 44px;
@@ -87,7 +87,7 @@
 	border-radius: 4px;
 }
 
-.container .input>input {
+.container-index .input>input {
 	outline: none;
 	border: none;
 	text-indent: 10px;
@@ -99,7 +99,7 @@
 	border-radius: 4px 0 0 4px;
 }
 
-.container .search {
+.container-index .search {
 	width: 90px;
 	height: 44px;
 	background-color: #ff8500;
@@ -252,7 +252,7 @@ ul.r-list li {
 	border-radius: 4px;
 }
 
-.top {
+.news-list .top {
 	display: inline-block;
 	background: url(../top_icon.png);
 	width: 31px;
@@ -260,7 +260,7 @@ ul.r-list li {
 	margin-left: 5px;
 }
 
-.jian {
+.news-list .jian {
 	position: relative;
 	top: 3px;
 	display: inline-block;

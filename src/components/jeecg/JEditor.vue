@@ -14,6 +14,7 @@
   import Editor from '@tinymce/tinymce-vue'
   import 'tinymce/themes/silver/theme'
   import 'tinymce/plugins/image'
+  import 'tinymce/plugins/link'
   import 'tinymce/plugins/media'
   import 'tinymce/plugins/table'
   import 'tinymce/plugins/lists'
@@ -21,6 +22,7 @@
   import 'tinymce/plugins/wordcount'
   import 'tinymce/plugins/colorpicker'
   import 'tinymce/plugins/textcolor'
+  import 'tinymce/plugins/fullscreen'
   export default {
     components: {
       Editor
@@ -30,17 +32,23 @@
         type: String,
         required:false
       },
+      triggerChange:{
+        type: Boolean,
+        default: false,
+        required:false
+      },
       disabled: {
         type: Boolean,
         default: false
       },
       plugins: {
         type: [String, Array],
-        default: 'lists image media table textcolor wordcount contextmenu'
+        default: 'lists image link media table textcolor wordcount contextmenu fullscreen'
       },
       toolbar: {
         type: [String, Array],
-        default: 'undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat'
+        default: 'undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists link unlink image media table | removeformat | fullscreen',
+        branding:false
       }
     },
     data() {
@@ -55,6 +63,7 @@
           toolbar: this.toolbar,
           branding: false,
           menubar: false,
+          toolbar_drawer: false,
           images_upload_handler: (blobInfo, success) => {
             const img = 'data:image/jpeg;base64,' + blobInfo.base64()
             success(img)
@@ -78,11 +87,14 @@
     },
     watch: {
       value(newValue) {
-        this.myValue = newValue
+        this.myValue = (newValue == null ? '' : newValue)
       },
       myValue(newValue) {
-        console.log(newValue)
-        this.$emit('input', newValue)
+        if(this.triggerChange){
+          this.$emit('change', newValue)
+        }else{
+          this.$emit('input', newValue)
+        }
       }
     }
   }

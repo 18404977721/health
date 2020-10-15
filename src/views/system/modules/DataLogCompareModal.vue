@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import {getUsercenterAction} from '@/api/manage'
+  import {getAction} from '@/api/manage'
 
   export default {
     name: 'DataLogCompareModal',
@@ -89,7 +89,7 @@
       loadData(dataId1, dataId2) {
         this.dataSource = [];
         let that = this;
-        getUsercenterAction(that.url.queryCompareUrl, {dataId1: dataId1, dataId2: dataId2}).then((res) => {
+        getAction(that.url.queryCompareUrl, {dataId1: dataId1, dataId2: dataId2}).then((res) => {
           if (res.success) {
             that.dataVersion1Num = res.result[0].dataVersion;
             that.dataVersion2Num = res.result[1].dataVersion;

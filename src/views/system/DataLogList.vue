@@ -2,7 +2,7 @@
   <a-card :bordered="false">
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
-      <a-form layout="inline">
+      <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="表名">
@@ -49,7 +49,7 @@
         :rowSelection="{selectedRowKeys: selectedRowKeys,onChange: onSelectChange}"
         @change="handleTableChange"
       >
-        <!-- 字符串超长截取省略号查看-->
+        <!-- 字符串超长截取省略号显示-->
         <span slot="dataContent" slot-scope="text, record">
           <j-ellipsis :value="text" :length="80" />
         </span>
@@ -129,45 +129,6 @@
   }
 
 </script>
-
 <style scoped>
-  .ant-card-body .table-operator {
-    margin-bottom: 18px;
-  }
-
-  .ant-table-tbody .ant-table-row td {
-    padding-top: 15px;
-    padding-bottom: 15px;
-  }
-
-  .anty-row-operator button {
-    margin: 0 5px
-  }
-
-  .ant-btn-danger {
-    background-color: #ffffff
-  }
-
-  .ant-modal-cust-warp {
-    height: 100%
-  }
-
-  .ant-modal-cust-warp .ant-modal-body {
-    height: calc(100% - 110px) !important;
-    overflow-y: auto
-  }
-
-  .ant-modal-cust-warp .ant-modal-content {
-    height: 90% !important;
-    overflow-y: hidden
-  }
-
-  .anty-img-wrap {
-    height: 25px;
-    position: relative;
-  }
-
-  .anty-img-wrap > img {
-    max-height: 100%;
-  }
+  @import '~@assets/less/common.less'
 </style>

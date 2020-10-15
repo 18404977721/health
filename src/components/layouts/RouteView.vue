@@ -1,8 +1,10 @@
 <template>
-  <keep-alive v-if="keepAlive">
-    <router-view />
+  <div class="main">
+  <keep-alive>
+    <router-view v-if="keepAlive" />
   </keep-alive>
-  <router-view v-else />
+  <router-view v-if="!keepAlive" />
+  </div>
 </template>
 
 <script>

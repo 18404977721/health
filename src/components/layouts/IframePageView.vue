@@ -5,13 +5,14 @@
 </template>
 
 <script>
+  import Vue from 'vue'
+  import { ACCESS_TOKEN } from "@/store/mutation-types"
   import PageLayout from '../page/PageLayout'
   import RouteView from './RouteView'
-	import Vue from 'vue'
-	import {Authorization} from "@/store/mutation-types"
 
   export default {
     name: "IframePageContent",
+    inject:['closeCurrent'],
     data () {
       return {
         url: "",
@@ -35,33 +36,22 @@
         let id = this.$route.path
         this.id = id
         //url = "http://www.baidu.com"
+        console.log("------url------"+url)
         if (url !== null && url !== undefined) {
-          this.$router.go(-1)
-          let oprnUrl = ""
-          if(window.location.host.indexOf('localhost') > -1){
-            if(this.$route.meta.title === "省政府13710"){
-              oprnUrl = 'http://192.167.107.23:8080';
-            }else if(this.$route.meta.title === "开发区展示"){
-							const token = Vue.ls.get(Authorization);
-              oprnUrl = 'http://218.26.86.90:8000/sw_13710_kfq/map.html?token='+token;
+          this.url = url;
+          /*update_begin author:wuxianquan date:20190908 for:判断打开方式，新窗口打开时this.$route.meta.internalOrExternal==true */
+          if(this.$route.meta.internalOrExternal != undefined && this.$route.meta.internalOrExternal==true){
+            this.closeCurrent();
+            //外部url加入token
+            let tokenStr = "${token}";
+            if(url.indexOf(tokenStr)!=-1){
+              let token = Vue.ls.get(ACCESS_TOKEN);
+               this.url = url.replace(tokenStr,token);
             }
-          }else if(window.location.host.indexOf('59.195.205.231') > -1){//政务外网访问
-						if(this.$route.meta.title === "开发区展示"){
-								const token = Vue.ls.get(Authorization);
-						    oprnUrl = 'http://59.195.205.231/sw_13710_kfq/map.html?token='+token;
-						}else{
-							oprnUrl = url;
-						}
-          }else if(window.location.host.indexOf('192.167.107.32') > -1){//VPN访问
-            if(this.$route.meta.title === "开发区展示"){
-            	const token = Vue.ls.get(Authorization);
-              oprnUrl = 'http://192.167.107.32/sw_13710_kfq/map.html?token='+token;
-            }else if(this.$route.meta.title === "省政府13710"){
-            	oprnUrl = 'http://192.167.107.23:8080';
-            }
+            window.open(this.url);
           }
-          //this.url = url
-          window.open(oprnUrl);
+          /*update_end author:wuxianquan date:20190908 for:判断打开方式，新窗口打开时this.$route.meta.internalOrExternal==true */
+
         }
       }
     }

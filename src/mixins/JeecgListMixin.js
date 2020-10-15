@@ -4,11 +4,16 @@
  * data中url定义 list为查询列表  delete为删除单条记录  deleteBatch为批量删除
  */
 import { filterObj } from '@/utils/util';
-import { deleteAction, getAction,getUsercenterAction,getDevareaAction,deleteUsercenterAction,deleteDevareaAction,getUaaAction,postUaaAction,httpUaaAction,putUaaAction,deleteUaaAction} from '@/api/manage'
+import { deleteAction, getAction,downFile } from '@/api/manage'
+import Vue from 'vue'
+import { ACCESS_TOKEN } from "@/store/mutation-types"
+
 export const JeecgListMixin = {
   data(){
     return {
-      /* 查询条件 */
+      //token header
+      tokenHeader: {'X-Access-Token': Vue.ls.get(ACCESS_TOKEN)},
+      /* 查询条件-请不要在queryParam中声明非字符串值的属性 */
       queryParam: {},
       /* 数据源 */
       dataSource:[],
@@ -42,13 +47,16 @@ export const JeecgListMixin = {
       /* 高级查询条件生效状态 */
       superQueryFlag:false,
       /* 高级查询条件 */
-      superQueryParams:"",
+      superQueryParams:""
     }
   },
   created() {
-    this.loadData();
-    //初始化字典配置 在自己页面定义
-    this.initDictConfig();
+    if(!this.disableMixinCreated){
+      console.log(' -- mixin created -- ')
+      this.loadData();
+      //初始化字典配置 在自己页面定义
+      this.initDictConfig();
+    }
   },
   methods:{
     loadData(arg) {
@@ -60,38 +68,18 @@ export const JeecgListMixin = {
       if (arg === 1) {
         this.ipagination.current = 1;
       }
-      console.log("flag",this.flag)
       var params = this.getQueryParams();//查询条件
-      if(this.flag === "overseer"){
-        getAction(this.url.list, params).then((res) => {
-          if (res.success) {
-            this.dataSource = res.result.records;
-            this.ipagination.total = res.result.total;
-          }
-        })
-      }else if(this.flag === "devArea"){
-        getDevareaAction(this.url.list, params).then((res) => {
-          if (res.success) {
-            this.dataSource = res.result.records;
-            this.ipagination.total = res.result.total;
-          }
-        })
-      }else if(this.flag === "uaa"){
-        getUaaAction(this.url.list, params).then((res) => {
-          if (res.success) {
-            this.dataSource = res.result.records;
-            this.ipagination.total = res.result.total;
-          }
-        })
-      }else{
-        getUsercenterAction(this.url.list, params).then((res) => {
-          if (res.success) {
-            this.dataSource = res.result.records;
-            this.ipagination.total = res.result.total;
-          }
-        })
-      }
-     
+      this.loading = true;
+      getAction(this.url.list, params).then((res) => {
+        if (res.success) {
+          this.dataSource = res.result.records;
+          this.ipagination.total = res.result.total;
+        }
+        if(res.code===510){
+          this.$message.warning(res.message)
+        }
+        this.loading = false;
+      })
     },
     initDictConfig(){
       console.log("--这是一个假的方法!")
@@ -164,47 +152,18 @@ export const JeecgListMixin = {
           title: "确认删除",
           content: "是否删除选中数据?",
           onOk: function () {
-            if(this.flag === "overseer"){
-              deleteAction(that.url.deleteBatch, {ids: ids}).then((res) => {
-                if (res.success) {
-                  that.$message.success(res.message);
-                  that.loadData();
-                  that.onClearSelected();
-                } else {
-                  that.$message.warning(res.message);
-                }
-              });
-            }else if(this.flag === "devArea"){
-              deleteDevareaAction(that.url.deleteBatch, {ids: ids}).then((res) => {
-                if (res.success) {
-                  that.$message.success(res.message);
-                  that.loadData();
-                  that.onClearSelected();
-                } else {
-                  that.$message.warning(res.message);
-                }
-              });
-            }else if(this.flag === "uaa"){
-              deleteUaaAction(that.url.deleteBatch, {ids: ids}).then((res) => {
-                if (res.success) {
-                  that.$message.success(res.message);
-                  that.loadData();
-                  that.onClearSelected();
-                } else {
-                  that.$message.warning(res.message);
-                }
-              });
-            }else{
-              deleteUsercenterAction(that.url.deleteBatch, {ids: ids}).then((res) => {
-                if (res.success) {
-                  that.$message.success(res.message);
-                  that.loadData();
-                  that.onClearSelected();
-                } else {
-                  that.$message.warning(res.message);
-                }
-              });
-            }
+            that.loading = true;
+            deleteAction(that.url.deleteBatch, {ids: ids}).then((res) => {
+              if (res.success) {
+                that.$message.success(res.message);
+                that.loadData();
+                that.onClearSelected();
+              } else {
+                that.$message.warning(res.message);
+              }
+            }).finally(() => {
+              that.loading = false;
+            });
           }
         });
       }
@@ -215,52 +174,24 @@ export const JeecgListMixin = {
         return
       }
       var that = this;
-      if(this.flag === "overseer"){
-        deleteAction(that.url.delete, {id: id}).then((res) => {
-          if (res.success) {
-            that.$message.success(res.message);
-            that.loadData();
-          } else {
-            that.$message.warning(res.message);
-          }
-        });
-      }else if(this.flag === "devArea"){
-       deleteDevareaAction(that.url.delete, {id: id}).then((res) => {
-         if (res.success) {
-           that.$message.success(res.message);
-           that.loadData();
-         } else {
-           that.$message.warning(res.message);
-         }
-       });
-      }else if(this.flag === "uaa"){
-        deleteUaaAction(that.url.delete, {id: id}).then((res) => {
-          if (res.success) {
-            that.$message.success(res.message);
-            that.loadData();
-          } else {
-            that.$message.warning(res.message);
-          }
-        });
-       }else{
-       deleteUsercenterAction(that.url.delete, {id: id}).then((res) => {
-         if (res.success) {
-           that.$message.success(res.message);
-           that.loadData();
-         } else {
-           that.$message.warning(res.message);
-         }
-       });
-      }
-      
+      deleteAction(that.url.delete, {id: id}).then((res) => {
+        if (res.success) {
+          that.$message.success(res.message);
+          that.loadData();
+        } else {
+          that.$message.warning(res.message);
+        }
+      });
     },
     handleEdit: function (record) {
       this.$refs.modalForm.edit(record);
       this.$refs.modalForm.title = "编辑";
+      this.$refs.modalForm.disableSubmit = false;
     },
     handleAdd: function () {
       this.$refs.modalForm.add();
       this.$refs.modalForm.title = "新增";
+      this.$refs.modalForm.disableSubmit = false;
     },
     handleTableChange(pagination, filters, sorter) {
       //分页、排序、筛选变化时触发
@@ -285,10 +216,39 @@ export const JeecgListMixin = {
       this.$refs.modalForm.disableSubmit = true;
     },
     /* 导出 */
-    handleExportXls(){
+    handleExportXls2(){
       let paramsStr = encodeURI(JSON.stringify(this.getQueryParams()));
       let url = `${window._CONFIG['domianURL']}/${this.url.exportXlsUrl}?paramsStr=${paramsStr}`;
       window.location.href = url;
+    },
+    handleExportXls(fileName){
+      if(!fileName || typeof fileName != "string"){
+        fileName = "导出文件"
+      }
+      let param = {...this.queryParam};
+      if(this.selectedRowKeys && this.selectedRowKeys.length>0){
+        param['selections'] = this.selectedRowKeys.join(",")
+      }
+      console.log("导出参数",param)
+      downFile(this.url.exportXlsUrl,param).then((data)=>{
+        if (!data) {
+          this.$message.warning("文件下载失败")
+          return
+        }
+        if (typeof window.navigator.msSaveBlob !== 'undefined') {
+          window.navigator.msSaveBlob(new Blob([data],{type: 'application/vnd.ms-excel'}), fileName+'.xls')
+        }else{
+          let url = window.URL.createObjectURL(new Blob([data],{type: 'application/vnd.ms-excel'}))
+          let link = document.createElement('a')
+          link.style.display = 'none'
+          link.href = url
+          link.setAttribute('download', fileName+'.xls')
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link); //下载完成移除元素
+          window.URL.revokeObjectURL(url); //释放掉blob对象
+        }
+      })
     },
     /* 导入 */
     handleImportExcel(info){
@@ -296,11 +256,48 @@ export const JeecgListMixin = {
         console.log(info.file, info.fileList);
       }
       if (info.file.status === 'done') {
-        this.$message.success(`${info.file.name} 文件上传成功`);
-        this.loadData();
+        if (info.file.response.success) {
+          // this.$message.success(`${info.file.name} 文件上传成功`);
+          if (info.file.response.code === 201) {
+            let { message, result: { msg, fileUrl, fileName } } = info.file.response
+            let href = window._CONFIG['domianURL'] + fileUrl
+            this.$warning({
+              title: message,
+              content: (
+                <div>
+                  <span>{msg}</span><br/>
+                  <span>具体详情请 <a href={href} target="_blank" download={fileName}>点击下载</a> </span>
+                </div>
+              )
+            })
+          } else {
+            this.$message.success(info.file.response.message || `${info.file.name} 文件上传成功`)
+          }
+          this.loadData()
+        } else {
+          this.$message.error(`${info.file.name} ${info.file.response.message}.`);
+        }
       } else if (info.file.status === 'error') {
-        this.$message.error(`${info.file.name} 文件上传失败.`);
+        this.$message.error(`文件上传失败: ${info.file.msg} `);
       }
+    },
+    /* 图片预览 */
+    getImgView(text){
+      if(text && text.indexOf(",")>0){
+        text = text.substring(0,text.indexOf(","))
+      }
+      return window._CONFIG['staticDomainURL']+"/"+text
+    },
+    /* 文件下载 */
+    uploadFile(text){
+      if(!text){
+        this.$message.warning("未知的文件")
+        return;
+      }
+      if(text.indexOf(",")>0){
+        text = text.substring(0,text.indexOf(","))
+      }
+      window.open(window._CONFIG['staticDomainURL']+ "/"+text);
     },
   }
 

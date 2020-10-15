@@ -75,7 +75,8 @@
 </template>
 
 <script>
-	
+	import "@/assets/less/base.css"
+	import "@/assets/less/home.css"
   export default {
     name: "LayoutFooter"
   }

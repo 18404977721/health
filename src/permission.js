@@ -4,24 +4,25 @@ import store from './store'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import notification from 'ant-design-vue/es/notification'
-import { Authorization } from '@/store/mutation-types'
+import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { generateIndexRouter } from "@/utils/util"
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/user/login', '/user/register', '/user/register-result'] // no redirect whitelist
+const whiteList = ['/user/login', '/user/register', '/user/register-result','/user/alteration'] // no redirect whitelist
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
-  if (Vue.ls.get(Authorization)) {
+
+  if (Vue.ls.get(ACCESS_TOKEN)) {
     /* has token */
     if (to.path === '/user/login') {
-      next({ path: '/homepage' })
+      next({ path: '/dashboard/analysis' })
       NProgress.done()
     } else {
       if (store.getters.permissionList.length === 0) {
         store.dispatch('GetPermissionList').then(res => {
-              const menuData = res.result;
+              const menuData = res.result.menu;
               console.log(res.message)
               if (menuData === null || menuData === "" || menuData === undefined) {
                 return;
@@ -44,10 +45,10 @@ router.beforeEach((to, from, next) => {
               })
             })
           .catch(() => {
-            notification.error({
+           /* notification.error({
               message: '系统提示',
               description: '请求用户信息失败，请重试！'
-            })
+            })*/
             store.dispatch('Logout').then(() => {
               next({ path: '/user/login', query: { redirect: to.fullPath } })
             })
@@ -64,7 +65,7 @@ router.beforeEach((to, from, next) => {
     //   next({ path: '/user/login', query: { redirect: to.fullPath } })
     //   NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
     // }
-		next()
+    next()
   }
 })
 

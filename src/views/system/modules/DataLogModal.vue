@@ -53,7 +53,7 @@
 </template>
 
 <script>
-  import { getUsercenterAction } from '@/api/manage'
+  import { getAction } from '@/api/manage'
   import DataLogCompareModal from './DataLogCompareModal'
   export default {
     name: 'DataLogModal',
@@ -118,7 +118,7 @@
       },
       initDataVersionList(){
         let that = this;
-        getUsercenterAction(that.url.queryDataVerListUrl,{dataTable:this.dataTable1,dataId:this.dataID3}).then((res)=>{
+        getAction(that.url.queryDataVerListUrl,{dataTable:this.dataTable1,dataId:this.dataID3}).then((res)=>{
           if(res.success){
             this.DataVersionList = res.result;
           }else{

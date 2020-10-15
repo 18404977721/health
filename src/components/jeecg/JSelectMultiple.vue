@@ -4,7 +4,7 @@
       v-for="(item,index) in options"
       :key="index"
       :value="item.value">
-      {{ item.text }}
+      {{ item.text || item.label }}
     </a-select-option>
   </a-select>
 </template>
@@ -60,6 +60,7 @@
           this.$emit('input', selectedValue.join(","));
         }
       },
-    }
+    },
+
   }
 </script>

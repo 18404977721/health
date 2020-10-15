@@ -114,7 +114,7 @@
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item >
-                <a-switch slot="actions" size="small" :disabled="(layoutMode === 'topmenu')" :defaultChecked="fixSiderbar" @change="handleFixSiderbar" />
+                <a-switch slot="actions" size="small" :disabled="(layoutMode === 'topmenu')" :checked="dataFixSiderbar" @change="handleFixSiderbar" />
                 <a-list-item-meta>
                   <div slot="title" :style="{ textDecoration: layoutMode === 'topmenu' ? 'line-through' : 'unset' }">固定侧边菜单</div>
                 </a-list-item-meta>
@@ -153,9 +153,10 @@
           </a-alert>
         </div>
       </div>
-      <div class="setting-drawer-index-handle" @click="toggle">
-        <a-icon type="setting" v-if="!visible"/>
-        <a-icon type="close" v-else/>
+      <div class="setting-drawer-index-handle" @click="toggle" v-if="visible">
+<!--        <a-icon type="setting" v-if="!visible"/>-->
+<!--        <a-icon type="close" v-else/>-->
+        <a-icon type="close" />
       </div>
     </a-drawer>
   </div>
@@ -179,7 +180,8 @@
       return {
         visible: true,
         colorList,
-      }
+        dataFixSiderbar: false
+    }
     },
     watch: {
 
@@ -244,16 +246,16 @@
       },
       handleFixSiderbar (fixed) {
         if (this.layoutMode === 'topmenu') {
-          this.$store.dispatch('ToggleFixSiderbar', false)
-          return;
+          fixed = false
         }
+        this.dataFixSiderbar = fixed
         this.$store.dispatch('ToggleFixSiderbar', fixed)
       }
     },
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
   .setting-drawer-index-content {
 

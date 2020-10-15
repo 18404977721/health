@@ -10,15 +10,6 @@ const api = {
 
 export default api
 
-//  使用默认的业务地址前缀
-//get
-export function getAction(url,parameter) {
-  return axios({
-    url: url,
-    method: 'get',
-    params: parameter
-  })
-}
 //post
 export function postAction(url,parameter) {
   return axios({
@@ -46,6 +37,15 @@ export function putAction(url,parameter) {
   })
 }
 
+//get
+export function getAction(url,parameter) {
+  return axios({
+    url: url,
+    method: 'get',
+    params: parameter
+  })
+}
+
 //deleteAction
 export function deleteAction(url,parameter) {
   return axios({
@@ -54,118 +54,6 @@ export function deleteAction(url,parameter) {
     params: parameter
   })
 }
-
-
-//  使用用户中心的业务地址前缀
-//用户中心get
-export function getUsercenterAction(url,parameter) {
-  return axios({
-    baseURL:"/api-user",
-    url: url,
-    method: 'get',
-    params: parameter
-  })
-}
-//用户中心post
-export function postUsercenterAction(url,parameter) {
-  return axios({
-    baseURL:"/api-user",
-    url: url,
-    method:'post' ,
-    data: parameter
-  })
-}
-//用户中心post method= {post | put}
-export function httpUsercenterAction(url,parameter,method) {
-  return axios({
-    baseURL:"/api-user",
-    url: url,
-    method:method ,
-    data: parameter
-  })
-}
-
-//put
-export function putUsercenterAction(url,parameter) {
-  return axios({
-    baseURL:"/api-user",
-    url: url,
-    method:'put',
-    data: parameter
-  })
-}
-
-//deleteAction
-export function deleteUsercenterAction(url,parameter) {
-  return axios({
-    baseURL:"/api-user",
-    url: url,
-    method: 'delete',
-    params: parameter
-  })
-}
-
-//  使用鉴权中心的业务地址前缀
-//鉴权中心get
-export function getUaaAction(url,parameter) {
-  return axios({
-    baseURL:"/api-uaa",
-    url: url,
-    method: 'get',
-    params: parameter
-  })
-}
-//鉴权中心post
-export function postUaaAction(url,parameter) {
-  return axios({
-    baseURL:"/api-uaa",
-    url: url,
-    method:'post' ,
-    data: parameter
-  })
-}
-//鉴权中心post method= {post | put}
-export function httpUaaAction(url,parameter,method) {
-  return axios({
-    baseURL:"/api-uaa",
-    url: url,
-    method:method ,
-    data: parameter
-  })
-}
-
-//put
-export function putUaaAction(url,parameter) {
-  return axios({
-    baseURL:"/api-uaar",
-    url: url,
-    method:'put',
-    data: parameter
-  })
-}
-
-//deleteAction
-export function deleteUaaAction(url,parameter) {
-  return axios({
-    baseURL:"/api-uaa",
-    url: url,
-    method: 'delete',
-    params: parameter
-  })
-}
-
-
-//  使用api的业务地址前缀
-//getApi
-export function getApiAction(url,parameter) {
-  return axios({
-    baseURL:'api',
-    url: url,
-    method: 'get',
-    params: parameter
-  })
-}
-
 
 export function getUserList(parameter) {
   return axios({
@@ -224,3 +112,17 @@ export function downFile(url,parameter){
   })
 }
 
+/**
+ * 获取文件访问路径
+ * @param avatar
+ * @param imgerver
+ * @param str
+ * @returns {*}
+ */
+export function getFileAccessHttpUrl(avatar,imgerver,subStr) {
+  if(avatar && avatar.indexOf(subStr) != -1 ){
+    return avatar;
+  }else{
+    return imgerver + "/" + avatar;
+  }
+}

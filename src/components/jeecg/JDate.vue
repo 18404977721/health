@@ -1,11 +1,12 @@
 <template>
   <a-date-picker
-    :disabled="readOnly"
+    :disabled="disabled || readOnly"
     :placeholder="placeholder"
     @change="handleDateChange"
     :value="momVal"
     :showTime="showTime"
     :format="dateFormat"
+    :getCalendarContainer="getCalendarContainer"
   />
 </template>
 <script>
@@ -27,6 +28,7 @@
         default: 'YYYY-MM-DD',
         required: false
       },
+      //此属性可以被废弃了
       triggerChange:{
         type: Boolean,
         required: false,
@@ -37,10 +39,19 @@
         required: false,
         default: false
       },
+      disabled:{
+        type: Boolean,
+        required: false,
+        default: false
+      },
       showTime:{
         type: Boolean,
         required: false,
         default: false
+      },
+      getCalendarContainer: {
+        type: Function,
+        default: () => document.body
       }
     },
     data () {
@@ -62,13 +73,13 @@
     methods: {
       moment,
       handleDateChange(mom,dateStr){
-        if(this.triggerChange){
-          this.$emit('change', dateStr);
-        }else{
-          this.$emit('input', dateStr);
-        }
+        this.$emit('change', dateStr);
       }
+    },
+    //2.2新增 在组件内定义 指定父组件调用时候的传值属性和事件类型 这个牛逼
+    model: {
+      prop: 'value',
+      event: 'change'
     }
   }
-  //note: do not set the prop value one default property
 </script>
