@@ -44,14 +44,9 @@
 				  label="个人住址"
 					v-bind="formItemLayout"
 				>
-					<a-cascader 
-						:options="options"
-						placeholder="请选择" 
-						v-decorator="[
-							'userRegion',
-							{ rules: [{ required: true, message: '请选择个人住址' }] },
-						]"
-					/>
+          <a-input
+          	v-decorator="['userRegion', { rules: [{ required: true, message: '请输入个人住址' }] }]"
+          />
 				</a-form-item>
 				<a-form-item
 				  label="验证码"
@@ -190,14 +185,9 @@
 				  label="个人住址"
 					v-bind="formItemLayout1"
 				>
-					<a-cascader 
-						:options="options"
-						placeholder="请选择" 
-						v-decorator="[
-							'userRegionQy',
-							{ rules: [{ required: true, message: '请选择个人住址' }] },
-						]"
-					/>
+          <a-input
+          	v-decorator="['userRegionQy', { rules: [{ required: true, message: '请输入个人住址' }] }]"
+          />
 				</a-form-item>
 				<a-form-item
 					v-bind="formItemLayout1"
@@ -371,7 +361,6 @@
 						sm: { span: 13,offset: 1 },
 					},
 				},
-				options: [],
 				phone:'',
 				phoneQy:'',
 				password:'',
@@ -383,7 +372,6 @@
 			}
 		},
 		created() {
-			this.getRegionTree()
 			this.getQueryList()
 			this.getlistTree()
 		},
@@ -404,13 +392,6 @@
 					}
 				}
 				
-			},
-			//获取省市县
-			getRegionTree(){
-				var url = '/sysRegion/regionTree';
-				getAction(url).then((res) => {
-				  this.options = res.result[0].children;
-				})
 			},
 			//发送验证码
 			getSms(){
@@ -482,7 +463,7 @@
 						obj.userType = this.userType
 						if(this.userType==0){//个人
 							obj.username = values.username
-							obj.userRegion = values.userRegion[values.userRegion.length-1]
+							obj.userRegion = values.userRegion
 							obj.phone = values.phone
 							obj.code = values.code
 							obj.password = values.password
@@ -497,7 +478,7 @@
 							obj.businessNum = values.businessNum
 							obj.businessAccount = values.businessAccount
 							obj.username = values.usernameQy
-							obj.userRegion = values.userRegionQy[values.userRegionQy.length-1]
+							obj.userRegion = values.userRegionQy
 							obj.phone = values.phoneQy
 							obj.code = values.codeQy
 							obj.password = values.passwordQy
