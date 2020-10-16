@@ -45,7 +45,12 @@
                 :type="collapsed ? 'menu-fold' : 'menu-unfold'"
                 @click.native="toggle"></a-icon>
             </div>
-            <user-menu class="header-index-right" :theme="theme" :style="topMenuStyle.headerIndexRight"/>
+            <span class="action" v-if="userInfo==null">
+              <a class="logout_title" target="_blank" href="/user/login"  style="color:#fff;">
+                <a-icon type="login" style="color:#fff;"/>&nbsp;登录
+              </a>
+            </span>
+            <user-menu v-if="userInfo!=null" class="header-index-right" :theme="theme" :style="topMenuStyle.headerIndexRight"/>
           </div>
         </div>
       </div>
@@ -117,6 +122,7 @@
             'width': '10000px'
           },
         },
+        userInfo:null
       }
     },
     watch: {
@@ -145,6 +151,8 @@
       // let menuData = []
       // commit('SET_PERMISSIONLIST', menuData)
       // console.log(111)
+      const userInfo = Vue.ls.get(USER_INFO);
+      this.userInfo = userInfo?userInfo:null
     },
     methods: {
       clickMenu(e){

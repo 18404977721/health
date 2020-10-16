@@ -77,7 +77,7 @@
     </a-dropdown>
     <span class="action">
       <a class="logout_title" href="javascript:;" @click="handleLogout">
-        <a-icon type="logout"/>
+        <a-icon type="logout" style="color:#fff;"/>
         <span v-if="isDesktop()">&nbsp;退出登录</span>
       </a>
     </span>
@@ -168,8 +168,8 @@
           content: '真的要注销登录吗 ?',
           onOk() {
             return that.Logout({}).then(() => {
-                window.location.href="/";
-              //window.location.reload()
+              //window.location.href="/user/login";
+              window.location.reload()
             }).catch(err => {
               that.$message.error({
                 title: '错误',

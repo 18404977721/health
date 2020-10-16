@@ -151,6 +151,7 @@ const user = {
         commit('SET_TOKEN', '')
         commit('SET_PERMISSIONLIST', [])
         Vue.ls.remove(ACCESS_TOKEN)
+        Vue.ls.remove(USER_INFO)
         //console.log('logoutToken: '+ logoutToken)
         logout(logoutToken).then(() => {
           //var sevice = "http://"+window.location.host+"/";
