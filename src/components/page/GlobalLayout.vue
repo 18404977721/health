@@ -132,7 +132,6 @@
       //this.menus = this.permissionMenuList
       this.menus =  [
               {
-                component:"dashboard/Analysis",
                 id: "9502685863ab87f0ad1134142788a385",
                 meta :{internalOrExternal:false,keepAlive:false,title:"首页"},
                 internalOrExternal: false,
@@ -144,14 +143,57 @@
                 route:"1"
               },
               {
-                //component:"dashboard/Analysis",
                 id: "9502685863ab87f0ad1134142788a386",
-                meta :{internalOrExternal:false,keepAlive:false,title:"注册"},
+                meta :{internalOrExternal:false,keepAlive:false,title:"信息圈"},
                 internalOrExternal: false,
                 keepAlive:false,
                 title:"aaa",
-                name :"register",
-                path:"/user/register",
+                name :"HealthInfoCircleList",
+                path:"/dashboard/HealthInfoCircleList",
+                redirect:null,
+                route:"1"
+              },
+              {
+                id: "9502685863ab87f0ad1134142788a387",
+                meta :{internalOrExternal:false,keepAlive:false,title:"活动"},
+                internalOrExternal: false,
+                keepAlive:false,
+                title:"aaa",
+                name :"HealthActiveList",
+                path:"/dashboard/HealthActiveList",
+                redirect:null,
+                route:"1"
+              },
+              {
+                id: "9502685863ab87f0ad1134142788a388",
+                meta :{internalOrExternal:false,keepAlive:false,title:"公共资源"},
+                internalOrExternal: false,
+                keepAlive:false,
+                title:"aaa",
+                name :"HealthPubSourceList",
+                path:"/dashboard/HealthPubSourceList",
+                redirect:null,
+                route:"1"
+              },
+              {
+                id: "9502685863ab87f0ad1134142788a389",
+                meta :{internalOrExternal:false,keepAlive:false,title:"新闻资讯"},
+                internalOrExternal: false,
+                keepAlive:false,
+                title:"aaa",
+                name :"HealthNoticList",
+                path:"/dashboard/HealthNoticList",
+                redirect:null,
+                route:"1"
+              },
+              {
+                id: "9502685863ab87f0ad1134142788a310",
+                meta :{internalOrExternal:false,keepAlive:false,title:"关于我们"},
+                internalOrExternal: false,
+                keepAlive:false,
+                title:"aaa",
+                name :"us",
+                path:"/dashboard/us",
                 redirect:null,
                 route:"1"
               }

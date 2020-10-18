@@ -359,12 +359,12 @@ ul.r-list li {
 }
 
 .act-model-r-list.r-list1 {
-	height: 722px;
+	height: 626px;
 	margin-bottom: 10px;
 }
 
 .act-model-r-list.r-list2 {
-	height: 500px;
+	height: 536px;
 }
 
 dl.act-r-th {
@@ -442,7 +442,7 @@ ul.r-list li {
 }
 
 .act-list-tit {
-	width: 200px;
+	width: 141px;
 	height: 28px;
 	color: #222
 }
@@ -455,8 +455,9 @@ ul.r-list li {
 	background-color: #e40002
 }
 
-.r-list2 .r-list {
+.r-list2 .r-list li {
 	border-bottom: 1px dashed #eee;
+  padding: 0 10px 10px;
 }
 
 .act-list-q {
@@ -467,7 +468,7 @@ ul.r-list li {
 .act-list-q::before {
 	content: " ";
 	position: absolute;
-	top: 2px;
+	top: 0px;
 	left: 0px;
 	width: 17px;
 	height: 25px;
@@ -481,7 +482,7 @@ ul.r-list li {
 
 .act-list-a::before {
 	position: absolute;
-	top: 2px;
+	top: 0px;
 	left: 0px;
 	content: "A";
 	font-weight: bold;
@@ -581,6 +582,7 @@ ul.r-list li {
 
 .text-col {
 	width: 49%;
+  height:226px;
 }
 
 dl.text-tit-th {
@@ -651,9 +653,12 @@ dl.text-tit-th dt {
 }
 
 .text-list-tit {
-	width: 500px;
+	width: 410px;
 	height: 28px;
-	color: #222
+	color: #222;
+  overflow: hidden;
+  text-overflow:ellipsis; 
+  white-space: nowrap;
 }
 
 .text-list-tim {
