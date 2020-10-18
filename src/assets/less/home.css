@@ -236,6 +236,7 @@ ul.r-list li {
 	background-color: #ff8500;
 	color: #fff;
 	border-radius: 4px;
+  font-size:12px;
 }
 
 .news-list-txt2 {
@@ -243,6 +244,7 @@ ul.r-list li {
 	background-color: #e50100;
 	color: #fff;
 	border-radius: 4px;
+  font-size:12px;
 }
 
 .news-list-txt3 {
@@ -250,6 +252,7 @@ ul.r-list li {
 	background-color: #696d76;
 	color: #fff;
 	border-radius: 4px;
+  font-size:12px;
 }
 
 .news-list .top {

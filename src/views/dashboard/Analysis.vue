@@ -55,7 +55,7 @@
 		            </dl>
 		            <ul class="r-list">
 		              <li v-for="(item, index) in newList" :key="index">
-		                <div class="news-list-tit"><i class="port"></i> {{item.title}}</div>
+		                <div class="news-list-tit"><i class="port"></i> {{item.title}}<i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
 		                <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
 		              </li>
 		            </ul>
@@ -73,7 +73,7 @@
 		            </dl>
 		            <ul class="r-list">
                   <li v-for="(item, index) in hotList" :key="index">
-                    <div class="news-list-tit"><i class="port"></i> {{item.title}}</div>
+                    <div class="news-list-tit"><i class="port"></i> {{item.title}}<i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
                     <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
                   </li>
 		              <!-- <li>
@@ -103,7 +103,7 @@
 		            </dl>
 		            <ul class="r-list">
                   <li v-for="(item, index) in recommendList" :key="index">
-                    <div class="news-list-tit"><i class="port"></i> {{item.title}}</div>
+                    <div class="news-list-tit"><i class="port"></i> {{item.title}}<i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
                     <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
                   </li>
 		            </ul>
@@ -129,7 +129,7 @@
 		    </li>
 		  </ul>
 		  <div class="more-s">
-		    <router-link to='/dashboard/HealthActiveList'>查看更多话题<span style="color: #f67f00;font-weight: bold;"><a-icon type="right" /></span></router-link>
+		    <router-link to='/dashboard/HealthInfoCircleList'>查看更多话题<span style="color: #f67f00;font-weight: bold;"><a-icon type="right" /></span></router-link>
 		  </div>
 		</div>
 		<!-- banner -->
@@ -165,7 +165,7 @@
 		          <div class="act-col act-row-sta Fr">
 		            <!-- stu_img_01.jpg 01 进行中  02已结束-->
 		            <img v-if="gy.state=='进行中'" src="@assets/stu_img_01.jpg">
-		            <img else src="@assets/stu_img_02.jpg">
+		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
             <div class="act-row act-row02" v-if="gy.picList.length>1">
@@ -185,7 +185,7 @@
                     </div>
                     <div class="act-col act-row-sta Fr">
                       <img v-if="gy.state=='进行中'" src="@assets/stu_img_01.jpg">
-                      <img else src="@assets/stu_img_02.jpg">
+                      <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
                     </div>
                   </div>
                   <div class="act-row-imglist Clear">
@@ -219,7 +219,7 @@
 		          <div class="act-col act-row-sta Fr">
 		            <!-- stu_img_01.jpg 01 进行中  02已结束-->
 		            <img v-if="zh.state=='进行中'" src="@assets/stu_img_01.jpg">
-		            <img else src="@assets/stu_img_02.jpg">
+		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
 		        <div class="act-row act-row02" v-if="zh.picList.length>1">
@@ -239,7 +239,7 @@
 		                </div>
 		                <div class="act-col act-row-sta Fr">
 		                  <img v-if="zh.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                  <img else src="@assets/stu_img_02.jpg">
+		                  <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		                </div>
 		              </div>
 		              <div class="act-row-imglist Clear">
@@ -273,7 +273,7 @@
 		          <div class="act-col act-row-sta Fr">
 		            <!-- stu_img_01.jpg 01 进行中  02已结束-->
 		            <img v-if="gf.state=='进行中'" src="@assets/stu_img_01.jpg">
-		            <img else src="@assets/stu_img_02.jpg">
+		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
 		        <div class="act-row act-row02" v-if="gf.picList.length>1">
@@ -293,7 +293,7 @@
 		                </div>
 		                <div class="act-col act-row-sta Fr">
 		                  <img v-if="gf.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                  <img else src="@assets/stu_img_02.jpg">
+		                  <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		                </div>
 		              </div>
 		              <div class="act-row-imglist Clear">
@@ -327,7 +327,7 @@
 		          <div class="act-col act-row-sta Fr">
 		            <!-- stu_img_01.jpg 01 进行中  02已结束-->
 		            <img v-if="kc.state=='进行中'" src="@assets/stu_img_01.jpg">
-		            <img else src="@assets/stu_img_02.jpg">
+		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
 		        <div class="act-row act-row02" v-if="kc.picList.length>1">
@@ -347,7 +347,7 @@
 		                </div>
 		                <div class="act-col act-row-sta Fr">
 		                  <img v-if="kc.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                  <img else src="@assets/stu_img_02.jpg">
+		                  <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		                </div>
 		              </div>
 		              <div class="act-row-imglist Clear">
@@ -381,7 +381,7 @@
 		          <div class="act-col act-row-sta Fr">
 		            <!-- stu_img_01.jpg 01 进行中  02已结束-->
 		            <img v-if="ly.state=='进行中'" src="@assets/stu_img_01.jpg">
-		            <img else src="@assets/stu_img_02.jpg">
+		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
 		        <div class="act-row act-row02" v-if="ly.picList.length>1">
@@ -401,7 +401,7 @@
 		                </div>
 		                <div class="act-col act-row-sta Fr">
 		                  <img v-if="ly.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                  <img else src="@assets/stu_img_02.jpg">
+		                  <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		                </div>
 		              </div>
 		              <div class="act-row-imglist Clear">
@@ -846,35 +846,35 @@
         	let obj = {}
         	obj.pageNo = 1
         	obj.pageSize = 1
-        	obj.type = gy
+        	obj.activeType = gy
         	getAction('/health/healthActive/list',obj).then((res1) => {
         		this.gy = res1.result.records[0];
         	})
           let objzh = {}
           objzh.pageNo = 1
           objzh.pageSize = 1
-          objzh.type = zh
+          objzh.activeType = zh
           getAction('/health/healthActive/list',objzh).then((res1) => {
           	this.zh = res1.result.records[0];
           })
           let objgf = {}
           objgf.pageNo = 1
           objgf.pageSize = 1
-          objgf.type = gf
+          objgf.activeType = gf
           getAction('/health/healthActive/list',objgf).then((res1) => {
           	this.gf = res1.result.records[0];
           })
           let objkc = {}
           objkc.pageNo = 1
           objkc.pageSize = 1
-          objkc.type = kc
+          objkc.activeType = kc
           getAction('/health/healthActive/list',objkc).then((res1) => {
           	this.kc = res1.result.records[0];
           })
           let objly = {}
           objly.pageNo = 1
           objly.pageSize = 1
-          objly.type = ly
+          objly.activeType = ly
           getAction('/health/healthActive/list',objly).then((res1) => {
           	this.ly = res1.result.records[0];
           })

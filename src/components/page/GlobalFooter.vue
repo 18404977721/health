@@ -47,26 +47,17 @@
         </ul>
         <div class="link-txt Bold">友情链接</div>
         <ul class="footer-btm-con Clear">
-          <li>
+          <li v-if="list1!=[]">
             <span class="Bold">政府部门</span>
-            <a href="123#" target="_blank">长春市政府网站</a>
-            <a href="123#" target="_blank">长春市中小企业电商平台</a>
-            <a href="123#" target="_blank">长春市企业服务中心</a>
-            <a href="123#" target="_blank">长春市政府网站</a>
+            <a v-for="(item, index) in list1" :key="index" :href="item.url" target="_blank">{{item.name}}</a>
           </li>
-          <li>
+          <li v-if="list2!=[]">
             <span class="Bold">会员单位</span>
-            <a href="123#" target="_blank">东北制药集团股份有限公司</a>
-            <a href="123#" target="_blank">中国医药健康产业股份有限公司</a>
-            <a href="123#" target="_blank">中国北京同仁堂 ( 集团 ) 有限责任公司</a>
-            <a href="123#" target="_blank">中国科学器材有限公司</a>
+            <a v-for="(item, index) in list2" :key="index" :href="item.url" target="_blank">{{item.name}}</a>
           </li>
-          <li>
+          <li v-if="list3!=[]">
             <span class="Bold">国际机构</span>
-            <a href="123#" target="_blank">欧洲药品质量管理局EDQM</a>
-            <a href="123#" target="_blank">美国药监局FDA</a>
-            <a href="123#" target="_blank">全球基金</a>
-            <a href="123#" target="_blank">联合国人口基金会</a>
+            <a v-for="(item, index) in list3" :key="index" :href="item.url" target="_blank">{{item.name}}</a>
           </li>
         </ul>
       </div>
@@ -77,8 +68,39 @@
 <script>
 	import "@/assets/less/base.css"
 	import "@/assets/less/home.css"
+  import {
+  	getAction,
+  	postAction
+  } from '@/api/manage';
   export default {
-    name: "LayoutFooter"
+    name: "LayoutFooter",
+    data(){
+      return{
+        list1:[],
+        list2:[],
+        list3:[]
+      }
+    },
+    created() {
+      this.getList()
+    },
+    methods: {
+      getList() {
+      	var url = '/health/healthLinks/listInfo';
+      	getAction(url,{}).then((res) => {
+      		let list = res.result;
+          for(var i=0;i<list.length;i++){
+            if(list[i].typeValue=="政府部门"){
+              this.list1 = list[i].healthLinksList
+            }else if(list[i].typeValue=="会员单位"){
+              this.list2 = list[i].healthLinksList
+            }else if(list[i].typeValue=="国际机构"){
+              this.list3 = list[i].healthLinksList
+            }
+          }
+      	})
+      },
+    },
   }
 </script>
 
