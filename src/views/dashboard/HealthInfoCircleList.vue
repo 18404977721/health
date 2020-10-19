@@ -2,81 +2,82 @@
   <a-card :bordered="false" style="padding:40px 60px;">
 
     <!-- 查询区域 -->
-    <div class="table-page-search-wrapper">
-      <a-form layout="inline" @keyup.enter.native="searchQuery">
-        <a-row :gutter="24">
-
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="标题">
-              <a-input placeholder="请输入标题" v-model="queryParam.title"></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="发布时间">
-              <a-date-picker format='YYYY-MM-DD HH:mm:ss' v-model="queryParam.publishTime" />
-            </a-form-item>
-          </a-col>
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
-            </span>
-          </a-col>
-
-        </a-row>
-      </a-form>
+    <div style="padding:0 0 10px;box-sizing:border-box;display: flex;">
+      <div style="flex: 1;">
+        <label style="width: 90px;">标题：</label>
+        <a-input placeholder="请输入标题" v-model="titleContent" style="width:350px;margin-right:20px;"></a-input>
+        <a-button type="primary" @click="getList">搜索</a-button>
+      </div>
     </div>
-    <a-list item-layout="vertical" size="large" :pagination="ipagination" :data-source="dataSource">
-      <a-list-item slot="renderItem" key="item.title" slot-scope="item, index">
-        <div style="cursor:pointer;" @click="clickDetail(item.id)">
-          <a-row :gutter="8">
-          	<a-col :span="2">
-          		标题：
-          	</a-col>
-          	<a-col :span="22">
-          		{{ item.title }}
-          	</a-col>
-          </a-row>
-          <a-row :gutter="8">
-          	<a-col :span="2">
-          		发布时间：
-          	</a-col>
-          	<a-col :span="22">
-          		{{ item.publishTime }}
-          	</a-col>
-          </a-row>
-        </div>
-      </a-list-item>
-    </a-list>  
-
-    <!-- 表单区域 -->
-    <healthInfoCircle-modal ref="modalForm" @ok="modalFormOk"></healthInfoCircle-modal>
+    <div style="cursor:pointer;border-bottom:1px solid #CC0000;padding:10px 0;" @click="clickDetail(item.id)"  v-for="(item,index) in list">
+      <a-row :gutter="8">
+      	<a-col :span="2">
+      		标题：
+      	</a-col>
+      	<a-col :span="22">
+      		{{ item.title }}
+      	</a-col>
+      </a-row>
+      <a-row :gutter="8">
+      	<a-col :span="2">
+      		发布时间：
+      	</a-col>
+      	<a-col :span="22">
+      		{{ item.publishTime }}
+      	</a-col>
+      </a-row>
+    </div>
+    <div style="margin-top: 15px;text-align: right;">
+      <a-pagination simple @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />
+    </div>
+    
+    <health-modal ref="HealthModal"></health-modal>
   </a-card>
 </template>
 
 <script>
-  import HealthInfoCircleModal from './modules/HealthInfoCircleModal'
-  import {
-    JeecgListMixin
-  } from '@/mixins/JeecgListMixin'
+  import HealthModal from './modules/HealthModal'
+  import { getAction,postAction } from '@/api/manage';
 
   export default {
     name: "HealthInfoCircleList",
-    mixins: [JeecgListMixin],
     components: {
-      HealthInfoCircleModal
+      HealthModal
     },
     data() {
       return {
         description: '信息圈页面',
-        url: {
-          list: "/health/healthInfoCircle/list",
-        },
+        list:[],
+        currentNo:1,
+        total:1,
+        titleContent:'',
       }
+    },
+    created() {
+      this.getList()
     },
     methods: {
       clickDetail(id){
-        this.$refs.HealthInfoCircleModal.show(id)
+        this.$refs.HealthModal.show(id,'xxq')
+      },
+      getList(){
+        this.list = [];
+        let url = "/health/healthInfoCircle/list";
+        let params = {
+          pageNo:this.currentNo,
+          pageSize:10,
+          title:this.titleContent,
+        };
+        getAction(url,params).then((res)=>{
+          if(res.success){
+            this.list = res.result.records;
+            this.total = res.result.total;
+          }
+        })
+      },
+      pageChange(val){
+        this.currentNo = val;
+        this.getList()
       },
     }
   }

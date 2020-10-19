@@ -54,7 +54,7 @@
 		              <dt @click="getnewList()" style="cursor:pointer;"><span class="r_more">换一换</span></dt>
 		            </dl>
 		            <ul class="r-list">
-		              <li v-for="(item, index) in newList" :key="index">
+		              <li v-for="(item, index) in newList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
 		                <div class="news-list-tit"><i class="port"></i> {{item.title}}<i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
 		                <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
 		              </li>
@@ -72,7 +72,7 @@
 		              <dt @click="gethotList()" style="cursor:pointer;"><span class="r_more">换一换</span></dt>
 		            </dl>
 		            <ul class="r-list">
-                  <li v-for="(item, index) in hotList" :key="index">
+                  <li v-for="(item, index) in hotList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
                     <div class="news-list-tit"><i class="port"></i> {{item.title}}<i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
                     <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
                   </li>
@@ -102,7 +102,7 @@
                   <dt @click="getrecommendList()" style="cursor:pointer;"><span class="r_more">换一换</span></dt>
 		            </dl>
 		            <ul class="r-list">
-                  <li v-for="(item, index) in recommendList" :key="index">
+                  <li v-for="(item, index) in recommendList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
                     <div class="news-list-tit"><i class="port"></i> {{item.title}}<i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
                     <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
                   </li>
@@ -422,14 +422,14 @@
 		              <dl class="act-r-th">
 		                <dd class="th"><i class="tiao-icon"></i>公告栏</dd>
 		                <dt>
-		                  <a href="html/news/index.html" class="act-r-more">
+                      <router-link to='/dashboard/HealthNoticList' class="act-r-more">
 		                    <i class="layui-icon layui-icon-right" style="color: #e40002"></i>
 		                    查看
-		                  </a>
+		                  </router-link>
 		                </dt>
 		              </dl>
 		              <ul class="r-list">
-		                <li class="Clear" v-for="(item, index) in noticList" :key="index">
+		                <li class="Clear" v-for="(item, index) in noticList" :key="index" @click="clickDetail(item.id,'ggl')" style="cursor:pointer;">
 		                  <div class="act-list-tit Fl text-over"><i class="port red"></i> {{item.title}}</div>
 		                  <div class="act-list-tim Fr">{{item.publishTime}}</div>
 		                </li>
@@ -445,10 +445,10 @@
 		              <dl class="act-r-th">
 		                <dd class="th"><i class="tiao-icon"></i>问答区</dd>
 		                <dt>
-		                  <a href="html/news/index.html" class="act-r-more">
-		                    <i class="layui-icon layui-icon-right" style="color: #e40002"></i>
-		                    查看
-		                  </a>
+                      <router-link to='/dashboard/HealthQuestionList' class="act-r-more">
+                        <i class="layui-icon layui-icon-right" style="color: #e40002"></i>
+                        查看
+                      </router-link>
 		                </dt>
 		              </dl>
 		              <ul class="r-list">
@@ -521,7 +521,7 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">政策协调与服务</dd>
 		          <dt>
-		            <a href="html/news/index.html" class="text-tit-more">
+		            <a href="" class="text-tit-more">
 		              · · ·
 		            </a>
 		          </dt>
@@ -541,7 +541,7 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">国际交流与合作</dd>
 		          <dt>
-		            <a href="html/news/index.html" class="text-tit-more">
+		            <a href="" class="text-tit-more">
 		              · · ·
 		            </a>
 		          </dt>
@@ -568,7 +568,7 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">行业规范与协调</dd>
 		          <dt>
-		            <a href="html/news/index.html" class="text-tit-more">
+		            <a href="" class="text-tit-more">
 		              · · ·
 		            </a>
 		          </dt>
@@ -594,7 +594,7 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">行业分析与研究</dd>
 		          <dt>
-		            <a href="html/news/index.html" class="text-tit-more">
+		            <a href="" class="text-tit-more">
 		              · · ·
 		            </a>
 		          </dt>
@@ -615,19 +615,23 @@
 		    </div>
 		  </li>
 		</ul>
-
+    <health-modal ref="HealthModal"></health-modal>
 	</div>
 </template>
 
 <script>
 	import "@/assets/less/base.css"
 	import "@/assets/less/home.css"
+  import HealthModal from './modules/HealthModal'
 	import {
 		getAction,
 		postAction
 	} from '@/api/manage';
 	export default {
 		name: "dashboard-analysis",
+    components: {
+      HealthModal
+    },
 		data() {
 			return {
         rotationList:[],//轮播相关
@@ -666,6 +670,9 @@
       this.getactiveList()
 		},
 		methods: {
+      clickDetail(id,type){
+        this.$refs.HealthModal.show(id,type)
+      },
 			clickRegister(){
 				this.$router.push({path: '/user/WebRegister'})
 			},

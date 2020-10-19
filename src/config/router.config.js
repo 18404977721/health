@@ -75,6 +75,11 @@ export const constantRouterMap = [{
         name: 'us',
         component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/us')
       },
+      {
+        path: '/dashboard/HealthQuestionList',
+        name: 'HealthQuestionList',
+        component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthQuestionList')
+      },
     ]
   },
   {

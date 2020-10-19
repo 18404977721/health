@@ -70,7 +70,7 @@
 
   export default {
     name: 'GlobalHeader',
-    inject: ['reload'],
+    // inject: ['reload'],
     components: {
       UserMenu,
       SMenu,

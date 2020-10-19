@@ -211,7 +211,8 @@ ul.r-list li {
 
 .news-list-tit {
 	font-size: 16px;
-	color: #000
+	color: #000;
+  text-decoration: none !important
 }
 
 .port {
