@@ -32,21 +32,23 @@
       return {
         title: "详情",
         visible: false,
-        list: [],
+        list: '',
+        reply:'',
+        id:'',
       }
     },
     methods: {
-      show(id,type) {
+      show(id) {
         this.visible = true
         let formData = {}
         formData.id = id
         let url = '/health/healthQuestion/queryById'
         getAction(url, formData).then((res) => {
           if (res.success) {
-            console.log(res.result)
             this.list = res.result
           }
         })
+        this.id = id
       },
       close() {
         this.$emit('close');

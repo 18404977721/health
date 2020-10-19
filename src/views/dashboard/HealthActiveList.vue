@@ -6,6 +6,13 @@
       <div style="flex: 1;">
         <label style="width: 90px;">标题：</label>
         <a-input placeholder="请输入标题" v-model="titleContent" style="width:350px;margin-right:20px;"></a-input>
+        <label style="width: 90px;">类型：</label>
+        <a-select v-model='activeType' style="width:350px;margin-right:20px;">
+          <a-select-option value="">请选择</a-select-option>
+        	<template v-for="item in typeList">
+        		<a-select-option :value="item.id">{{item.typeValue}}</a-select-option>
+        	</template>
+        </a-select>
         <a-button type="primary" @click="getList">搜索</a-button>
       </div>
     </div>
@@ -51,12 +58,28 @@
         currentNo:1,
         total:1,
         titleContent:'',
+        activeType:'',
+        typeList:[],
       }
     },
     created() {
+      console.log(this.$route.params.activeType)
+      this.activeType = this.$route.params.activeType==undefined?'':this.$route.params.activeType=='kong'?'':this.$route.params.activeType
+      this.getTypeList()
       this.getList()
     },
     methods: {
+      getTypeList(){
+        let formData = {}
+        formData.typeCode = 'hdlx'
+        formData.pageNo = 1
+        formData.pageSize = 100
+        getAction('/health/healthTypeValue/list',formData).then((res)=>{
+          if(res.success){
+            this.typeList = res.result.records
+          }
+        })
+      },
       clickDetail(id){
         this.$refs.HealthModal.show(id,'hd')
       },
@@ -67,6 +90,7 @@
           pageNo:this.currentNo,
           pageSize:10,
           title:this.titleContent,
+          activeType:this.activeType
         };
         getAction(url,params).then((res)=>{
           if(res.success){

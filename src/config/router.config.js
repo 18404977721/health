@@ -56,12 +56,12 @@ export const constantRouterMap = [{
         component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthInfoCircleList')
       },
       {
-        path: '/dashboard/HealthActiveList',
+        path: '/dashboard/HealthActiveList/:activeType',
         name: 'HealthActiveList',
         component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthActiveList')
       },
       {
-        path: '/dashboard/HealthPubSourceList',
+        path: '/dashboard/HealthPubSourceList/:type',
         name: 'HealthPubSourceList',
         component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthPubSourceList')
       },

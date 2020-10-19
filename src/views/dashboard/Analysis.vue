@@ -143,11 +143,11 @@
 		  </div>
 		  <div class="act-model Clear">
 		    <ul class="act-model-l Fl">
-		      <li class="act-model-item Clear" v-if="gy.picList.length!=0">
-		        <a href="" class="img-box Fl">
+		      <li class="act-model-item Clear" v-if="gy.picList&&gy.picList.length!=0">
+		        <span class="img-box Fl" @click="clickhd(gyId)">
 		          <img src="@assets/act_01_img.jpg">
-		        </a>
-		        <div class="act-row act-row01 Clear" v-if="gy.picList.length==1">
+		        </span>
+		        <div class="act-row act-row01 Clear" v-if="gy.picList&&gy.picList.length==1" @click="clickDetail(gy.id,'hd')" style="cursor:pointer;">
 		          <div class="act-col act-row-img Fl">
 		            <img :src="gy.picList[0].filePath">
 		          </div>
@@ -168,40 +168,38 @@
 		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
-            <div class="act-row act-row02" v-if="gy.picList.length>1">
+            <div class="act-row act-row02" v-if="gy.picList&&gy.picList.length>1" @click="clickDetail(gy.id,'hd')" style="cursor:pointer;">
               <div class="Fl" style="width: 664px;">
-                <a href="#">
-                  <div class="Clear">
-                    <div class="act-col act-row-txts Fl">
-                      <div class="act-row-txt-tit">{{gy.title}}</div>
-                      <div>
-                        <b class="layui-icon layui-icon-time"></b>
-                        <a-icon type="clock-circle" />{{gy.startTime}} 至 {{gy.endTime}}
-                      </div>
-                      <div>
-                        <b class="layui-icon layui-icon-location"></b>
-                        <a-icon type="environment" />{{gy.activeAddr}}
-                      </div>
+                <div class="Clear">
+                  <div class="act-col act-row-txts Fl">
+                    <div class="act-row-txt-tit">{{gy.title}}</div>
+                    <div>
+                      <b class="layui-icon layui-icon-time"></b>
+                      <a-icon type="clock-circle" />{{gy.startTime}} 至 {{gy.endTime}}
                     </div>
-                    <div class="act-col act-row-sta Fr">
-                      <img v-if="gy.state=='进行中'" src="@assets/stu_img_01.jpg">
-                      <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+                    <div>
+                      <b class="layui-icon layui-icon-location"></b>
+                      <a-icon type="environment" />{{gy.activeAddr}}
                     </div>
                   </div>
-                  <div class="act-row-imglist Clear">
-                    <div v-if="index<3" class="act-col act-row-img Fl" v-for="(item, index) in gy.picList" :key="index" >
-                      <img :src="item.filePath">
-                    </div>
+                  <div class="act-col act-row-sta Fr">
+                    <img v-if="gy.state=='进行中'" src="@assets/stu_img_01.jpg">
+                    <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
                   </div>
-                </a>
+                </div>
+                <div class="act-row-imglist Clear">
+                  <div v-if="index<3" class="act-col act-row-img Fl" v-for="(item, index) in gy.picList" :key="index" >
+                    <img :src="item.filePath">
+                  </div>
+                </div>
               </div>
             </div>
 		      </li>
 		      <li class="act-model-item Clear">
-		        <a href="" class="img-box Fl">
+		        <span class="img-box Fl" @click="clickhd(zhId)">
 		          <img src="@assets/act_02_img.jpg">
-		        </a>
-		        <div class="act-row act-row01 Clear" v-if="zh.picList.length==1">
+		        </span>
+		        <div class="act-row act-row01 Clear" v-if="zh.picList&&zh.picList.length==1" @click="clickDetail(zh.id,'hd')" style="cursor:pointer;">
 		          <div class="act-col act-row-img Fl">
 		            <img :src="zh.picList[0].filePath">
 		          </div>
@@ -222,40 +220,38 @@
 		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
-		        <div class="act-row act-row02" v-if="zh.picList.length>1">
+		        <div class="act-row act-row02" v-if="zh.picList&&zh.picList.length>1" @click="clickDetail(zh.id,'hd')" style="cursor:pointer;">
 		          <div class="Fl" style="width: 664px;">
-		            <a href="#">
-		              <div class="Clear">
-		                <div class="act-col act-row-txts Fl">
-		                  <div class="act-row-txt-tit">{{zh.title}}</div>
-		                  <div>
-		                    <b class="layui-icon layui-icon-time"></b>
-		                    <a-icon type="clock-circle" />{{zh.startTime}} 至 {{zh.endTime}}
-		                  </div>
-		                  <div>
-		                    <b class="layui-icon layui-icon-location"></b>
-		                    <a-icon type="environment" />{{zh.activeAddr}}
-		                  </div>
+		            <div class="Clear">
+		              <div class="act-col act-row-txts Fl">
+		                <div class="act-row-txt-tit">{{zh.title}}</div>
+		                <div>
+		                  <b class="layui-icon layui-icon-time"></b>
+		                  <a-icon type="clock-circle" />{{zh.startTime}} 至 {{zh.endTime}}
 		                </div>
-		                <div class="act-col act-row-sta Fr">
-		                  <img v-if="zh.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                  <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		                <div>
+		                  <b class="layui-icon layui-icon-location"></b>
+		                  <a-icon type="environment" />{{zh.activeAddr}}
 		                </div>
 		              </div>
-		              <div class="act-row-imglist Clear">
-		                <div v-if="index<3" class="act-col act-row-img Fl" v-for="(item, index) in zh.picList" :key="index" >
-		                  <img :src="item.filePath">
-		                </div>
+		              <div class="act-col act-row-sta Fr">
+		                <img v-if="zh.state=='进行中'" src="@assets/stu_img_01.jpg">
+		                <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		              </div>
-		            </a>
+		            </div>
+		            <div class="act-row-imglist Clear">
+		              <div v-if="index<3" class="act-col act-row-img Fl" v-for="(item, index) in zh.picList" :key="index" >
+		                <img :src="item.filePath">
+		              </div>
+		            </div>
 		          </div>
 		        </div>
 		      </li>
 		      <li class="act-model-item Clear">
-		        <a href="" class="img-box Fl">
+		        <span class="img-box Fl" @click="clickhd(gfId)">
 		          <img src="@assets/act_03_img.jpg">
-		        </a>
-		        <div class="act-row act-row01 Clear" v-if="gf.picList.length==1">
+		        </span>
+		        <div class="act-row act-row01 Clear" v-if="gf.picList&&gf.picList.length==1" @click="clickDetail(gf.id,'hd')" style="cursor:pointer;">
 		          <div class="act-col act-row-img Fl">
 		            <img :src="gf.picList[0].filePath">
 		          </div>
@@ -276,40 +272,38 @@
 		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
-		        <div class="act-row act-row02" v-if="gf.picList.length>1">
+		        <div class="act-row act-row02" v-if="gf.picList&&gf.picList.length>1" @click="clickDetail(gf.id,'hd')" style="cursor:pointer;">
 		          <div class="Fl" style="width: 664px;">
-		            <a href="#">
-		              <div class="Clear">
-		                <div class="act-col act-row-txts Fl">
-		                  <div class="act-row-txt-tit">{{gf.title}}</div>
-		                  <div>
-		                    <b class="layui-icon layui-icon-time"></b>
-		                    <a-icon type="clock-circle" />{{gf.startTime}} 至 {{gf.endTime}}
-		                  </div>
-		                  <div>
-		                    <b class="layui-icon layui-icon-location"></b>
-		                    <a-icon type="environment" />{{gf.activeAddr}}
-		                  </div>
+		            <div class="Clear">
+		              <div class="act-col act-row-txts Fl">
+		                <div class="act-row-txt-tit">{{gf.title}}</div>
+		                <div>
+		                  <b class="layui-icon layui-icon-time"></b>
+		                  <a-icon type="clock-circle" />{{gf.startTime}} 至 {{gf.endTime}}
 		                </div>
-		                <div class="act-col act-row-sta Fr">
-		                  <img v-if="gf.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                  <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		                <div>
+		                  <b class="layui-icon layui-icon-location"></b>
+		                  <a-icon type="environment" />{{gf.activeAddr}}
 		                </div>
 		              </div>
-		              <div class="act-row-imglist Clear">
-		                <div v-if="index<3" class="act-col act-row-img Fl" v-for="(item, index) in gf.picList" :key="index" >
-		                  <img :src="item.filePath">
-		                </div>
+		              <div class="act-col act-row-sta Fr">
+		                <img v-if="gf.state=='进行中'" src="@assets/stu_img_01.jpg">
+		                <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		              </div>
-		            </a>
+		            </div>
+		            <div class="act-row-imglist Clear">
+		              <div v-if="index<3" class="act-col act-row-img Fl" v-for="(item, index) in gf.picList" :key="index" >
+		                <img :src="item.filePath">
+		              </div>
+		            </div>
 		          </div>
 		        </div>
 		      </li>
 		      <li class="act-model-item Clear">
-		        <a href="" class="img-box Fl">
+		        <span class="img-box Fl" @click="clickhd(kcId)">
 		          <img src="@assets/act_04_img.jpg">
-		        </a>
-		        <div class="act-row act-row01 Clear" v-if="kc.picList.length==1">
+		        </span>
+		        <div class="act-row act-row01 Clear" v-if="kc.picList&&kc.picList.length==1" @click="clickDetail(kc.id,'hd')" style="cursor:pointer;">
 		          <div class="act-col act-row-img Fl">
 		            <img :src="kc.picList[0].filePath">
 		          </div>
@@ -330,40 +324,38 @@
 		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
-		        <div class="act-row act-row02" v-if="kc.picList.length>1">
+		        <div class="act-row act-row02" v-if="kc.picList&&kc.picList.length>1" @click="clickDetail(kc.id,'hd')" style="cursor:pointer;">
 		          <div class="Fl" style="width: 664px;">
-		            <a href="#">
-		              <div class="Clear">
-		                <div class="act-col act-row-txts Fl">
-		                  <div class="act-row-txt-tit">{{kc.title}}</div>
-		                  <div>
-		                    <b class="layui-icon layui-icon-time"></b>
-		                    <a-icon type="clock-circle" />{{kc.startTime}} 至 {{kc.endTime}}
-		                  </div>
-		                  <div>
-		                    <b class="layui-icon layui-icon-location"></b>
-		                    <a-icon type="environment" />{{kc.activeAddr}}
-		                  </div>
+		            <div class="Clear">
+		              <div class="act-col act-row-txts Fl">
+		                <div class="act-row-txt-tit">{{kc.title}}</div>
+		                <div>
+		                  <b class="layui-icon layui-icon-time"></b>
+		                  <a-icon type="clock-circle" />{{kc.startTime}} 至 {{kc.endTime}}
 		                </div>
-		                <div class="act-col act-row-sta Fr">
-		                  <img v-if="kc.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                  <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		                <div>
+		                  <b class="layui-icon layui-icon-location"></b>
+		                  <a-icon type="environment" />{{kc.activeAddr}}
 		                </div>
 		              </div>
-		              <div class="act-row-imglist Clear">
-		                <div v-if="index<3" class="act-col act-row-img Fl" v-for="(item, index) in kc.picList" :key="index" >
-		                  <img :src="item.filePath">
-		                </div>
+		              <div class="act-col act-row-sta Fr">
+		                <img v-if="kc.state=='进行中'" src="@assets/stu_img_01.jpg">
+		                <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		              </div>
-		            </a>
+		            </div>
+		            <div class="act-row-imglist Clear">
+		              <div v-if="index<3" class="act-col act-row-img Fl" v-for="(item, index) in kc.picList" :key="index" >
+		                <img :src="item.filePath">
+		              </div>
+		            </div>
 		          </div>
 		        </div>
 		      </li>
 		      <li class="act-model-item Clear">
-		        <a href="" class="img-box Fl">
+		        <span class="img-box Fl" @click="clickhd(lyId)">
 		          <img src="@assets/act_05_img.jpg">
-		        </a>
-		        <div class="act-row act-row01 Clear" v-if="ly.picList.length==1">
+		        </span>
+		        <div class="act-row act-row01 Clear" v-if="ly.picList&&ly.picList.length==1" @click="clickDetail(ly.id,'hd')" style="cursor:pointer;">
 		          <div class="act-col act-row-img Fl">
 		            <img :src="ly.picList[0].filePath">
 		          </div>
@@ -384,32 +376,30 @@
 		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
-		        <div class="act-row act-row02" v-if="ly.picList.length>1">
+		        <div class="act-row act-row02" v-if="ly.picList&&ly.picList.length>1" @click="clickDetail(ly.id,'hd')" style="cursor:pointer;">
 		          <div class="Fl" style="width: 664px;">
-		            <a href="#">
-		              <div class="Clear">
-		                <div class="act-col act-row-txts Fl">
-		                  <div class="act-row-txt-tit">{{ly.title}}</div>
-		                  <div>
-		                    <b class="layui-icon layui-icon-time"></b>
-		                    <a-icon type="clock-circle" />{{ly.startTime}} 至 {{ly.endTime}}
-		                  </div>
-		                  <div>
-		                    <b class="layui-icon layui-icon-location"></b>
-		                    <a-icon type="environment" />{{ly.activeAddr}}
-		                  </div>
+		            <div class="Clear">
+		              <div class="act-col act-row-txts Fl">
+		                <div class="act-row-txt-tit">{{ly.title}}</div>
+		                <div>
+		                  <b class="layui-icon layui-icon-time"></b>
+		                  <a-icon type="clock-circle" />{{ly.startTime}} 至 {{ly.endTime}}
 		                </div>
-		                <div class="act-col act-row-sta Fr">
-		                  <img v-if="ly.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                  <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		                <div>
+		                  <b class="layui-icon layui-icon-location"></b>
+		                  <a-icon type="environment" />{{ly.activeAddr}}
 		                </div>
 		              </div>
-		              <div class="act-row-imglist Clear">
-		                <div v-if="index<3" class="act-col act-row-img Fl" v-for="(item, index) in ly.picList" :key="index" >
-		                  <img :src="item.filePath">
-		                </div>
+		              <div class="act-col act-row-sta Fr">
+		                <img v-if="ly.state=='进行中'" src="@assets/stu_img_01.jpg">
+		                <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
 		              </div>
-		            </a>
+		            </div>
+		            <div class="act-row-imglist Clear">
+		              <div v-if="index<3" class="act-col act-row-img Fl" v-for="(item, index) in ly.picList" :key="index" >
+		                <img :src="item.filePath">
+		              </div>
+		            </div>
 		          </div>
 		        </div>
 		      </li>
@@ -452,7 +442,7 @@
 		                </dt>
 		              </dl>
 		              <ul class="r-list">
-		                <li v-for="(item, index) in questionList" :key="index">
+		                <li v-for="(item, index) in questionList" :key="index" @click="clickQ(item.id)" style="cursor:pointer">
 		                  <div class="act-list-q">{{item.question}}</div>
 		                  <div class="act-list-a" v-if="item.reply">{{item.reply}}</div>
 		                </li>
@@ -521,13 +511,13 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">政策协调与服务</dd>
 		          <dt>
-		            <a href="" class="text-tit-more">
+		            <span @click="clickggzy(zcId)" class="text-tit-more">
 		              · · ·
-		            </a>
+		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-		          <li v-for="(item, index) in zc" :key="index">
+		          <li v-for="(item, index) in zc" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
 		            <div class="text-list-tit Fl text-over">{{item.title}}</div>
 		            <div class="text-list-tim Fr">{{item.publishTime}}</div>
 		          </li>
@@ -541,23 +531,16 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">国际交流与合作</dd>
 		          <dt>
-		            <a href="" class="text-tit-more">
+		            <span @click="clickggzy(gjId)" class="text-tit-more">
 		              · · ·
-		            </a>
+		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-              <li v-for="(item, index) in gj" :key="index">
+              <li v-for="(item, index) in gj" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
                 <div class="text-list-tit Fl text-over">{{item.title}}</div>
                 <div class="text-list-tim Fr">{{item.publishTime}}</div>
               </li>
-		          
-		          <!-- <li>
-		            <a href="#123" target="_blank" class="Clear">
-		              <div class="text-list-tit Fl text-over">吉商阿萨德阿萨德阿萨德发峰会</div>
-		              <div class="text-list-tim Fr">2017-02-08</div>
-		            </a>
-		          </li> -->
 		        </ul>
 		      </div>
 		    </div>
@@ -568,22 +551,16 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">行业规范与协调</dd>
 		          <dt>
-		            <a href="" class="text-tit-more">
+		            <span @click="clickggzy(hygfId)" class="text-tit-more">
 		              · · ·
-		            </a>
+		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-              <li v-for="(item, index) in hygf" :key="index">
+              <li v-for="(item, index) in hygf" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
                 <div class="text-list-tit Fl text-over">{{item.title}}</div>
                 <div class="text-list-tim Fr">{{item.publishTime}}</div>
               </li>
-		          <!-- <li>
-		            <a href="#123" target="_blank" class="Clear">
-		              <div class="text-list-tit Fl text-over">吉商阿萨德阿萨德阿萨德发峰会</div>
-		              <div class="text-list-tim Fr">2017-02-08</div>
-		            </a>
-		          </li> -->
 		        </ul>
 		      </div>
 		    </div>
@@ -594,28 +571,23 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">行业分析与研究</dd>
 		          <dt>
-		            <a href="" class="text-tit-more">
+		            <span @click="clickggzy(hyfxId)" class="text-tit-more">
 		              · · ·
-		            </a>
+		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-              <li v-for="(item, index) in hyfx" :key="index">
+              <li v-for="(item, index) in hyfx" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
                 <div class="text-list-tit Fl text-over">{{item.title}}</div>
                 <div class="text-list-tim Fr">{{item.publishTime}}</div>
               </li>
-		          <!-- <li>
-		            <a href="#123" target="_blank" class="Clear">
-		              <div class="text-list-tit Fl text-over">吉商阿萨德阿萨德阿萨德发峰会</div>
-		              <div class="text-list-tim Fr">2017-02-08</div>
-		            </a>
-		          </li> -->
 		        </ul>
 		      </div>
 		    </div>
 		  </li>
 		</ul>
     <health-modal ref="HealthModal"></health-modal>
+    <health-question-modal ref="HealthQuestionModal"></health-question-modal>
 	</div>
 </template>
 
@@ -623,6 +595,7 @@
 	import "@/assets/less/base.css"
 	import "@/assets/less/home.css"
   import HealthModal from './modules/HealthModal'
+  import HealthQuestionModal from './modules/HealthQuestionModal'
 	import {
 		getAction,
 		postAction
@@ -630,7 +603,8 @@
 	export default {
 		name: "dashboard-analysis",
     components: {
-      HealthModal
+      HealthModal,
+      HealthQuestionModal
     },
 		data() {
 			return {
@@ -650,12 +624,21 @@
         gj:[],
         hygf:[],
         hyfx:[],
+        zcId:'',
+        gjId:'',
+        hygfId:'',
+        hyfxId:'',
         //活动
         gy:[],
         zh:[],
         gf:[],
         kc:[],
         ly:[],
+        gyId:'',
+        zhId:'',
+        gfId:'',
+        kcId:'',
+        lyId:'',
 			}
 		},
 		created() {
@@ -762,6 +745,9 @@
       		this.questionList = res.result.records;
       	})
       },
+      clickQ(id){
+        this.$refs.HealthQuestionModal.show(id)
+      },
       //公共资源
       getpubSourceList() {
         let formData = {}
@@ -777,15 +763,19 @@
           for(var i=0;i<arr.length;i++){
             if(arr[i].typeValue=='政策协调与服务'){
               zc = arr[i].id
+              this.zcId = zc
             }
             if(arr[i].typeValue=='国际交流与合作'){
               gj = arr[i].id
+              this.gjId = gj
             }
             if(arr[i].typeValue=='行业规范与协调'){
               hygf = arr[i].id
+              this.hygfId = hygf
             }
             if(arr[i].typeValue=='行业分析与研究'){
               hyfx = arr[i].id
+              this.hyfxId = hyfx
             }
           }
           
@@ -819,6 +809,9 @@
           })
         })
       },
+      clickggzy(type){
+        this.$router.push({path: '/dashboard/HealthPubSourceList/'+type})
+      },
       //活动
       getactiveList() {
         let formData = {}
@@ -835,18 +828,23 @@
           for(var i=0;i<arr.length;i++){
             if(arr[i].typeValue=='公益'){
               gy = arr[i].id
+              this.gyId = gy
             }
             if(arr[i].typeValue=='展会'){
               zh = arr[i].id
+              this.zhId = zh
             }
             if(arr[i].typeValue=='高峰'){
               gf = arr[i].id
+              this.gfId = gf
             }
             if(arr[i].typeValue=='考察'){
               kc = arr[i].id
+              this.kcId = kc
             }
             if(arr[i].typeValue=='路演'){
               ly = arr[i].id
+              this.lyId = ly
             }
           }
           
@@ -886,6 +884,9 @@
           	this.ly = res1.result.records[0];
           })
         })
+      },
+      clickhd(activeType){
+        this.$router.push({path: '/dashboard/HealthActiveList/'+activeType})
       },
     },
 	}

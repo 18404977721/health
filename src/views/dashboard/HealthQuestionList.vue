@@ -7,42 +7,51 @@
         <label style="width: 90px;">问题：</label>
         <a-input placeholder="请输入问题" v-model="question" style="width:350px;margin-right:20px;"></a-input>
         <a-button type="primary" @click="getList">搜索</a-button>
+        <a-button type="primary" @click="clickQuestion('')" style="margin-left:20px;">新建</a-button>
       </div>
     </div>
-    <div style="cursor:pointer;border-bottom:1px solid #CC0000;padding:10px 0;" @click="clickDetail(item.id)"  v-for="(item,index) in list">
-      <a-row :gutter="8">
-      	<a-col :span="2">
-      		问题：
-      	</a-col>
-      	<a-col :span="22">
-      		{{ item.question }}
-      	</a-col>
-      </a-row>
-      <a-row :gutter="8">
-      	<a-col :span="2">
-      		时间：
-      	</a-col>
-      	<a-col :span="22">
-      		{{ item.createTime }}
-      	</a-col>
-      </a-row>
+    <div style="display:flex;cursor:pointer;border-bottom:1px solid #CC0000;padding:10px 0;"  v-for="(item,index) in list">
+      <div style="flex:1;" @click="clickDetail(item.id)">
+        <a-row :gutter="8">
+        	<a-col :span="2">
+        		问题：
+        	</a-col>
+        	<a-col :span="22">
+        		{{ item.question }}
+        	</a-col>
+        </a-row>
+        <a-row :gutter="8" v-if="item.reply">
+        	<a-col :span="2">
+        		回答：
+        	</a-col>
+        	<a-col :span="22">
+        		{{ item.reply }}
+        	</a-col>
+        </a-row>
+      </div>
+      <a-button v-if="adminFlag" style="width:100px;" type="primary" @click="clickQuestion(item.id)">回答</a-button>
     </div>
     <div style="margin-top: 15px;text-align: right;">
       <a-pagination simple @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />
     </div>
     
     <health-question-modal ref="HealthQuestionModal"></health-question-modal>
+    <health-question-answer-modal ref="HealthQuestionAnswerModal" @ok="currentPageReload"></health-question-answer-modal>
   </a-card>
 </template>
 
 <script>
   import HealthQuestionModal from './modules/HealthQuestionModal'
+  import HealthQuestionAnswerModal from './modules/HealthQuestionAnswerModal'
   import { getAction,postAction } from '@/api/manage';
+  import Vue from "vue"
+  import { USER_INFO} from "@/store/mutation-types"
 
   export default {
     name: "HealthInfoCircleList",
     components: {
-      HealthQuestionModal
+      HealthQuestionModal,
+      HealthQuestionAnswerModal
     },
     data() {
       return {
@@ -51,14 +60,37 @@
         currentNo:1,
         total:1,
         question:'',
+        adminFlag:false,
       }
     },
     created() {
       this.getList()
+      
+      const userInfo = Vue.ls.get(USER_INFO);
+      if(userInfo.username=='admin'){
+        this.adminFlag = true
+      }else{
+        this.adminFlag = false
+      }
     },
     methods: {
+      currentPageReload() {
+        this.getList()
+      },
       clickDetail(id){
         this.$refs.HealthQuestionModal.show(id)
+      },
+      clickQuestion(id){
+        let that = this
+        const userInfo = Vue.ls.get(USER_INFO);
+        if(!userInfo){
+          this.$message.warning('请登录后再进行回答');
+          setTimeout(function(){
+            that.$router.push({path: '/user/login'})
+          },1000)
+          return
+        }
+        this.$refs.HealthQuestionAnswerModal.edit(id)
       },
       getList(){
         this.list = [];

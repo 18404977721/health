@@ -11,37 +11,37 @@
           <li class="footer-top-item Fl">
             <ul>
               <li class="footer-top-lif">公共资源</li>
-              <li><a href="#foo">需求库</a></li>
-              <li><a href="#foo">供给库</a></li>
-              <li><a href="#foo">人脉</a></li>
-              <li><a href="#foo">行业资讯</a></li>
-              <li><a href="#foo">行业动态</a></li>
+              <li>需求库</li>
+              <li>供给库</li>
+              <li>人脉</li>
+              <li>行业资讯</li>
+              <li>行业动态</li>
             </ul>
           </li>
           <li class="footer-top-item Fl">
             <ul>
-              <li class="footer-top-lif">活动</li>
-              <li><a href="#foo">公益</a></li>
-              <li><a href="#foo">展会</a></li>
-              <li><a href="#foo">高峰</a></li>
-              <li><a href="#foo">考察</a></li>
-              <li><a href="#foo">路演</a></li>
+              <li class="footer-top-lif"@click="clickhd('kong')">活动</li>
+              <li @click="clickhd(gyId)">公益</li>
+              <li @click="clickhd(zhId)">展会</li>
+              <li @click="clickhd(gfId)">高峰</li>
+              <li @click="clickhd(kcId)">考察</li>
+              <li @click="clickhd(lyId)">路演</li>
             </ul>
           </li>
           <li class="footer-top-item Fl">
             <ul>
-              <li class="footer-top-lif">会员中心</li>
-              <li><a href="#foo">会员注册</a></li>
-              <li><a href="#foo">会员须知</a></li>
-              <li><a href="#foo">会员服务</a></li>
+              <li class="footer-top-lif"><router-link to='/user/register'>会员中心</router-link></li>
+              <li><router-link to='/user/register'>会员注册</router-link></li>
+              <li><router-link to='/user/register'>会员须知</router-link></li>
+              <li><router-link to='/user/register'>会员服务</router-link></li>
             </ul>
           </li>
           <li class="footer-top-item Fl" style="width: 200px;">
             <ul>
-              <li class="footer-top-lif">关于我们</li>
-              <li><a href="#foo">大健康产业联盟介绍</a></li>
-              <li><a href="#foo">联系我们</a></li>
-              <li><a href="#foo">意见反馈</a></li>
+              <li class="footer-top-lif"><router-link to='/dashboard/us'>关于我们</router-link></li>
+              <li><router-link to='/dashboard/us'>大健康产业联盟介绍</router-link></li>
+              <li><router-link to='/dashboard/us'>联系我们</router-link></li>
+              <li><router-link to='/dashboard/us'>意见反馈</router-link></li>
             </ul>
           </li>
         </ul>
@@ -62,10 +62,12 @@
         </ul>
       </div>
     </div>
+    <health-modal ref="HealthModal"></health-modal>
   </div>
 </template>
 
 <script>
+  import HealthModal from '@views/dashboard/modules/HealthModal'
 	import "@/assets/less/base.css"
 	import "@/assets/less/home.css"
   import {
@@ -74,17 +76,65 @@
   } from '@/api/manage';
   export default {
     name: "LayoutFooter",
+    components: {
+      HealthModal,
+    },
     data(){
       return{
         list1:[],
         list2:[],
-        list3:[]
+        list3:[],
+        gyId:'',
+        zhId:'',
+        gfId:'',
+        kcId:'',
+        lyId:'',
       }
     },
     created() {
       this.getList()
+      this.get()
     },
     methods: {
+      get(){
+        let formData = {}
+        formData.typeCode = 'hdlx'
+        formData.pageNo = 1
+        formData.pageSize = 100
+        getAction('/health/healthTypeValue/list',formData).then((res) => {
+          let arr = res.result.records
+          let gy = ''
+          let zh = ''
+          let gf = ''
+          let kc = ''
+          let ly = ''
+          for(var i=0;i<arr.length;i++){
+            if(arr[i].typeValue=='公益'){
+              gy = arr[i].id
+              this.gyId = gy
+            }
+            if(arr[i].typeValue=='展会'){
+              zh = arr[i].id
+              this.zhId = zh
+            }
+            if(arr[i].typeValue=='高峰'){
+              gf = arr[i].id
+              this.gfId = gf
+            }
+            if(arr[i].typeValue=='考察'){
+              kc = arr[i].id
+              this.kcId = kc
+            }
+            if(arr[i].typeValue=='路演'){
+              ly = arr[i].id
+              this.lyId = ly
+            }
+          }
+        })
+      },
+      clickhd(activeType){
+        this.$router.push({path: '/dashboard/HealthActiveList/'+activeType})
+      },
       getList() {
       	var url = '/health/healthLinks/listInfo';
       	getAction(url,{}).then((res) => {

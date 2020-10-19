@@ -154,24 +154,26 @@
                 route:"1"
               },
               {
+                component:"dashboard/HealthActiveList",
                 id: "9502685863ab87f0ad1134142788a387",
                 meta :{internalOrExternal:false,keepAlive:false,title:"活动"},
                 internalOrExternal: false,
                 keepAlive:false,
                 title:"aaa",
                 name :"HealthActiveList",
-                path:"/dashboard/HealthActiveList",
+                path:"/dashboard/HealthActiveList/:activeType",
                 redirect:null,
                 route:"1"
               },
               {
+                component:"dashboard/HealthPubSourceList",
                 id: "9502685863ab87f0ad1134142788a388",
                 meta :{internalOrExternal:false,keepAlive:false,title:"公共资源"},
                 internalOrExternal: false,
                 keepAlive:false,
                 title:"aaa",
                 name :"HealthPubSourceList",
-                path:"/dashboard/HealthPubSourceList",
+                path:"/dashboard/HealthPubSourceList/:type",
                 redirect:null,
                 route:"1"
               },

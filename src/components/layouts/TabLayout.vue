@@ -167,7 +167,7 @@
         if (this.$route.path === indexKey) {
           document.title = projectTitle
         } else {
-          document.title = title + ' · ' + projectTitle
+          //document.title = title + ' · ' + projectTitle
         }
       },
       // update-end-author:sunjianlei date:20200120 for: 动态更改页面标题

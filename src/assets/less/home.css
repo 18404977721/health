@@ -620,6 +620,7 @@ dl.text-tit-th dt {
 	position: relative;
 	top: 6px;
 	font-weight: bold;
+  cursor:pointer;
 }
 
 .text-tit-more:hover {
@@ -663,6 +664,7 @@ dl.text-tit-th dt {
   overflow: hidden;
   text-overflow:ellipsis; 
   white-space: nowrap;
+  text-decoration: none !important;
 }
 
 .text-list-tim {
@@ -704,6 +706,14 @@ dl.text-tit-th dt {
 	text-indent: 14px;
 	color: #070505;
 	padding: 3px 0;
+  cursor:pointer;
+}
+
+.footer-top-con .footer-top-item li a{
+	text-indent: 14px;
+	color: #070505;
+  cursor:pointer;
+  text-decoration: none !important;
 }
 
 .footer-top-lif {
@@ -727,5 +737,9 @@ dl.text-tit-th dt {
 }
 
 .act-row:hover .act-row-txt-tit {
-	text-decoration: underline;
+	/* text-decoration: underline; */
+}
+
+.img-box{
+  cursor:pointer;
 }
