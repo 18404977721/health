@@ -56,16 +56,6 @@ export const constantRouterMap = [{
         component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthInfoCircleList')
       },
       {
-        path: '/dashboard/HealthActiveList/:activeType',
-        name: 'HealthActiveList',
-        component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthActiveList')
-      },
-      {
-        path: '/dashboard/HealthPubSourceList/:type',
-        name: 'HealthPubSourceList',
-        component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthPubSourceList')
-      },
-      {
         path: '/dashboard/HealthNoticList',
         name: 'HealthNoticList',
         component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthNoticList')
@@ -79,6 +69,23 @@ export const constantRouterMap = [{
         path: '/dashboard/HealthQuestionList',
         name: 'HealthQuestionList',
         component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthQuestionList')
+      },
+    ]
+  },
+  {
+    path: '/dashboard',
+    component: TabLayout,
+    hidden: true,
+    children: [
+      {
+        path: '/dashboard/HealthActiveList/:activeType',
+        name: 'HealthActiveList',
+        component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthActiveList')
+      },
+      {
+        path: '/dashboard/HealthPubSourceList/:type',
+        name: 'HealthPubSourceList',
+        component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthPubSourceList')
       },
     ]
   },

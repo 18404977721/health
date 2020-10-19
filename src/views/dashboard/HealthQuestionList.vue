@@ -30,6 +30,10 @@
         </a-row>
       </div>
       <a-button v-if="adminFlag" style="width:100px;" type="primary" @click="clickQuestion(item.id)">回答</a-button>
+      <!-- <a-button v-if="adminFlag" style="width:100px;margin-left:20px;" type="primary" @click="clickDel(item.id)">删除</a-button> -->
+      <a-popconfirm title="确定删除吗?"  @confirm="clickDel(item.id)">
+        <a-button v-if="adminFlag" style="width:100px;margin-left:20px;" type="primary">删除</a-button>
+      </a-popconfirm>
     </div>
     <div style="margin-top: 15px;text-align: right;">
       <a-pagination simple @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />
@@ -43,7 +47,7 @@
 <script>
   import HealthQuestionModal from './modules/HealthQuestionModal'
   import HealthQuestionAnswerModal from './modules/HealthQuestionAnswerModal'
-  import { getAction,postAction } from '@/api/manage';
+  import { getAction,postAction,deleteAction } from '@/api/manage';
   import Vue from "vue"
   import { USER_INFO} from "@/store/mutation-types"
 
@@ -91,6 +95,26 @@
           return
         }
         this.$refs.HealthQuestionAnswerModal.edit(id)
+      },
+      clickDel(id){
+        let that = this
+        const userInfo = Vue.ls.get(USER_INFO);
+        if(!userInfo){
+          this.$message.warning('请登录后再进行删除');
+          setTimeout(function(){
+            that.$router.push({path: '/user/login'})
+          },1000)
+          return
+        }
+        let url = "/health/healthQuestion/delete";
+        let params = {
+          id:id,
+        };
+        deleteAction(url,params).then((res)=>{
+          if(res.success){
+            that.getList()
+          }
+        })
       },
       getList(){
         this.list = [];

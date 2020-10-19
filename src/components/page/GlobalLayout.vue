@@ -161,9 +161,9 @@
                 keepAlive:false,
                 title:"aaa",
                 name :"HealthActiveList",
-                path:"/dashboard/HealthActiveList/:activeType",
+                path:"/dashboard/HealthActiveList/kong",
                 redirect:null,
-                route:"1"
+                route:"0"
               },
               {
                 component:"dashboard/HealthPubSourceList",
@@ -173,21 +173,21 @@
                 keepAlive:false,
                 title:"aaa",
                 name :"HealthPubSourceList",
-                path:"/dashboard/HealthPubSourceList/:type",
+                path:"/dashboard/HealthPubSourceList/kong",
                 redirect:null,
-                route:"1"
+                route:"0"
               },
-              {
-                id: "9502685863ab87f0ad1134142788a389",
-                meta :{internalOrExternal:false,keepAlive:false,title:"新闻资讯"},
-                internalOrExternal: false,
-                keepAlive:false,
-                title:"aaa",
-                name :"HealthNoticList",
-                path:"/dashboard/HealthNoticList",
-                redirect:null,
-                route:"1"
-              },
+              // {
+              //   id: "9502685863ab87f0ad1134142788a389",
+              //   meta :{internalOrExternal:false,keepAlive:false,title:"新闻资讯"},
+              //   internalOrExternal: false,
+              //   keepAlive:false,
+              //   title:"aaa",
+              //   name :"HealthNoticList",
+              //   path:"/dashboard/HealthNoticList",
+              //   redirect:null,
+              //   route:"1"
+              // },
               {
                 id: "9502685863ab87f0ad1134142788a310",
                 meta :{internalOrExternal:false,keepAlive:false,title:"关于我们"},
@@ -226,6 +226,7 @@
         this.$emit("dynamicRouterShow",value.key,this.activeMenu.meta.title)
         // update-begin-author:sunjianlei date:20191223 for: 修复刷新后菜单Tab名字显示异常
         let storeKey = 'route:title:' + this.activeMenu.path
+        
         this.$ls.set(storeKey, this.activeMenu.meta.title)
         // update-end-author:sunjianlei date:20191223 for: 修复刷新后菜单Tab名字显示异常
       },

@@ -1,9 +1,9 @@
 <template>
   <a-modal :title="title" :width="800" :visible="visible" @ok="handleCancel" @cancel="handleCancel" okText="确定"
     cancelText="关闭">
-    <a-tabs default-active-key="1">
+    <a-tabs default-active-key="1" v-if="list.picList||list.videoList">
       <a-tab-pane key="1" tab="图片" v-if="list.picList&&list.picList.length>0">
-        <a-carousel autoplay arrows>
+        <a-carousel arrows>
           <div slot="prevArrow" slot-scope="props" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
             <a-icon type="left-circle" />
           </div>
@@ -20,9 +20,20 @@
         </a-carousel>
       </a-tab-pane>
       <a-tab-pane key="2" tab="视频" force-render v-if="list.videoList&&list.videoList.length>0">
-        <a-carousel autoplay>
-          <div v-for="(item, index) in list.videoList" :key="index" style="height: 420px;overflow:hidden;"><img class="carouselimg"
-              :src="item.filePath" alt=""></div>
+        <a-carousel arrows>
+          <div slot="prevArrow" slot-scope="props" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
+            <a-icon type="left-circle" />
+          </div>
+          <div slot="nextArrow" slot-scope="props" class="custom-slick-arrow" style="right: 10px">
+            <a-icon type="right-circle" />
+          </div>
+          <div v-for="(item, index) in list.videoList" :key="index" style="height: 420px;overflow:hidden;">
+            <img v-if="item.showType==1" class="carouselimg" :src="item.filePath" alt="">
+            <video v-if="item.showType==2" class="carouselimg">
+              <source :src="item.filePath" type="video/mp4" />
+              <source :src="item.filePath" type="video/WebM">
+            </video>
+          </div>
         </a-carousel>
       </a-tab-pane>
     </a-tabs>
@@ -55,7 +66,7 @@
           url = '/health/healthInfoCircle/queryById'
         }else if(type=='hd'){//活动
           url = '/health/healthActive/queryById'
-        }else if(type=='ggl'){//公告栏
+        }else if(type=='gg'){//公告栏
           url = '/health/healthNotic/queryById'
         }else if(type=='ggzy'){//公共资源
           url = '/health/healthPubSource/queryById'

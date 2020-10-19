@@ -62,9 +62,14 @@
         typeList:[],
       }
     },
+    watch:{
+      $route(to,from){
+        this.type = this.$route.params.type==undefined?'':this.$route.params.type=='kong'?'':this.$route.params.type
+        this.getList()
+      }
+    },
     created() {
-      console.log(this.$route.params.type)
-      this.type = this.$route.params.type==undefined?'':this.$route.params.type
+      this.type = this.$route.params.type==undefined?'':this.$route.params.type=='kong'?'':this.$route.params.type
       this.getTypeList()
       this.getList()
     },

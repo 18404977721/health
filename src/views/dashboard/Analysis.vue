@@ -33,10 +33,12 @@
 		</div>
 		<div class="container-index Center Clear">
 		  <div class="input Fl">
-		    <input type="text" placeholder="请输入要搜索的内容" autocomplete="off" id="search-input">
-		    <div class="hot-list" id="hot-list"></div>
+		    <input type="text" placeholder="请输入要搜索的内容" autocomplete="off" id="search-input" v-model="keyWord" @blur="inputBlur">
+        <div class="hot-list" v-if="contentList!=''">
+          <div class="_item" v-for="(item, index) in contentList" :key="index" @click="clickDetailInput(item.id,item.type)">{{item.title}}</div>
+        </div>
 		  </div>
-		  <div class="search Fr">搜 索</div>
+		  <div class="search Fr" @click="searchContent">搜 索</div>
 		</div>
 		<!-- 信息圈板块 -->
 		<!-- <i class="port"></i> 图标class = port:点  top:最热  jian:推荐-->
@@ -419,7 +421,7 @@
 		                </dt>
 		              </dl>
 		              <ul class="r-list">
-		                <li class="Clear" v-for="(item, index) in noticList" :key="index" @click="clickDetail(item.id,'ggl')" style="cursor:pointer;">
+		                <li class="Clear" v-for="(item, index) in noticList" :key="index" @click="clickDetail(item.id,'gg')" style="cursor:pointer;">
 		                  <div class="act-list-tit Fl text-over"><i class="port red"></i> {{item.title}}</div>
 		                  <div class="act-list-tim Fr">{{item.publishTime}}</div>
 		                </li>
@@ -608,6 +610,9 @@
     },
 		data() {
 			return {
+        //搜索相关
+        keyWord:'',
+        contentList:'',
         rotationList:[],//轮播相关
         //信息圈相关
 				newList:[],
@@ -651,11 +656,36 @@
       this.getnoticList()
       this.getpubSourceList()
       this.getactiveList()
+      this.look()
 		},
 		methods: {
+      //搜索
+      searchContent(){
+        var url = '/health/healthIndex/list';
+        let obj = {}
+        obj.name = this.keyWord
+        getAction(url,obj).then((res) => {
+        	this.contentList = res.result;
+        })
+      },
+      inputBlur(){
+        this.contentList = ''
+      },
+      clickDetailInput(id,type){
+        this.contentList = ''
+        this.$refs.HealthModal.show(id,type)
+      },
+      look(){
+        let that = this
+        document.addEventListener('click', function(){
+          that.contentList = ''
+        }, false)
+      },
+      //进详情
       clickDetail(id,type){
         this.$refs.HealthModal.show(id,type)
       },
+      //进注册页
 			clickRegister(){
 				this.$router.push({path: '/user/WebRegister'})
 			},
@@ -918,4 +948,18 @@
 		background: #364d79;
 		overflow: hidden;
 	}
+  .hot-list{
+    border:1px solid #ccc;border-radius:3px;
+    height:300px;
+    overflow-y:auto;
+    z-index:999;
+    background:#fff;
+  }
+  .hot-list ._item{
+    padding:5px;
+    cursor:pointer;
+  }
+  .hot-list ._item:hover{
+    background:#ececec;
+  }
 </style>
