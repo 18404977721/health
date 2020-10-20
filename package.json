@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@antv/data-set": "^0.10.2",
-    "@jeecg/antd-online-214": "^2.1.41",
     "@tinymce/tinymce-vue": "^2.0.0",
     "ant-design-vue": "^1.4.11",
     "apexcharts": "^3.6.5",
