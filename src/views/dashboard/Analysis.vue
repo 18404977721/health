@@ -695,6 +695,7 @@
         let obj = {}
         obj.pageNo = 1
         obj.pageSize = 5
+				obj.state = '1'
       	getAction(url,obj).then((res) => {
       		this.rotationList = res.result.records;
       	})
