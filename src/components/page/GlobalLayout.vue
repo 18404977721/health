@@ -165,18 +165,18 @@
                 redirect:null,
                 route:"0"
               },
-              {
-                component:"dashboard/HealthPubSourceList",
-                id: "9502685863ab87f0ad1134142788a388",
-                meta :{internalOrExternal:false,keepAlive:false,title:"公共资源"},
-                internalOrExternal: false,
-                keepAlive:false,
-                title:"aaa",
-                name :"HealthPubSourceList",
-                path:"/dashboard/HealthPubSourceList/kong",
-                redirect:null,
-                route:"0"
-              },
+              // {
+              //   component:"dashboard/HealthPubSourceList",
+              //   id: "9502685863ab87f0ad1134142788a388",
+              //   meta :{internalOrExternal:false,keepAlive:false,title:"公共资源"},
+              //   internalOrExternal: false,
+              //   keepAlive:false,
+              //   title:"aaa",
+              //   name :"HealthPubSourceList",
+              //   path:"/dashboard/HealthPubSourceList/kong",
+              //   redirect:null,
+              //   route:"0"
+              // },
               // {
               //   id: "9502685863ab87f0ad1134142788a389",
               //   meta :{internalOrExternal:false,keepAlive:false,title:"新闻资讯"},

@@ -414,14 +414,16 @@
 		              <dl class="act-r-th">
 		                <dd class="th"><i class="tiao-icon"></i>公告栏</dd>
 		                <dt>
-                      <router-link to='/dashboard/HealthNoticList' class="act-r-more">
+											<router-link to='' class="act-r-more">
+                      <!-- <router-link to='/dashboard/HealthNoticList' class="act-r-more"> -->
 		                    <i class="layui-icon layui-icon-right" style="color: #e40002"></i>
 		                    查看
 		                  </router-link>
 		                </dt>
 		              </dl>
 		              <ul class="r-list">
-		                <li class="Clear" v-for="(item, index) in noticList" :key="index" @click="clickDetail(item.id,'gg')" style="cursor:pointer;">
+                    <li class="Clear" v-for="(item, index) in noticList" :key="index" style="cursor:pointer;">
+		                <!-- <li class="Clear" v-for="(item, index) in noticList" :key="index" @click="clickDetail(item.id,'gg')" style="cursor:pointer;"> -->
 		                  <div class="act-list-tit Fl text-over"><i class="port red"></i> {{item.title}}</div>
 		                  <div class="act-list-tim Fr">{{item.publishTime}}</div>
 		                </li>
@@ -437,14 +439,16 @@
 		              <dl class="act-r-th">
 		                <dd class="th"><i class="tiao-icon"></i>问答区</dd>
 		                <dt>
-                      <router-link to='/dashboard/HealthQuestionList' class="act-r-more">
+                      <router-link to='' class="act-r-more">
+                      <!-- <router-link to='/dashboard/HealthQuestionList' class="act-r-more"> -->
                         <i class="layui-icon layui-icon-right" style="color: #e40002"></i>
                         查看
                       </router-link>
 		                </dt>
 		              </dl>
 		              <ul class="r-list">
-		                <li v-for="(item, index) in questionList" :key="index" @click="clickQ(item.id)" style="cursor:pointer">
+                    <li v-for="(item, index) in questionList" :key="index" style="cursor:pointer">
+		                <!-- <li v-for="(item, index) in questionList" :key="index" @click="clickQ(item.id)" style="cursor:pointer"> -->
 		                  <div class="act-list-q">{{item.question}}</div>
 		                  <div class="act-list-a" v-if="item.reply">{{item.reply}}</div>
 		                </li>
@@ -513,13 +517,15 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">政策协调与服务</dd>
 		          <dt>
-		            <span @click="clickggzy(zcId)" class="text-tit-more">
+                <span  class="text-tit-more">
+		            <!-- <span @click="clickggzy(zcId)" class="text-tit-more"> -->
 		              · · ·
 		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-		          <li v-for="(item, index) in zc" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
+              <li v-for="(item, index) in zc" :key="index" style="cursor:pointer;">
+		          <!-- <li v-for="(item, index) in zc" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;"> -->
 		            <div class="text-list-tit Fl text-over">{{item.title}}</div>
 		            <div class="text-list-tim Fr">{{item.publishTime}}</div>
 		          </li>
@@ -533,13 +539,15 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">国际交流与合作</dd>
 		          <dt>
-		            <span @click="clickggzy(gjId)" class="text-tit-more">
+                <span  class="text-tit-more">
+		            <!-- <span @click="clickggzy(gjId)" class="text-tit-more"> -->
 		              · · ·
 		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-              <li v-for="(item, index) in gj" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
+              <li v-for="(item, index) in gj" :key="index"  style="cursor:pointer;">
+              <!-- <li v-for="(item, index) in gj" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;"> -->
                 <div class="text-list-tit Fl text-over">{{item.title}}</div>
                 <div class="text-list-tim Fr">{{item.publishTime}}</div>
               </li>
@@ -553,13 +561,15 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">行业规范与协调</dd>
 		          <dt>
-		            <span @click="clickggzy(hygfId)" class="text-tit-more">
+                <span  class="text-tit-more">
+		            <!-- <span @click="clickggzy(hygfId)" class="text-tit-more"> -->
 		              · · ·
 		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-              <li v-for="(item, index) in hygf" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
+              <li v-for="(item, index) in hygf" :key="index" style="cursor:pointer;">
+              <!-- <li v-for="(item, index) in hygf" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;"> -->
                 <div class="text-list-tit Fl text-over">{{item.title}}</div>
                 <div class="text-list-tim Fr">{{item.publishTime}}</div>
               </li>
@@ -573,13 +583,15 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">行业分析与研究</dd>
 		          <dt>
-		            <span @click="clickggzy(hyfxId)" class="text-tit-more">
+                <span class="text-tit-more">
+		            <!-- <span @click="clickggzy(hyfxId)" class="text-tit-more"> -->
 		              · · ·
 		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-              <li v-for="(item, index) in hyfx" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
+              <li v-for="(item, index) in hyfx" :key="index"  style="cursor:pointer;">
+              <!-- <li v-for="(item, index) in hyfx" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;"> -->
                 <div class="text-list-tit Fl text-over">{{item.title}}</div>
                 <div class="text-list-tim Fr">{{item.publishTime}}</div>
               </li>

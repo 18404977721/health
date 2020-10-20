@@ -127,11 +127,11 @@
     },
     watch: {
       /** 监听设备变化 */
-      device() {
-        if (this.mode === 'topmenu') {
-          this.buildTopMenuStyle()
-        }
-      },
+      // device() {
+      //   if (this.mode === 'topmenu') {
+      //     this.buildTopMenuStyle()
+      //   }
+      // },
       /** 监听导航栏模式变化 */
       mode(newVal) {
         if (newVal === 'topmenu') {
@@ -153,6 +153,8 @@
       // console.log(111)
       const userInfo = Vue.ls.get(USER_INFO);
       this.userInfo = userInfo?userInfo:null
+      console.log(this.device)
+      this.device === 'desktop'
     },
     methods: {
       clickMenu(e){
