@@ -57,7 +57,7 @@
 		            </dl>
 		            <ul class="r-list">
 		              <li v-for="(item, index) in newList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
-		                <div class="news-list-tit"><i class="port"></i> {{item.title}}<i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
+		                <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
 		                <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
 		              </li>
 		            </ul>
@@ -75,7 +75,7 @@
 		            </dl>
 		            <ul class="r-list">
                   <li v-for="(item, index) in hotList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
-                    <div class="news-list-tit"><i class="port"></i> {{item.title}}<i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
+                    <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
                     <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
                   </li>
 		              <!-- <li>
@@ -105,7 +105,7 @@
 		            </dl>
 		            <ul class="r-list">
                   <li v-for="(item, index) in recommendList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
-                    <div class="news-list-tit"><i class="port"></i> {{item.title}}<i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
+                    <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
                     <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
                   </li>
 		            </ul>
@@ -154,7 +154,7 @@
 		            <img :src="gy.picList[0].filePath">
 		          </div>
 		          <div class="act-col act-row-txts Fl">
-		            <div class="act-row-txt-tit">{{gy.title}}</div>
+		            <div class="act-row-txt-tit1">{{gy.title}}</div>
 		            <div>
 		              <b class="layui-icon layui-icon-time"></b>
 		              <a-icon type="clock-circle" />{{gy.startTime}} 至 {{gy.endTime}}
@@ -167,7 +167,7 @@
 		          <div class="act-col act-row-sta Fr">
 		            <!-- stu_img_01.jpg 01 进行中  02已结束-->
 		            <img v-if="gy.state=='进行中'" src="@assets/stu_img_01.jpg">
-		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		            <img v-if="gy.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
             <div class="act-row act-row02" v-if="gy.picList&&gy.picList.length>1" @click="clickDetail(gy.id,'hd')" style="cursor:pointer;">
@@ -186,7 +186,7 @@
                   </div>
                   <div class="act-col act-row-sta Fr">
                     <img v-if="gy.state=='进行中'" src="@assets/stu_img_01.jpg">
-                    <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+                    <img v-if="gy.state=='已结束'" src="@assets/stu_img_02.jpg">
                   </div>
                 </div>
                 <div class="act-row-imglist Clear">
@@ -206,7 +206,7 @@
 		            <img :src="zh.picList[0].filePath">
 		          </div>
 		          <div class="act-col act-row-txts Fl">
-		            <div class="act-row-txt-tit">{{zh.title}}</div>
+		            <div class="act-row-txt-tit1">{{zh.title}}</div>
 		            <div>
 		              <b class="layui-icon layui-icon-time"></b>
 		              <a-icon type="clock-circle" />{{zh.startTime}} 至 {{zh.endTime}}
@@ -219,7 +219,7 @@
 		          <div class="act-col act-row-sta Fr">
 		            <!-- stu_img_01.jpg 01 进行中  02已结束-->
 		            <img v-if="zh.state=='进行中'" src="@assets/stu_img_01.jpg">
-		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		            <img v-if="zh.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
 		        <div class="act-row act-row02" v-if="zh.picList&&zh.picList.length>1" @click="clickDetail(zh.id,'hd')" style="cursor:pointer;">
@@ -238,7 +238,7 @@
 		              </div>
 		              <div class="act-col act-row-sta Fr">
 		                <img v-if="zh.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		                <img v-if="zh.state=='已结束'" src="@assets/stu_img_02.jpg">
 		              </div>
 		            </div>
 		            <div class="act-row-imglist Clear">
@@ -258,7 +258,7 @@
 		            <img :src="gf.picList[0].filePath">
 		          </div>
 		          <div class="act-col act-row-txts Fl">
-		            <div class="act-row-txt-tit">{{gf.title}}</div>
+		            <div class="act-row-txt-tit1">{{gf.title}}</div>
 		            <div>
 		              <b class="layui-icon layui-icon-time"></b>
 		              <a-icon type="clock-circle" />{{gf.startTime}} 至 {{gf.endTime}}
@@ -310,7 +310,7 @@
 		            <img :src="kc.picList[0].filePath">
 		          </div>
 		          <div class="act-col act-row-txts Fl">
-		            <div class="act-row-txt-tit">{{kc.title}}</div>
+		            <div class="act-row-txt-tit1">{{kc.title}}</div>
 		            <div>
 		              <b class="layui-icon layui-icon-time"></b>
 		              <a-icon type="clock-circle" />{{kc.startTime}} 至 {{kc.endTime}}
@@ -362,7 +362,7 @@
 		            <img :src="ly.picList[0].filePath">
 		          </div>
 		          <div class="act-col act-row-txts Fl">
-		            <div class="act-row-txt-tit">{{ly.title}}</div>
+		            <div class="act-row-txt-tit1">{{ly.title}}</div>
 		            <div>
 		              <b class="layui-icon layui-icon-time"></b>
 		              <a-icon type="clock-circle" />{{ly.startTime}} 至 {{ly.endTime}}

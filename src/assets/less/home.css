@@ -214,22 +214,35 @@ ul.r-list li {
 	color: #000;
   text-decoration: none !important
 }
+.news-list-tit .news-list-title{
+	width:206px;
+	display:inline-block;
+	overflow: hidden;  text-overflow:ellipsis;   white-space: nowrap;
+  text-decoration: none !important;
+}
 
 .port {
 	display: inline-block;
 	position: relative;
-	top: -3px;
+	top: -7px;
 	width: 4px;
 	height: 4px;
 	background-color: #8c8c8c;
 }
 
 .news-list-txt {
-	color: #777
+	color: #777;
+  display: flex;
 }
 
 .news-list-txt span+span {
 	margin-left: 8px;
+  width:110px;
+  display:inline-block;
+  overflow: hidden;
+  text-overflow:ellipsis; 
+  white-space: nowrap;
+  text-decoration: none !important;
 }
 
 .news-list-txt1 {
@@ -262,6 +275,7 @@ ul.r-list li {
 	width: 31px;
 	height: 11px;
 	margin-left: 5px;
+  vertical-align: super;
 }
 
 .news-list .jian {
@@ -272,6 +286,7 @@ ul.r-list li {
 	width: 19px;
 	height: 16px;
 	margin-left: 5px;
+  vertical-align: super;
 }
 
 .friend-link-list {
@@ -336,6 +351,16 @@ ul.r-list li {
 	color: #222222;
 	font-size: 16px;
 	font-weight: bold;
+  overflow: hidden;  text-overflow:ellipsis;   white-space: nowrap;
+  width: 596px;
+}
+
+.act-row-txt-tit1 {
+	color: #222222;
+	font-size: 16px;
+	font-weight: bold;
+  overflow: hidden;  text-overflow:ellipsis;   white-space: nowrap;
+  width: 480px;
 }
 
 .act-row-imglist {
@@ -409,7 +434,7 @@ ul.r-list li {
 .port {
 	display: inline-block;
 	position: relative;
-	top: -3px;
+	top: -7px;
 	width: 4px;
 	height: 4px;
 	background-color: #8c8c8c;
