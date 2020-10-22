@@ -68,7 +68,7 @@
       this.getList()
       
       const userInfo = Vue.ls.get(USER_INFO);
-      if(userInfo.username=='admin'){
+      if(userInfo&&userInfo.username=='admin'){
         this.adminFlag = true
       }else{
         this.adminFlag = false

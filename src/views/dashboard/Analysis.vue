@@ -2,7 +2,7 @@
 	<div class="wrap">
 		<div class="topWrap">
 			<!-- 登录 -->
-			<!-- <div class="login-index-con Center Abs">
+			<div v-if="userInfo==null" class="login-index-con Center Abs">
 			  <div class="login-index-box Fr">
 			    <div class="login-index">
 			      <div class="login-face">
@@ -11,7 +11,71 @@
 			        <p>登 录</p>
 			      </div>
 			      <div class="login-con">
-							<ul>
+              <a-form :form="form" class="user-layout-login" ref="formLogin" id="formLogin">
+                <a-form-item>
+                  <a-input
+                    size="large"
+                    v-decorator="['username',validatorRules.username,{ validator: this.handleUsernameOrEmail }]"
+                    type="text"
+                    placeholder="请输入帐户名 / admin">
+                    <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+                  </a-input>
+                </a-form-item>
+                
+                <a-form-item>
+                  <a-input
+                    v-decorator="['password',validatorRules.password]"
+                    size="large"
+                    type="password"
+                    autocomplete="false"
+                    placeholder="密码 / 123456">
+                    <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+                  </a-input>
+                </a-form-item>
+                
+                <a-row :gutter="0">
+                  <a-col :span="16">
+                    <a-form-item>
+                      <a-input
+                        v-decorator="['inputCode',validatorRules.inputCode]"
+                        size="large"
+                        type="text"
+                        @change="inputCodeChange"
+                        placeholder="请输入验证码">
+                        <a-icon slot="prefix" type="smile" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+                      </a-input>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="8" style="text-align: right">
+                    <img v-if="requestCodeSuccess" style="margin-top: 4px;" :src="randCodeImage" @click="handleChangeCheckCode"/>
+                    <img v-else style="margin-top: 4px;" src="../../assets/checkcode.png" @click="handleChangeCheckCode"/>
+                  </a-col>
+                </a-row>
+              </a-form>
+              <a-form-item>
+                <a-checkbox v-decorator="['rememberMe', {initialValue: true, valuePropName: 'checked'}]" >自动登陆</a-checkbox>
+                <router-link :to="{ name: 'alteration'}" class="forge-password" style="float: right;">
+                  忘记密码
+                </router-link>
+               <router-link :to="{ name: 'register'}" class="forge-password" style="float: right;margin-right: 10px" >
+                  注册
+                </router-link>
+              </a-form-item>
+              
+              <a-form-item>
+                <a-button
+                 style="width:100%;"
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                  :loading="loginBtn"
+                  @click.stop.prevent="handleSubmit"
+                  :disabled="loginBtn">确定
+                </a-button>
+              </a-form-item>
+              
+              
+							<!-- <ul>
 							  <li>
 									<input type="text" name="username" placeholder="请输入邮箱或手机号" autocomplete="off">
 								</li>
@@ -21,11 +85,11 @@
 								<span style="float:left;">忘记密码 ?</span>
 								<span style="float:right;cursor:pointer;" @click="clickRegister">注册</span>
 							</div>
-							<button type="submit" class="index-login-btn" >登录</button>
+							<button type="submit" class="index-login-btn" >登录</button> -->
 			      </div>
 			    </div>
 			  </div>
-			</div> -->
+			</div>
 			<!-- 轮播图 -->
 			<a-carousel autoplay>
 				<div v-for="(item, index) in rotationList" :key="index" style="height: 420px;overflow:hidden;"><img class="carouselimg" :src="item.picList[0].filePath" alt=""></div>
@@ -595,8 +659,14 @@
 		getAction,
 		postAction
 	} from '@/api/manage';
+  import { mapActions } from "vuex"
+  import { timeFix } from "@/utils/util"
+  import Vue from "vue"
+  import { USER_INFO} from "@/store/mutation-types"
+  
 	export default {
 		name: "dashboard-analysis",
+    inject:["reload"],
 		data() {
 			return {
         keyWord:'',//搜索相关
@@ -631,6 +701,35 @@
         gfId:'',
         kcId:'',
         lyId:'',
+        //登录相关
+        customActiveKey: "tab1",
+        loginBtn: false,
+        // login type: 0 email, 1 username, 2 telephone
+        loginType: 0,
+        requiredTwoStepCaptcha: false,
+        stepCaptchaVisible: false,
+        form: this.$form.createForm(this),
+        encryptedString:{
+          key:"",
+          iv:"",
+        },
+        state: {
+          time: 60,
+          smsSendBtn: false,
+        },
+        validatorRules:{
+          username:{rules: [{ required: true, message: '请输入用户名!'},{validator: this.handleUsernameOrEmail}]},
+          password:{rules: [{ required: true, message: '请输入密码!',validator: 'click'}]},
+          captcha:{rule: [{ required: true, message: '请输入验证码!'}]},
+          inputCode:{rules: [{ required: true, message: '请输入验证码!'}]}
+        },
+        verifiedCode:"",
+        inputCodeContent:"",
+        inputCodeNull:true,
+        currdatetime:'',
+        randCodeImage:'',
+        requestCodeSuccess:false,
+        userInfo:null,
 			}
 		},
 		created() {
@@ -643,8 +742,14 @@
       this.getnoticList()
       this.getpubSourceList()
       this.getactiveList()
+      
+      this.currdatetime = new Date().getTime();
+      this.handleChangeCheckCode();//初始化验证码
+      const userInfo = Vue.ls.get(USER_INFO);
+      this.userInfo = userInfo?userInfo:null
 		},
 		methods: {
+      ...mapActions([ "Login", "Logout"]),
       //搜索
       searchContent(){
         if(this.keyWord==''){
@@ -893,6 +998,99 @@
       clickhd(activeType){
         this.$router.push({path: '/dashboard/HealthActiveList/'+activeType})
       },
+      //登录
+      handleChangeCheckCode(){
+        this.currdatetime = new Date().getTime();
+        getAction(`/sys/randomImage/${this.currdatetime}`).then(res=>{
+          if(res.success){
+            this.randCodeImage = res.result
+            this.requestCodeSuccess=true
+          }else{
+            this.$message.error(res.message)
+            this.requestCodeSuccess=false
+          }
+        }).catch(()=>{
+          this.requestCodeSuccess=false
+        })
+      },
+      loginSuccess () {
+        // update-begin- author:sunjianlei --- date:20190812 --- for: 登录成功后不解除禁用按钮，防止多次点击
+        // this.loginBtn = false
+        // update-end- author:sunjianlei --- date:20190812 --- for: 登录成功后不解除禁用按钮，防止多次点击
+        // this.$router.push({ name: "dashboard" })
+        
+        this.reload()
+        this.$notification.success({
+          message: '欢迎',
+          description: `${timeFix()}，欢迎回来`,
+        });
+      },
+      cmsFailed(err){
+        this.$notification[ 'error' ]({
+          message: "登录失败",
+          description:err,
+          duration: 4,
+        });
+      },
+      requestFailed (err) {
+        this.$notification[ 'error' ]({
+          message: '登录失败',
+          description: ((err.response || {}).data || {}).message || err.message || "请求出现错误，请稍后再试",
+          duration: 4,
+        });
+        this.loginBtn = false;
+      },
+      validateInputCode(rule,value,callback){
+        if(!value || this.verifiedCode==this.inputCodeContent){
+          callback();
+        }else{
+          callback("您输入的验证码不正确!");
+        }
+      },
+      generateCode(value){
+        this.verifiedCode = value.toLowerCase()
+      },
+      inputCodeChange(e){
+        this.inputCodeContent = e.target.value
+      },
+      handleUsernameOrEmail (rule, value, callback) {
+        const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+        if (regex.test(value)) {
+          this.loginType = 0
+        } else {
+          this.loginType = 1
+        }
+        callback()
+      },
+      handleSubmit () {
+        let that = this
+        let loginParams = {};
+        that.loginBtn = true;
+        // 使用账户密码登陆
+        that.form.validateFields([ 'username', 'password','inputCode', 'rememberMe' ], { force: true }, (err, values) => {
+          if (!err) {
+            loginParams.username = values.username
+            loginParams.password = values.password
+            loginParams.remember_me = values.rememberMe
+            loginParams.captcha = that.inputCodeContent
+            loginParams.checkKey = that.currdatetime
+            that.Login(loginParams).then((res) => {
+              if(res.success){
+                console.log("登录参数",loginParams)
+                that.loginSuccess()
+              }else{
+                that.requestFailed(res)
+                that.Logout();
+              }
+            }).catch((err) => {
+              that.requestFailed(err);
+            });
+          }else {
+            that.loginBtn = false;
+          }
+        })
+      },
+ 
     },
 	}
 </script>
@@ -923,4 +1121,7 @@
 		background: #364d79;
 		overflow: hidden;
 	}
+  .ant-form-item{
+    margin:0 0 5px !important;
+  }
 </style>

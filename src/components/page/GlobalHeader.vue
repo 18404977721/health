@@ -45,11 +45,11 @@
                 :type="collapsed ? 'menu-fold' : 'menu-unfold'"
                 @click.native="toggle"></a-icon>
             </div>
-            <span class="action" v-if="userInfo==null">
+            <!-- <span class="action" v-if="userInfo==null">
               <a class="logout_title" href="/user/login"  style="color:#fff;">
                 <a-icon type="login" style="color:#fff;"/>&nbsp;登录
               </a>
-            </span>
+            </span> -->
             <user-menu v-if="userInfo!=null" class="header-index-right" :theme="theme" :style="topMenuStyle.headerIndexRight"/>
           </div>
         </div>

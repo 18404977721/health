@@ -1,9 +1,9 @@
 <template>
-  <a-locale-provider :locale="locale">
+  <a-config-provider :locale="locale">
     <div id="app">
-      <router-view/>
+      <router-view v-if="isAlive"/>
     </div>
-  </a-locale-provider>
+  </a-config-provider>
 </template>
 <script>
   import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
@@ -13,6 +13,20 @@
     data () {
       return {
         locale: zhCN,
+        isAlive:true
+      }
+    },
+    provide() {
+      return {
+        reload: this.reload
+      }
+    },
+    methods:{
+      reload() {
+        this.isAlive = false;
+        this.$nextTick(function () {
+          this.isAlive = true
+        })
       }
     },
     created () {
@@ -41,7 +55,7 @@
   #app {
     height: 100%;
   }
-	.ant-menu-dark, .ant-menu-dark .ant-menu-sub {
-	  background:rgba(0,0,0,0) !important;
-	}
+  .ant-menu-dark, .ant-menu-dark .ant-menu-sub {
+    background:rgba(0,0,0,0) !important;
+  }
 </style>
