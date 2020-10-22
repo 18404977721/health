@@ -280,7 +280,7 @@
       z-index: 2;
       color: white;
       height: $height;
-      background-color: #1890ff;
+      background: linear-gradient(to right, rgb(185, 1, 1), rgb(235, 86, 12), rgb(193, 14, 3));
       transition: background 300ms;
 
       /* dark 样式 */
