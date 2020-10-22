@@ -33,10 +33,7 @@
 		</div>
 		<div class="container-index Center Clear">
 		  <div class="input Fl">
-		    <input type="text" placeholder="请输入要搜索的内容" autocomplete="off" id="search-input" v-model="keyWord" @blur="inputBlur">
-        <div class="hot-list" v-if="contentList!=''">
-          <div class="_item" v-for="(item, index) in contentList" :key="index" @click="clickDetailInput(item.id,item.type)">{{item.title}}</div>
-        </div>
+		    <input type="text" placeholder="请输入要搜索的内容" autocomplete="off" id="search-input" v-model="keyWord">
 		  </div>
 		  <div class="search Fr" @click="searchContent">搜 索</div>
 		</div>
@@ -414,16 +411,14 @@
 		              <dl class="act-r-th">
 		                <dd class="th"><i class="tiao-icon"></i>公告栏</dd>
 		                <dt>
-											<router-link to='' class="act-r-more">
-                      <!-- <router-link to='/dashboard/HealthNoticList' class="act-r-more"> -->
+                      <router-link to='/dashboard/HealthNoticList' class="act-r-more">
 		                    <i class="layui-icon layui-icon-right" style="color: #e40002"></i>
 		                    查看
 		                  </router-link>
 		                </dt>
 		              </dl>
 		              <ul class="r-list">
-                    <li class="Clear" v-for="(item, index) in noticList" :key="index" style="cursor:pointer;">
-		                <!-- <li class="Clear" v-for="(item, index) in noticList" :key="index" @click="clickDetail(item.id,'gg')" style="cursor:pointer;"> -->
+		                <li class="Clear" v-for="(item, index) in noticList" :key="index" @click="clickDetail(item.id,'gg')" style="cursor:pointer;">
 		                  <div class="act-list-tit Fl text-over"><i class="port red"></i> {{item.title}}</div>
 		                  <div class="act-list-tim Fr">{{item.publishTime}}</div>
 		                </li>
@@ -439,16 +434,14 @@
 		              <dl class="act-r-th">
 		                <dd class="th"><i class="tiao-icon"></i>问答区</dd>
 		                <dt>
-                      <router-link to='' class="act-r-more">
-                      <!-- <router-link to='/dashboard/HealthQuestionList' class="act-r-more"> -->
+                      <router-link to='/dashboard/HealthQuestionList' class="act-r-more">
                         <i class="layui-icon layui-icon-right" style="color: #e40002"></i>
                         查看
                       </router-link>
 		                </dt>
 		              </dl>
 		              <ul class="r-list">
-                    <li v-for="(item, index) in questionList" :key="index" style="cursor:pointer">
-		                <!-- <li v-for="(item, index) in questionList" :key="index" @click="clickQ(item.id)" style="cursor:pointer"> -->
+		                <li v-for="(item, index) in questionList" :key="index" @click="clickDetail(item.id,'qdq')" style="cursor:pointer">
 		                  <div class="act-list-q">{{item.question}}</div>
 		                  <div class="act-list-a" v-if="item.reply">{{item.reply}}</div>
 		                </li>
@@ -517,15 +510,13 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">政策协调与服务</dd>
 		          <dt>
-                <span  class="text-tit-more">
-		            <!-- <span @click="clickggzy(zcId)" class="text-tit-more"> -->
+		            <span @click="clickggzy(zcId)" class="text-tit-more">
 		              · · ·
 		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-              <li v-for="(item, index) in zc" :key="index" style="cursor:pointer;">
-		          <!-- <li v-for="(item, index) in zc" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;"> -->
+		          <li v-for="(item, index) in zc" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
 		            <div class="text-list-tit Fl text-over">{{item.title}}</div>
 		            <div class="text-list-tim Fr">{{item.publishTime}}</div>
 		          </li>
@@ -539,15 +530,13 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">国际交流与合作</dd>
 		          <dt>
-                <span  class="text-tit-more">
-		            <!-- <span @click="clickggzy(gjId)" class="text-tit-more"> -->
+		            <span @click="clickggzy(gjId)" class="text-tit-more">
 		              · · ·
 		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-              <li v-for="(item, index) in gj" :key="index"  style="cursor:pointer;">
-              <!-- <li v-for="(item, index) in gj" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;"> -->
+              <li v-for="(item, index) in gj" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
                 <div class="text-list-tit Fl text-over">{{item.title}}</div>
                 <div class="text-list-tim Fr">{{item.publishTime}}</div>
               </li>
@@ -561,15 +550,13 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">行业规范与协调</dd>
 		          <dt>
-                <span  class="text-tit-more">
-		            <!-- <span @click="clickggzy(hygfId)" class="text-tit-more"> -->
+		            <span @click="clickggzy(hygfId)" class="text-tit-more">
 		              · · ·
 		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-              <li v-for="(item, index) in hygf" :key="index" style="cursor:pointer;">
-              <!-- <li v-for="(item, index) in hygf" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;"> -->
+              <li v-for="(item, index) in hygf" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
                 <div class="text-list-tit Fl text-over">{{item.title}}</div>
                 <div class="text-list-tim Fr">{{item.publishTime}}</div>
               </li>
@@ -583,15 +570,13 @@
 		        <dl class="text-tit-th">
 		          <dd class="th">行业分析与研究</dd>
 		          <dt>
-                <span class="text-tit-more">
-		            <!-- <span @click="clickggzy(hyfxId)" class="text-tit-more"> -->
+		            <span @click="clickggzy(hyfxId)" class="text-tit-more">
 		              · · ·
 		            </span>
 		          </dt>
 		        </dl>
 		        <ul class="r-list">
-              <li v-for="(item, index) in hyfx" :key="index"  style="cursor:pointer;">
-              <!-- <li v-for="(item, index) in hyfx" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;"> -->
+              <li v-for="(item, index) in hyfx" :key="index" @click="clickDetail(item.id,'ggzy')" style="cursor:pointer;">
                 <div class="text-list-tit Fl text-over">{{item.title}}</div>
                 <div class="text-list-tim Fr">{{item.publishTime}}</div>
               </li>
@@ -600,31 +585,21 @@
 		    </div>
 		  </li>
 		</ul>
-    <health-modal ref="HealthModal"></health-modal>
-    <health-question-modal ref="HealthQuestionModal"></health-question-modal>
 	</div>
 </template>
 
 <script>
 	import "@/assets/less/base.css"
 	import "@/assets/less/home.css"
-  import HealthModal from './modules/HealthModal'
-  import HealthQuestionModal from './modules/HealthQuestionModal'
 	import {
 		getAction,
 		postAction
 	} from '@/api/manage';
 	export default {
 		name: "dashboard-analysis",
-    components: {
-      HealthModal,
-      HealthQuestionModal
-    },
 		data() {
 			return {
-        //搜索相关
-        keyWord:'',
-        contentList:'',
+        keyWord:'',//搜索相关
         rotationList:[],//轮播相关
         //信息圈相关
 				newList:[],
@@ -668,34 +643,24 @@
       this.getnoticList()
       this.getpubSourceList()
       this.getactiveList()
-      this.look()
 		},
 		methods: {
       //搜索
       searchContent(){
-        var url = '/health/healthIndex/list';
-        let obj = {}
-        obj.name = this.keyWord
-        getAction(url,obj).then((res) => {
-        	this.contentList = res.result;
-        })
-      },
-      inputBlur(){
-        this.contentList = ''
-      },
-      clickDetailInput(id,type){
-        this.contentList = ''
-        this.$refs.HealthModal.show(id,type)
-      },
-      look(){
-        let that = this
-        document.addEventListener('click', function(){
-          that.contentList = ''
-        }, false)
+        if(this.keyWord==''){
+          return
+        }
+        let word = encodeURI(this.keyWord)
+        this.$router.push({
+          name:"search",
+          params: {
+            keyWord: word,
+          }
+        });
       },
       //进详情
       clickDetail(id,type){
-        this.$refs.HealthModal.show(id,type)
+        this.$router.push({path: '/dashboard/HealthModal/'+id+'/'+type})
       },
       //进注册页
 			clickRegister(){
@@ -787,9 +752,6 @@
       	getAction(url,obj).then((res) => {
       		this.questionList = res.result.records;
       	})
-      },
-      clickQ(id){
-        this.$refs.HealthQuestionModal.show(id)
       },
       //公共资源
       getpubSourceList() {
@@ -961,18 +923,4 @@
 		background: #364d79;
 		overflow: hidden;
 	}
-  .hot-list{
-    border:1px solid #ccc;border-radius:3px;
-    height:300px;
-    overflow-y:auto;
-    z-index:999;
-    background:#fff;
-  }
-  .hot-list ._item{
-    padding:5px;
-    cursor:pointer;
-  }
-  .hot-list ._item:hover{
-    background:#ececec;
-  }
 </style>

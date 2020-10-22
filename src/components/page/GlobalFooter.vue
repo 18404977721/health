@@ -62,12 +62,10 @@
         </ul>
       </div>
     </div>
-    <health-modal ref="HealthModal"></health-modal>
   </div>
 </template>
 
 <script>
-  import HealthModal from '@views/dashboard/modules/HealthModal'
 	import "@/assets/less/base.css"
 	import "@/assets/less/home.css"
   import {
@@ -76,9 +74,6 @@
   } from '@/api/manage';
   export default {
     name: "LayoutFooter",
-    components: {
-      HealthModal,
-    },
     data(){
       return{
         list1:[],

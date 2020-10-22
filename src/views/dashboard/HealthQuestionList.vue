@@ -10,7 +10,7 @@
         <a-button type="primary" @click="clickQuestion('')" style="margin-left:20px;">新建</a-button>
       </div>
     </div>
-    <div style="display:flex;cursor:pointer;border-bottom:1px solid #CC0000;padding:10px 0;"  v-for="(item,index) in list">
+    <div style="display:flex;cursor:pointer;border-bottom:1px dashed #CC0000;padding:10px 0;"  v-for="(item,index) in list">
       <div style="flex:1;" @click="clickDetail(item.id)">
         <a-row :gutter="8">
         	<a-col :span="2">
@@ -39,13 +39,11 @@
       <a-pagination simple @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />
     </div>
     
-    <health-question-modal ref="HealthQuestionModal"></health-question-modal>
     <health-question-answer-modal ref="HealthQuestionAnswerModal" @ok="currentPageReload"></health-question-answer-modal>
   </a-card>
 </template>
 
 <script>
-  import HealthQuestionModal from './modules/HealthQuestionModal'
   import HealthQuestionAnswerModal from './modules/HealthQuestionAnswerModal'
   import { getAction,postAction,deleteAction } from '@/api/manage';
   import Vue from "vue"
@@ -54,7 +52,6 @@
   export default {
     name: "HealthInfoCircleList",
     components: {
-      HealthQuestionModal,
       HealthQuestionAnswerModal
     },
     data() {
@@ -82,7 +79,7 @@
         this.getList()
       },
       clickDetail(id){
-        this.$refs.HealthQuestionModal.show(id)
+        this.$router.push({path: '/dashboard/HealthModal/'+id+'/wdq'})
       },
       clickQuestion(id){
         let that = this

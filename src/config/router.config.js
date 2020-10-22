@@ -87,6 +87,16 @@ export const constantRouterMap = [{
         name: 'HealthPubSourceList',
         component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthPubSourceList')
       },
+      {
+        path: '/dashboard/search/:keyWord',
+        name: 'search',
+        component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/search')
+      },
+      {
+        path: '/dashboard/HealthModal/:id/:type',
+        name: 'HealthModal',
+        component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthModal')
+      },
     ]
   },
   {

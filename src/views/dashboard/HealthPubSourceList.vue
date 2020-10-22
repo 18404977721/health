@@ -16,7 +16,7 @@
         <a-button type="primary" @click="getList">搜索</a-button>
       </div>
     </div>
-    <div style="cursor:pointer;border-bottom:1px solid #CC0000;padding:10px 0;" @click="clickDetail(item.id)"  v-for="(item,index) in list">
+    <div style="cursor:pointer;border-bottom:1px dashed #CC0000;padding:10px 0;" @click="clickDetail(item.id)"  v-for="(item,index) in list">
       <a-row :gutter="8">
       	<a-col :span="2">
       		标题：
@@ -38,22 +38,17 @@
       <a-pagination simple @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />
     </div>
     
-    <health-modal ref="HealthModal"></health-modal>
   </a-card>
 </template>
 
 <script>
-  import HealthModal from './modules/HealthModal'
   import { getAction,postAction } from '@/api/manage';
 
   export default {
     name: "HealthInfoCircleList",
-    components: {
-      HealthModal
-    },
     data() {
       return {
-        description: '',
+        description: '公共资源',
         list:[],
         currentNo:1,
         total:1,
@@ -64,8 +59,10 @@
     },
     watch:{
       $route(to,from){
-        this.type = this.$route.params.type==undefined?'':this.$route.params.type=='kong'?'':this.$route.params.type
-        this.getList()
+        if(to.name=="HealthPubSourceList"){
+          this.type = this.$route.params.type==undefined?'':this.$route.params.type=='kong'?'':this.$route.params.type
+          this.getList()
+        }
       }
     },
     created() {
@@ -86,7 +83,7 @@
         })
       },
       clickDetail(id){
-        this.$refs.HealthModal.show(id,'ggzy')
+        this.$router.push({path: '/dashboard/HealthModal/'+id+'/ggzy'})
       },
       getList(){
         this.list = [];
