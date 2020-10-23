@@ -68,7 +68,7 @@
       this.getList()
       
       const userInfo = Vue.ls.get(USER_INFO);
-      console.log(userInfo)
+      //console.log(userInfo)
       if(userInfo){
         let sysRoleList = userInfo.sysRoleList
         if(sysRoleList!=[]&&sysRoleList!=undefined){

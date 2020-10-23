@@ -74,7 +74,7 @@
         }
         
         this.id = id
-        console.log(id)
+        //console.log(id)
         if(id==''){//新建
           
         }else{//管理员进行回答

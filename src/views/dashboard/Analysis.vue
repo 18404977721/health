@@ -1076,7 +1076,7 @@
             loginParams.checkKey = that.currdatetime
             that.Login(loginParams).then((res) => {
               if(res.success){
-                console.log("登录参数",loginParams)
+                //console.log("登录参数",loginParams)
                 that.loginSuccess()
               }else{
                 that.requestFailed(res)
