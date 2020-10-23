@@ -61,15 +61,26 @@
         currentNo:1,
         total:1,
         question:'',
-        adminFlag:false,
+        adminFlag:false,//管理员为true
       }
     },
     created() {
       this.getList()
       
       const userInfo = Vue.ls.get(USER_INFO);
-      if(userInfo&&userInfo.username=='admin'){
-        this.adminFlag = true
+      console.log(userInfo)
+      if(userInfo){
+        let sysRoleList = userInfo.sysRoleList
+        if(sysRoleList!=[]&&sysRoleList!=undefined){
+          let result = sysRoleList.some(function(item) {
+              if (item.roleName == "管理员") {
+                  return true;
+              }
+          })
+          this.adminFlag = result
+        }else{
+          this.adminFlag = false
+        }
       }else{
         this.adminFlag = false
       }
@@ -86,9 +97,9 @@
         const userInfo = Vue.ls.get(USER_INFO);
         if(!userInfo){
           this.$message.warning('请登录后再进行回答');
-          setTimeout(function(){
-            that.$router.push({path: '/user/login'})
-          },1000)
+          // setTimeout(function(){
+          //   that.$router.push({path: '/user/login'})
+          // },1000)
           return
         }
         this.$refs.HealthQuestionAnswerModal.edit(id)
@@ -98,9 +109,9 @@
         const userInfo = Vue.ls.get(USER_INFO);
         if(!userInfo){
           this.$message.warning('请登录后再进行删除');
-          setTimeout(function(){
-            that.$router.push({path: '/user/login'})
-          },1000)
+          // setTimeout(function(){
+          //   that.$router.push({path: '/user/login'})
+          // },1000)
           return
         }
         let url = "/health/healthQuestion/delete";
