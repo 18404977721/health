@@ -14,7 +14,7 @@
 			      </div>
 			      <div v-for="(item, index) in list.picList" :key="index" style="height: 420px;overflow:hidden;">
 			        <img v-if="item.showType==1" class="carouselimg" :src="item.filePath" alt="">
-			        <video v-if="item.showType==2" class="carouselimg">
+			        <video controls="controls" v-if="item.showType==2" class="carouselimg" style="width= 100%; height=100%; object-fit: fill">
 			          <source :src="item.filePath" type="video/mp4" />
 			          <source :src="item.filePath" type="video/WebM">
 			        </video>
@@ -31,7 +31,7 @@
 			      </div>
 			      <div v-for="(item, index) in list.videoList" :key="index" style="height: 420px;overflow:hidden;">
 			        <img v-if="item.showType==1" class="carouselimg" :src="item.filePath" alt="">
-			        <video v-if="item.showType==2" class="carouselimg">
+			        <video controls="controls" v-if="item.showType==2" class="carouselimg" style="width= 100%; height=100%; object-fit: fill">
 			          <source :src="item.filePath" type="video/mp4" />
 			          <source :src="item.filePath" type="video/WebM">
 			        </video>
