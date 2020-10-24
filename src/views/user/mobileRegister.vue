@@ -372,18 +372,11 @@
 			}
 		},
 		created() {
-      var that = this
-      
-      //获取微信授权code
-      // let name = this.getQueryString('code')
-      // setTimeout(function(){
-      //   that.$message.warning(name);
-      // },2000)
-      
-			that.getQueryList()
-			that.getlistTree()
+			this.getQueryList()
+			this.getlistTree()
 		},
 		methods: {
+      //获取地址栏参数
       getQueryString(name) {
         var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
         var r = window.location.search.substr(1).match(reg);
@@ -391,6 +384,21 @@
           return unescape(r[2]);
         }
         return null;
+      },
+      //获取openid
+      getOpenId(){
+        var that = this
+        let code = that.getQueryString('code')//获取微信授权code
+      	var url = '/sys/weChat/wxOpenId';
+      	let jsonObject = {};
+        jsonObject.code  = code
+      	getAction(url,jsonObject).then(res=>{
+      	  if (res.success) {
+      			//that.$message.success(res.message);
+      	  }else{
+      	    //that.$message.error(res.message);
+      	  }
+      	})
       },
 			//确认密码
 			inputBlur(){
