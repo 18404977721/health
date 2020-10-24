@@ -17,7 +17,7 @@
                     size="large"
                     v-decorator="['username',validatorRules.username,{ validator: this.handleUsernameOrEmail }]"
                     type="text"
-                    placeholder="请输入帐户名 / admin">
+                    placeholder="请输入帐户名">
                     <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
                   </a-input>
                 </a-form-item>
@@ -28,7 +28,7 @@
                     size="large"
                     type="password"
                     autocomplete="false"
-                    placeholder="密码 / 123456">
+                    placeholder="密码">
                     <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
                   </a-input>
                 </a-form-item>
@@ -91,7 +91,7 @@
 			  </div>
 			</div>
 			<!-- 轮播图 -->
-			<a-carousel autoplay>
+			<a-carousel autoplay style="height:420px;">
 				<div v-for="(item, index) in rotationList" :key="index" style="height: 420px;overflow:hidden;"><img class="carouselimg" :src="item.picList[0].filePath" alt=""></div>
 			</a-carousel>
 		</div>
@@ -505,7 +505,7 @@
 		                </dt>
 		              </dl>
 		              <ul class="r-list">
-		                <li v-for="(item, index) in questionList" :key="index" @click="clickDetail(item.id,'qdq')" style="cursor:pointer">
+		                <li v-for="(item, index) in questionList" :key="index" @click="clickDetail(item.id,'wdq')" style="cursor:pointer">
 		                  <div class="act-list-q">{{item.question}}</div>
 		                  <div class="act-list-a" v-if="item.reply">{{item.reply}}</div>
 		                </li>
