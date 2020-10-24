@@ -372,10 +372,26 @@
 			}
 		},
 		created() {
-			this.getQueryList()
-			this.getlistTree()
+      var that = this
+      
+      //获取微信授权code
+      // let name = this.getQueryString('code')
+      // setTimeout(function(){
+      //   that.$message.warning(name);
+      // },2000)
+      
+			that.getQueryList()
+			that.getlistTree()
 		},
 		methods: {
+      getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+          return unescape(r[2]);
+        }
+        return null;
+      },
 			//确认密码
 			inputBlur(){
 				if(this.userType==0){
