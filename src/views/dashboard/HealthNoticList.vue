@@ -53,7 +53,9 @@
     },
     methods: {
       clickDetail(id){
-        this.$router.push({path: '/dashboard/HealthModal/'+id+'/ggl'})
+        // this.$router.push({path: '/dashboard/HealthModal/'+id+'/ggl'})
+        let routeData = this.$router.resolve({path: '/dashboard/HealthModal/'+id+'/ggl'});
+        window.open(routeData.href, '_blank');
       },
       getList(){
         this.list = [];

@@ -90,7 +90,9 @@
         this.getList()
       },
       clickDetail(id){
-        this.$router.push({path: '/dashboard/HealthModal/'+id+'/wdq'})
+        // this.$router.push({path: '/dashboard/HealthModal/'+id+'/wdq'})
+        let routeData = this.$router.resolve({path: '/dashboard/HealthModal/'+id+'/wdq'});
+        window.open(routeData.href, '_blank');
       },
       clickQuestion(id){
         let that = this

@@ -54,10 +54,10 @@
               </a-form>
               <a-form-item>
                 <a-checkbox v-decorator="['rememberMe', {initialValue: true, valuePropName: 'checked'}]" >自动登陆</a-checkbox>
-                <router-link :to="{ name: 'alteration'}" class="forge-password" style="float: right;">
+                <router-link target="_blank" :to="{ name: 'alteration'}" class="forge-password" style="float: right;">
                   忘记密码
                 </router-link>
-               <router-link :to="{ name: 'register'}" class="forge-password" style="float: right;margin-right: 10px" >
+               <router-link target="_blank" :to="{ name: 'register'}" class="forge-password" style="float: right;margin-right: 10px" >
                   注册
                 </router-link>
               </a-form-item>
@@ -192,7 +192,7 @@
 		    </li>
 		  </ul>
 		  <div class="more-s">
-		    <router-link to='/dashboard/HealthInfoCircleList'>查看更多话题<span style="color: #f67f00;font-weight: bold;"><a-icon type="right" /></span></router-link>
+		    <router-link target="_blank" to='/dashboard/HealthInfoCircleList'>查看更多话题<span style="color: #f67f00;font-weight: bold;"><a-icon type="right" /></span></router-link>
 		  </div>
 		</div>
 		<!-- banner -->
@@ -475,7 +475,7 @@
 		              <dl class="act-r-th">
 		                <dd class="th"><i class="tiao-icon"></i>公告栏</dd>
 		                <dt>
-                      <router-link to='/dashboard/HealthNoticList' class="act-r-more">
+                      <router-link target="_blank" to='/dashboard/HealthNoticList' class="act-r-more">
 		                    <i class="layui-icon layui-icon-right" style="color: #e40002"></i>
 		                    查看
 		                  </router-link>
@@ -498,7 +498,7 @@
 		              <dl class="act-r-th">
 		                <dd class="th"><i class="tiao-icon"></i>问答区</dd>
 		                <dt>
-                      <router-link to='/dashboard/HealthQuestionList' class="act-r-more">
+                      <router-link target="_blank" to='/dashboard/HealthQuestionList' class="act-r-more">
                         <i class="layui-icon layui-icon-right" style="color: #e40002"></i>
                         查看
                       </router-link>
@@ -756,20 +756,21 @@
           return
         }
         let word = encodeURI(this.keyWord)
-        this.$router.push({
-          name:"search",
-          params: {
-            keyWord: word,
-          }
-        });
+        // this.$router.push({name:"search",params: {keyWord: word,}});
+        let routeData = this.$router.resolve({name:"search",params: {keyWord: word,}});
+        window.open(routeData.href, '_blank');
       },
       //进详情
       clickDetail(id,type){
-        this.$router.push({path: '/dashboard/HealthModal/'+id+'/'+type})
+        //this.$router.push({path: '/dashboard/HealthModal/'+id+'/'+type})
+        let routeData = this.$router.resolve({path: '/dashboard/HealthModal/'+id+'/'+type});
+        window.open(routeData.href, '_blank');
       },
       //进注册页
 			clickRegister(){
-				this.$router.push({path: '/user/WebRegister'})
+				// this.$router.push({path: '/user/WebRegister'})
+        let routeData = this.$router.resolve({path: '/user/WebRegister'});
+        window.open(routeData.href, '_blank');
 			},
       //轮播
       getRotationList() {
@@ -790,6 +791,7 @@
         obj.pageNo = this.newPageNo
         obj.pageSize = 3
       	getAction(url,obj).then((res) => {
+          // debugger
       		this.newList = res.result.records;
           if(this.newPageNo<res.result.pages){
             this.newPageNo++
@@ -920,7 +922,9 @@
         })
       },
       clickggzy(type){
-        this.$router.push({path: '/dashboard/HealthPubSourceList/'+type})
+        let routeData = this.$router.resolve({path: '/dashboard/HealthPubSourceList/'+type});
+        window.open(routeData.href, '_blank');
+        //this.$router.push({path: '/dashboard/HealthPubSourceList/'+type})
       },
       //活动
       getactiveList() {
@@ -996,7 +1000,9 @@
         })
       },
       clickhd(activeType){
-        this.$router.push({path: '/dashboard/HealthActiveList/'+activeType})
+        // this.$router.push({path: '/dashboard/HealthActiveList/'+activeType})
+        let routeData = this.$router.resolve({path: '/dashboard/HealthActiveList/'+activeType});
+        window.open(routeData.href, '_blank');
       },
       //登录
       handleChangeCheckCode(){

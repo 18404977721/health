@@ -84,7 +84,9 @@
         })
       },
       clickDetail(id){
-        this.$router.push({path: '/dashboard/HealthModal/'+id+'/hd'})
+        // this.$router.push({path: '/dashboard/HealthModal/'+id+'/hd'})
+        let routeData = this.$router.resolve({path: '/dashboard/HealthModal/'+id+'/hd'});
+        window.open(routeData.href, '_blank');
       },
       getList(){
         this.list = [];

@@ -57,7 +57,9 @@
         })
       },
       clickDetail(id,type){
-        this.$router.push({path: '/dashboard/HealthModal/'+id+'/'+type})
+        // this.$router.push({path: '/dashboard/HealthModal/'+id+'/'+type})
+        let routeData = this.$router.resolve({path: '/dashboard/HealthModal/'+id+'/'+type});
+        window.open(routeData.href, '_blank');
       },
     }
   }
