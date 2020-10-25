@@ -31,17 +31,17 @@
           <li class="footer-top-item Fl">
             <ul>
               <li class="footer-top-lif"><router-link to='/user/register'>会员中心</router-link></li>
-              <li><router-link to='/user/register'>会员注册</router-link></li>
-              <li><router-link to='/user/register'>会员须知</router-link></li>
-              <li><router-link to='/user/register'>会员服务</router-link></li>
+              <li><router-link target="_blank" to='/user/register'>会员注册</router-link></li>
+              <li><router-link target="_blank" to='/user/register'>会员须知</router-link></li>
+              <li><router-link target="_blank" to='/user/register'>会员服务</router-link></li>
             </ul>
           </li>
           <li class="footer-top-item Fl" style="width: 200px;">
             <ul>
               <li class="footer-top-lif"><router-link to='/dashboard/us'>关于我们</router-link></li>
-              <li><router-link to='/dashboard/us'>大健康产业联盟介绍</router-link></li>
-              <li><router-link to='/dashboard/us'>联系我们</router-link></li>
-              <li><router-link to='/dashboard/us'>意见反馈</router-link></li>
+              <li><router-link target="_blank" to='/dashboard/us'>大健康产业联盟介绍</router-link></li>
+              <li><router-link target="_blank" to='/dashboard/us'>联系我们</router-link></li>
+              <li><router-link target="_blank" to='/dashboard/us'>意见反馈</router-link></li>
             </ul>
           </li>
         </ul>
@@ -128,7 +128,9 @@
         })
       },
       clickhd(activeType){
-        this.$router.push({path: '/dashboard/HealthActiveList/'+activeType})
+        // this.$router.push({path: '/dashboard/HealthActiveList/'+activeType})
+        let routeData = this.$router.resolve({path: '/dashboard/HealthActiveList/'+activeType});
+        window.open(routeData.href, '_blank');
       },
       getList() {
       	var url = '/health/healthLinks/listInfo';
