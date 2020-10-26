@@ -492,6 +492,7 @@ ul.r-list li {
 .act-list-q {
 	position: relative;
 	padding-left: 25px;
+  line-height:20px;
 }
 
 .act-list-q::before {
@@ -507,6 +508,7 @@ ul.r-list li {
 .act-list-a {
 	position: relative;
 	padding-left: 25px;
+  line-height:20px;
 }
 
 .act-list-a::before {
