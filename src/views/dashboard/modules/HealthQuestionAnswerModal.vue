@@ -66,6 +66,7 @@
     },
     methods: {
       edit (id) {
+        this.form.resetFields();
         const userInfo = Vue.ls.get(USER_INFO);
         if(userInfo.username=='admin'){
           this.adminFlag = true

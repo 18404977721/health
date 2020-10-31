@@ -354,5 +354,5 @@
   .fix{position:fixed;top:0;left:0;z-index:100;
 		// background:#001529;
 	}
-  .ant-menu{font-size:20px;font-weight:bold;}
+  .ant-menu{font-size:17px;font-weight:bold;color:rgb(255, 255, 255) !important;font-family: '微软雅黑';}
 </style>

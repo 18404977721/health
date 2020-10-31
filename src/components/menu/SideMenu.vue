@@ -151,7 +151,7 @@
       background-color: transparent;
 
       & > a, & > a:hover {
-        color: rgba(0, 0, 0, 0.65);
+        color: rgba(0, 0, 0, 1);
       }
 
       &.ant-menu-item-selected {
@@ -163,7 +163,7 @@
 
     &.ant-menu-dark > .ant-menu-item:first-child {
       & > a, & > a:hover {
-        color: rgba(255, 255, 255, 0.65);
+        color: rgba(255, 255, 255, 1);
       }
 
       &.ant-menu-item-selected {

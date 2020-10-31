@@ -44,8 +44,7 @@ export const constantRouterMap = [{
       title: '首页'
     },
     redirect: '/dashboard/analysis',
-    children: [
-      {
+    children: [{
         path: '/dashboard/analysis',
         name: 'dashboard-analysis',
         component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/Analysis')
@@ -76,8 +75,7 @@ export const constantRouterMap = [{
     path: '/dashboard',
     component: TabLayout,
     hidden: true,
-    children: [
-      {
+    children: [{
         path: '/dashboard/HealthActiveList/:activeType',
         name: 'HealthActiveList',
         component: () => import( /* webpackChunkName: "user" */ '@/views/dashboard/HealthActiveList')
@@ -119,11 +117,6 @@ export const constantRouterMap = [{
         name: 'registerResult',
         component: () => import( /* webpackChunkName: "user" */ '@/views/user/RegisterResult')
       },
-      {
-        path: 'alteration',
-        name: 'alteration',
-        component: () => import( /* webpackChunkName: "user" */ '@/views/user/Alteration')
-      },
     ]
   },
   { //pc端注册页
@@ -131,10 +124,16 @@ export const constantRouterMap = [{
     component: TabLayout,
     redirect: '/register',
     children: [{
-      path: 'register',
-      name: 'register',
-      component: () => import( /* webpackChunkName: "user" */ '@/views/user/register')
-    }]
+        path: 'register',
+        name: 'register',
+        component: () => import( /* webpackChunkName: "user" */ '@/views/user/register')
+      },
+      {
+        path: 'alteration',
+        name: 'alteration',
+        component: () => import( /* webpackChunkName: "user" */ '@/views/user/Alteration')
+      },
+    ]
   },
   { //移动端注册页
     path: '/mobileRegister',
@@ -168,7 +167,7 @@ export const constantRouterMap = [{
   //   ]
   // },
 
-  
+
   {
     path: '/404',
     component: () => import( /* webpackChunkName: "fail" */ '@/views/exception/404')

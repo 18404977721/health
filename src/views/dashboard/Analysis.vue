@@ -8,7 +8,7 @@
 			      <div class="login-face">
 			        <div class=""></div>
 			        <img src="@assets/login_off_img.png">
-			        <p>登 录</p>
+			        <p style="color:#666;font-size:16px;font-family: '微软雅黑';">登 录</p>
 			      </div>
 			      <div class="login-con">
               <a-form :form="form" class="user-layout-login" ref="formLogin" id="formLogin">
@@ -119,7 +119,7 @@
 		            <ul class="r-list">
 		              <li v-for="(item, index) in newList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
 		                <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
-		                <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
+		                <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span><span class="_span">阅读量:</span>{{item.clientNum?item.clientNum:0}}人</span><span><span class="_span">发布人:</span>{{item.createBy}}</span></div>
 		              </li>
 		            </ul>
 		          </div>
@@ -137,7 +137,7 @@
 		            <ul class="r-list">
                   <li v-for="(item, index) in hotList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
                     <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
-                    <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
+                    <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>发布人:{{item.createBy}}</span></div>
                   </li>
 		              <!-- <li>
 		                <a href="#123" target="_blank">
@@ -167,7 +167,7 @@
 		            <ul class="r-list">
                   <li v-for="(item, index) in recommendList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
                     <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></div>
-                    <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>主持人:{{item.createBy}}</span></div>
+                    <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>发布人:{{item.createBy}}</span></div>
                   </li>
 		            </ul>
 		          </div>

@@ -179,7 +179,7 @@
               },
               {
                 id: "9502685863ab87f0ad1134142788a389",
-                meta :{internalOrExternal:false,keepAlive:false,title:"新闻资讯"},
+                meta :{internalOrExternal:false,keepAlive:false,title:"公告栏"},
                 internalOrExternal: false,
                 keepAlive:false,
                 title:"aaa",
@@ -467,7 +467,7 @@
 
             .header-index-left {
               .trigger {
-                color: rgba(0, 0, 0, 0.65);
+                color: rgba(0, 0, 0, 1);
               }
             }
           }

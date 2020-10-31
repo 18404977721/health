@@ -29,11 +29,10 @@
         	</a-col>
         </a-row>
       </div>
-      <a-button v-if="adminFlag" style="width:100px;" type="primary" @click="clickQuestion(item.id)">回答</a-button>
-      <!-- <a-button v-if="adminFlag" style="width:100px;margin-left:20px;" type="primary" @click="clickDel(item.id)">删除</a-button> -->
+      <!-- <a-button v-if="adminFlag" style="width:100px;" type="primary" @click="clickQuestion(item.id)">回答</a-button>
       <a-popconfirm title="确定删除吗?"  @confirm="clickDel(item.id)">
         <a-button v-if="adminFlag" style="width:100px;margin-left:20px;" type="primary">删除</a-button>
-      </a-popconfirm>
+      </a-popconfirm> -->
     </div>
     <div style="margin-top: 15px;text-align: right;">
       <a-pagination simple @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />

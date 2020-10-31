@@ -44,6 +44,14 @@
               <li><router-link target="_blank" to='/dashboard/us'>意见反馈</router-link></li>
             </ul>
           </li>
+          <li class="footer-top-item Fl" style="padding:0 30px;width:150px">
+            <img src="@assets/er_img.png">
+            <p style="text-align:center;">扫码入群</p>
+          </li>
+          <li class="footer-top-item Fl" style="padding:0 30px;width:150px">
+            <img src="@assets/er_img.png">
+            <p style="text-align:center;">扫码入群</p>
+          </li>
         </ul>
         <div class="link-txt Bold">友情链接</div>
         <ul class="footer-btm-con Clear">

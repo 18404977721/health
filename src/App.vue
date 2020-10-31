@@ -58,4 +58,7 @@
   .ant-menu-dark, .ant-menu-dark .ant-menu-sub {
     background:rgba(0,0,0,0) !important;
   }
+  .ant-menu-dark .ant-menu-item, .ant-menu-dark .ant-menu-item-group-title, .ant-menu-dark .ant-menu-item > a {
+      color: rgba(255, 255, 255, 1) !important;
+  }
 </style>
