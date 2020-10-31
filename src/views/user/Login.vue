@@ -264,6 +264,7 @@
               // update-begin- --- author:scott ------ date:20190805 ---- for:密码加密逻辑暂时注释掉，有点问题
               loginParams.captcha = that.inputCodeContent
               loginParams.checkKey = that.currdatetime
+              loginParams.loginType = '2'
               console.log("登录参数",loginParams)
               that.Login(loginParams).then((res) => {
                 this.departConfirm(res)

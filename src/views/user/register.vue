@@ -18,6 +18,9 @@
 					<a-form-item label="姓名" v-bind="formItemLayout">
 						<a-input v-decorator="['username', { rules: [{ required: true, message: '请输入姓名' }] }]" />
 					</a-form-item>
+          <a-form-item label="账号" v-bind="formItemLayout">
+          	<a-input v-decorator="['workNo', { rules: [{ required: true, message: '请输入账号' }] }]" />
+          </a-form-item>
 					<a-form-item v-bind="formItemLayout" label="手机号">
 						<a-row :gutter="8">
 							<a-col :span="13">
@@ -99,6 +102,9 @@
 					<a-form-item label="联系人姓名" v-bind="formItemLayout1">
 						<a-input v-decorator="['usernameQy', { rules: [{ required: true, message: '请输入联系人姓名' }] }]" />
 					</a-form-item>
+          <a-form-item label="账号" v-bind="formItemLayout">
+          	<a-input v-decorator="['workNoQy', { rules: [{ required: true, message: '请输入账号' }] }]" />
+          </a-form-item>
 					<a-form-item label="个人住址" v-bind="formItemLayout1">
 						<a-input
 							v-decorator="['userRegionQy', { rules: [{ required: true, message: '请输入个人住址' }] }]"
@@ -351,9 +357,10 @@
 				this.form.validateFields((err, values) => {
 					if (!err) {
 						let obj = {};
-						obj.userType = this.userType
+						obj.post = this.userType
 						if (this.userType == 0) { //个人
 							obj.username = values.username
+              obj.workNo = values.workNo
 							obj.userRegion = values.userRegion
 							obj.phone = values.phone
 							obj.code = values.code
@@ -369,6 +376,7 @@
 							obj.businessNum = values.businessNum
 							obj.businessAccount = values.businessAccount
 							obj.username = values.usernameQy
+              obj.workNo = values.workNoQy
 							obj.userRegion = values.userRegionQy
 							obj.phone = values.phoneQy
 							obj.code = values.codeQy
