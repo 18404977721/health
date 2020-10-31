@@ -10,7 +10,7 @@
         <a-button type="primary" @click="clickQuestion('')" style="margin-left:20px;">新建</a-button>
       </div>
     </div>
-    <div style="display:flex;cursor:pointer;border-bottom:1px dashed #CC0000;padding:10px 0;"  v-for="(item,index) in list">
+    <div style="display:flex;cursor:pointer;border-bottom:1px solid #efefef;padding:10px 0;"  v-for="(item,index) in list">
       <div style="flex:1;" @click="clickDetail(item.id)">
         <a-row :gutter="8">
         	<a-col :span="2">
@@ -35,7 +35,7 @@
       </a-popconfirm> -->
     </div>
     <div style="margin-top: 15px;text-align: right;">
-      <a-pagination simple @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />
+      <a-pagination show-quick-jumper @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />
     </div>
     
     <health-question-answer-modal ref="HealthQuestionAnswerModal" @ok="currentPageReload"></health-question-answer-modal>

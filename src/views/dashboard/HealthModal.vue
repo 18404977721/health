@@ -111,7 +111,7 @@
           url = '/health/healthInfoCircle/queryById'
         }else if(type=='hd'){//活动
           url = '/health/healthActive/queryById'
-        }else if(type=='gg'){//公告栏
+        }else if(type=='ggl'){//公告栏
           url = '/health/healthNotic/queryById'
         }else if(type=='ggzy'){//公共资源
           url = '/health/healthPubSource/queryById'

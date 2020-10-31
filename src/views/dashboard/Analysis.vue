@@ -482,7 +482,7 @@
 		                </dt>
 		              </dl>
 		              <ul class="r-list">
-		                <li class="Clear" v-for="(item, index) in noticList" :key="index" @click="clickDetail(item.id,'gg')" style="cursor:pointer;">
+		                <li class="Clear" v-for="(item, index) in noticList" :key="index" @click="clickDetail(item.id,'ggl')" style="cursor:pointer;">
 		                  <div class="act-list-tit Fl"><i class="port red"></i> {{item.title}}</div>
 		                  <div class="act-list-tim Fr">{{item.publishTime}}</div>
 		                </li>

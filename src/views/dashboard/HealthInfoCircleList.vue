@@ -9,26 +9,19 @@
         <a-button type="primary" @click="getList">搜索</a-button>
       </div>
     </div>
-    <div style="cursor:pointer;border-bottom:1px dashed #CC0000;padding:10px 0;" @click="clickDetail(item.id)"  v-for="(item,index) in list">
-      <a-row :gutter="8">
-      	<a-col :span="2">
-      		标题：
-      	</a-col>
-      	<a-col :span="22">
-      		{{ item.title }}
-      	</a-col>
-      </a-row>
-      <a-row :gutter="8">
-      	<a-col :span="2">
-      		发布时间：
-      	</a-col>
-      	<a-col :span="22">
-      		{{ item.publishTime }}
-      	</a-col>
-      </a-row>
+    <div style="cursor:pointer;border-bottom:1px solid #efefef;padding:10px 0;display:flex;" @click="clickDetail(item.id)"  v-for="(item,index) in list">
+      <img style="width:80px;height:80px;margin-right:20px;" :src="item.picList[0].filePath" alt="">
+      <div style="flex:1;">
+        <a-row>
+        	{{ item.title }}
+        </a-row>
+        <a-row>
+        	<a-icon type="clock-circle" style="color:#666;margin-right:10px;" />{{ item.publishTime }}
+        </a-row>
+      </div>
     </div>
     <div style="margin-top: 15px;text-align: right;">
-      <a-pagination simple @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />
+      <a-pagination show-quick-jumper @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />
     </div>
     
   </a-card>
