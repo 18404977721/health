@@ -48,9 +48,12 @@
             <img class="_img" src="@assets/er_img.png">
             <p style="text-align:center;">扫码入群</p>
           </li>
-          <li class="Fl" style="width:120px;">
+          <li v-if="userInfo!=null" class="Fl" style="width:120px;">
             <img class="_img" src="@assets/er_img.png">
             <p style="text-align:center;">扫码入群</p>
+          </li>
+          <li v-if="userInfo==null" class="Fl" style="width:174px;">
+            <img src="@assets/share.png" style="display:inline-block;width:100%;height:81px;">
           </li>
         </ul>
         <div class="link-txt Bold">友情链接</div>
@@ -80,6 +83,8 @@
   	getAction,
   	postAction
   } from '@/api/manage';
+  import Vue from "vue"
+  import { USER_INFO} from "@/store/mutation-types"
   export default {
     name: "LayoutFooter",
     data(){
@@ -92,11 +97,14 @@
         gfId:'',
         kcId:'',
         lyId:'',
+        userInfo:null,
       }
     },
     created() {
       this.getList()
       this.get()
+      const userInfo = Vue.ls.get(USER_INFO);
+      this.userInfo = userInfo?userInfo:null
     },
     methods: {
       get(){
