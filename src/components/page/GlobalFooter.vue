@@ -44,7 +44,7 @@
               <li><router-link target="_blank" to='/dashboard/us'>意见反馈</router-link></li>
             </ul>
           </li>
-          <li class="footer-top-item Fl">
+          <li v-if="userInfo!=null" class="footer-top-item Fl">
             <img class="_img" src="@assets/er_img.png">
             <p style="text-align:center;">扫码入群</p>
           </li>
