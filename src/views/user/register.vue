@@ -19,7 +19,7 @@
 						<a-input v-decorator="['username', { rules: [{ required: true, message: '请输入姓名' }] }]" />
 					</a-form-item>
           <a-form-item label="账号" v-bind="formItemLayout">
-          	<a-input v-decorator="['workNo', { rules: [{ required: true, message: '请输入账号' }] }]" />
+          	<a-input :maxLength="15" v-decorator="['workNo', { rules: [{ required: true, message: '请输入账号' }] }]" />
           </a-form-item>
 					<a-form-item v-bind="formItemLayout" label="手机号">
 						<a-row :gutter="8">
@@ -102,8 +102,8 @@
 					<a-form-item label="联系人姓名" v-bind="formItemLayout1">
 						<a-input v-decorator="['usernameQy', { rules: [{ required: true, message: '请输入联系人姓名' }] }]" />
 					</a-form-item>
-          <a-form-item label="账号" v-bind="formItemLayout">
-          	<a-input v-decorator="['workNoQy', { rules: [{ required: true, message: '请输入账号' }] }]" />
+          <a-form-item label="账号" v-bind="formItemLayout1">
+          	<a-input :maxLength="15" v-decorator="['workNoQy', { rules: [{ required: true, message: '请输入账号' }] }]" />
           </a-form-item>
 					<a-form-item label="个人住址" v-bind="formItemLayout1">
 						<a-input
