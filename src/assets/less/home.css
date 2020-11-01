@@ -714,8 +714,19 @@ dl.text-tit-th dt {
   text-decoration: underline;
 }
 
+.footer-top-con{
+  display:flex;
+  justify-content:space-between;
+}
+
 .footer-top-con .footer-top-item {
-  width: 120px;
+  flex:1;
+  text-align:center;
+}
+
+._img{
+  display:inline-block;
+  width:120px;height:120px;
 }
 
 .footer-top-con .footer-top-item+li {

@@ -6,7 +6,7 @@
           <li class="footer-top-item Fl" style="padding-right:30px">
             <div class="footer-logo"></div>
             <p class="footer-tit">大健康产业联盟</p>
-            <img src="@assets/er_img.png">
+            <img class="_img" src="@assets/er_img.png">
           </li>
           <li class="footer-top-item Fl">
             <ul>
@@ -20,7 +20,7 @@
           </li>
           <li class="footer-top-item Fl">
             <ul>
-              <li class="footer-top-lif"@click="clickhd('kong')">活动</li>
+              <li class="footer-top-lif" @click="clickhd('kong')">活动</li>
               <li @click="clickhd(gyId)">公益</li>
               <li @click="clickhd(zhId)">展会</li>
               <li @click="clickhd(gfId)">高峰</li>
@@ -36,7 +36,7 @@
               <li><router-link target="_blank" to='/user/register'>会员服务</router-link></li>
             </ul>
           </li>
-          <li class="footer-top-item Fl" style="width: 200px;">
+          <li class="footer-top-item Fl" style="width: 220px;">
             <ul>
               <li class="footer-top-lif"><router-link to='/dashboard/us'>关于我们</router-link></li>
               <li><router-link target="_blank" to='/dashboard/us'>大健康产业联盟介绍</router-link></li>
@@ -44,12 +44,12 @@
               <li><router-link target="_blank" to='/dashboard/us'>意见反馈</router-link></li>
             </ul>
           </li>
-          <li class="footer-top-item Fl" style="padding:0 30px;width:150px">
-            <img src="@assets/er_img.png">
+          <li class="footer-top-item Fl">
+            <img class="_img" src="@assets/er_img.png">
             <p style="text-align:center;">扫码入群</p>
           </li>
-          <li class="footer-top-item Fl" style="padding:0 30px;width:150px">
-            <img src="@assets/er_img.png">
+          <li class="Fl" style="width:120px;">
+            <img class="_img" src="@assets/er_img.png">
             <p style="text-align:center;">扫码入群</p>
           </li>
         </ul>
