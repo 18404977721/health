@@ -119,7 +119,7 @@
 		            <ul class="r-list">
 		              <li v-for="(item, index) in newList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
 		                <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><span style="float:right;padding-right: 10px;"><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></span></div>
-		                <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span><span class="_span">阅读量:</span>{{item.clientNum?item.clientNum:0}}人</span><span><span class="_span">发布人:</span>{{item.createBy}}</span></div>
+		                <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span><span class="_span">阅读量:</span>{{item.clientNum?item.clientNum:0}}人</span><span style="text-align:right;"><span class="_span">发布人:</span>{{item.createBy}}</span></div>
 		              </li>
 		            </ul>
 		          </div>
@@ -137,7 +137,7 @@
 		            <ul class="r-list">
                   <li v-for="(item, index) in hotList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
                     <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><span style="float:right;padding-right: 10px;"><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></span></div>
-                    <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>发布人:{{item.createBy}}</span></div>
+                    <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span style="text-align:right;">发布人:{{item.createBy}}</span></div>
                   </li>
 		              <!-- <li>
 		                <a href="#123" target="_blank">
@@ -167,7 +167,7 @@
 		            <ul class="r-list">
                   <li v-for="(item, index) in recommendList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
                     <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><span style="float:right;padding-right: 10px;"><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></span></div>
-                    <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span>发布人:{{item.createBy}}</span></div>
+                    <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span style="text-align:right;">发布人:{{item.createBy}}</span></div>
                   </li>
 		            </ul>
 		          </div>
@@ -483,7 +483,7 @@
 		              </dl>
 		              <ul class="r-list">
 		                <li class="Clear" v-for="(item, index) in noticList" :key="index" @click="clickDetail(item.id,'ggl')" style="cursor:pointer;">
-		                  <div class="act-list-tit Fl"><i class="port red"></i> {{item.title}}</div>
+		                  <div class="act-list-tit Fl" :title="item.title"><i class="port red"></i> {{item.title}}</div>
 		                  <div class="act-list-tim Fr">{{item.publishTime}}</div>
 		                </li>
 		              </ul>

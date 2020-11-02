@@ -27,7 +27,7 @@
     <div v-else :class="['top-nav-header-index', theme]">
       <div style="height:80px;">
         <div style="margin:auto;width:100%;height:80px;background:linear-gradient(to right, #b90101 , #eb560c,#c10e03);"  :class="{'fix':!topBanner}">
-          <div class="header-index-wide" style="margin:auto;width:1315px;padding: 0;">
+          <div class="header-index-wide" style="margin:auto;width:1200px;padding: 0;">
             <div class="header-index-left" :style="topMenuStyle.headerIndexLeft">
               <logo v-if="!topBanner" class="top-nav-header" :show-title="device !== 'mobile'" :style="topMenuStyle.topNavHeader"/>
               <div v-if="device !== 'mobile'" id="top-nav-scroll-view" :style="topMenuStyle.scrollView">
