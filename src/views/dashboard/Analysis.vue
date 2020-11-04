@@ -661,6 +661,7 @@
 	} from '@/api/manage';
   import { mapActions } from "vuex"
   import { timeFix } from "@/utils/util"
+  import { mixin, mixinDevice } from '@/utils/mixin.js'
   import Vue from "vue"
   import { USER_INFO} from "@/store/mutation-types"
   
@@ -733,6 +734,8 @@
 			}
 		},
 		created() {
+      this.$store.dispatch('ToggleLayoutMode', "topmenu")
+      this.$store.dispatch('ToggleFixSiderbar', false)
       this.getRotationList()
       this.getnewList()
       this.gethotList()
