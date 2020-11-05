@@ -1,6 +1,6 @@
 <template>
-  <a-card :bordered="false" style="padding:40px 60px;">
-    <div style="width:80%;margin:0 auto;border:1px solid #bb261a;border-radius:10px;padding:35px 40px;">
+  <a-card :bordered="false">
+    <div style="width:80%;margin:0 auto;border:1px solid #bb261a;border-radius:20px;padding:30px 40px 20px 40px;">
       <!-- 查询区域 -->
       <div style="padding:0 0 10px;box-sizing:border-box;display: flex;">
         <div style="flex: 1;">
