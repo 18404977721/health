@@ -1,24 +1,24 @@
 <template>
   <a-card :bordered="false" style="padding:40px 60px;">
-
-    <!-- 查询区域 -->
-    <div style="padding:0 0 10px;box-sizing:border-box;display: flex;">
-      <div style="flex: 1;">
-        <a-input placeholder="请输入标题" v-model="keyWord" style="width:400px;margin-right:20px;"></a-input>
-        <a-button type="primary" @click="getList">搜索</a-button>
+    <div style="width:1200px;margin:0 auto;border:1px solid #bb261a;border-radius:10px;padding:35px 40px;">
+      <!-- 查询区域 -->
+      <div style="padding:0 0 10px;box-sizing:border-box;display: flex;">
+        <div style="flex: 1;">
+          <a-input placeholder="请输入标题" v-model="keyWord" style="width:400px;margin-right:20px;"></a-input>
+          <a-button type="primary" @click="getList">搜索</a-button>
+        </div>
+      </div>
+      <div class="_li" @click="clickDetail(item.id,item.type)"  v-for="(item,index) in list">
+        <a-row :gutter="8">
+          <a-col :span="2">
+            标题：
+          </a-col>
+          <a-col :span="22">
+            {{ item.title }}
+          </a-col>
+        </a-row>
       </div>
     </div>
-    <div class="_li" @click="clickDetail(item.id,item.type)"  v-for="(item,index) in list">
-      <a-row :gutter="8">
-      	<a-col :span="2">
-      		标题：
-      	</a-col>
-      	<a-col :span="22">
-      		{{ item.title }}
-      	</a-col>
-      </a-row>
-    </div>
-    
   </a-card>
 </template>
 
@@ -66,6 +66,6 @@
 </script>
 <style scoped>
   ._li{
-    cursor:pointer;border-bottom:1px dashed #CC0000;padding:10px 0;
+    cursor:pointer;border-bottom:1px solid #CC0000;padding:10px 0;
   }
 </style>

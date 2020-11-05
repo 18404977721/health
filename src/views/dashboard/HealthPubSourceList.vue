@@ -1,35 +1,35 @@
 <template>
   <a-card :bordered="false" style="padding:40px 60px;">
-
-    <!-- 查询区域 -->
-    <div style="padding:0 0 10px;box-sizing:border-box;display: flex;">
-      <div style="flex: 1;">
-        <label style="width: 90px;">标题：</label>
-        <a-input placeholder="请输入标题" v-model="titleContent" style="width:350px;margin-right:20px;"></a-input>
-        <label style="width: 90px;">类型：</label>
-        <a-select v-model='type' style="width:350px;margin-right:20px;">
-          <a-select-option value="">请选择</a-select-option>
-        	<template v-for="item in typeList">
-        		<a-select-option :value="item.id">{{item.typeValue}}</a-select-option>
-        	</template>
-        </a-select>
-        <a-button type="primary" @click="getList">搜索</a-button>
+    <div style="width:1200px;margin:0 auto;border:1px solid #bb261a;border-radius:10px;padding:35px 40px;">
+      <!-- 查询区域 -->
+      <div style="padding:0 0 10px;box-sizing:border-box;display: flex;">
+        <div style="flex: 1;">
+          <label style="width: 90px;">标题：</label>
+          <a-input placeholder="请输入标题" v-model="titleContent" style="width:350px;margin-right:20px;"></a-input>
+          <label style="width: 90px;">类型：</label>
+          <a-select v-model='type' style="width:350px;margin-right:20px;">
+            <a-select-option value="">请选择</a-select-option>
+            <template v-for="item in typeList">
+              <a-select-option :value="item.id">{{item.typeValue}}</a-select-option>
+            </template>
+          </a-select>
+          <a-button type="primary" @click="getList">搜索</a-button>
+        </div>
+      </div>
+      <div style="cursor:pointer;border-bottom:1px solid #efefef;padding:10px 0;display:flex;" @click="clickDetail(item.id)"  v-for="(item,index) in list">
+        <div style="flex:1;">
+          <a-row>
+            {{ item.title }}
+          </a-row>
+          <a-row>
+            <a-icon type="clock-circle" style="color:#666;margin-right:10px;" />{{ item.publishTime }}
+          </a-row>
+        </div>
+      </div>
+      <div style="margin-top: 15px;text-align: right;">
+        <a-pagination show-quick-jumper @change="pageChange" v-model="currentNo" :defaultPageSize=5 :total="total" />
       </div>
     </div>
-    <div style="cursor:pointer;border-bottom:1px solid #efefef;padding:10px 0;display:flex;" @click="clickDetail(item.id)"  v-for="(item,index) in list">
-      <div style="flex:1;">
-        <a-row>
-        	{{ item.title }}
-        </a-row>
-        <a-row>
-        	<a-icon type="clock-circle" style="color:#666;margin-right:10px;" />{{ item.publishTime }}
-        </a-row>
-      </div>
-    </div>
-    <div style="margin-top: 15px;text-align: right;">
-      <a-pagination show-quick-jumper @change="pageChange" v-model="currentNo" :defaultPageSize=10 :total="total" />
-    </div>
-    
   </a-card>
 </template>
 
@@ -84,7 +84,7 @@
         let url = "/health/healthPubSource/list";
         let params = {
           pageNo:this.currentNo,
-          pageSize:10,
+          pageSize:5,
           title:this.titleContent,
           type:this.type
         };
