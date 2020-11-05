@@ -384,7 +384,7 @@
 		          <div class="act-col act-row-sta Fr">
 		            <!-- stu_img_01.jpg 01 进行中  02已结束-->
 		            <img v-if="kc.state=='进行中'" src="@assets/stu_img_01.jpg">
-		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		            <img v-if="kc.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
 		        <div class="act-row act-row02" v-if="kc.picList&&kc.picList.length>1" @click="clickDetail(kc.id,'hd')" style="cursor:pointer;">
@@ -403,7 +403,7 @@
 		              </div>
 		              <div class="act-col act-row-sta Fr">
 		                <img v-if="kc.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		                <img v-if="kc.state=='已结束'" src="@assets/stu_img_02.jpg">
 		              </div>
 		            </div>
 		            <div class="act-row-imglist Clear">
@@ -436,7 +436,7 @@
 		          <div class="act-col act-row-sta Fr">
 		            <!-- stu_img_01.jpg 01 进行中  02已结束-->
 		            <img v-if="ly.state=='进行中'" src="@assets/stu_img_01.jpg">
-		            <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		            <img v-if="ly.state=='已结束'" src="@assets/stu_img_02.jpg">
 		          </div>
 		        </div>
 		        <div class="act-row act-row02" v-if="ly.picList&&ly.picList.length>1" @click="clickDetail(ly.id,'hd')" style="cursor:pointer;">
@@ -455,7 +455,7 @@
 		              </div>
 		              <div class="act-col act-row-sta Fr">
 		                <img v-if="ly.state=='进行中'" src="@assets/stu_img_01.jpg">
-		                <img v-if="gf.state=='已结束'" src="@assets/stu_img_02.jpg">
+		                <img v-if="ly.state=='已结束'" src="@assets/stu_img_02.jpg">
 		              </div>
 		            </div>
 		            <div class="act-row-imglist Clear">
@@ -661,7 +661,6 @@
 	} from '@/api/manage';
   import { mapActions } from "vuex"
   import { timeFix } from "@/utils/util"
-  import { mixin, mixinDevice } from '@/utils/mixin.js'
   import Vue from "vue"
   import { USER_INFO} from "@/store/mutation-types"
   

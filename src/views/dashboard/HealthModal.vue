@@ -2,8 +2,8 @@
   <div class="cardWrap">
 		<div v-if="!wdqFlag">
 			<h2 style="text-align:center;margin:0;">{{list.title}}</h2>
-			<p v-if="list.source" style="text-align:center;font-size: 18px;color: #999;line-height: 50px;margin:0;">发布时间: {{list.publishTime}} <span style="padding-left: 20px;"></span>来源: {{list.source}}</p>
-      <p v-else style="text-align:center;font-size: 18px;color: #999;line-height: 50px;margin:0;">发布时间: {{list.publishTime}}</p>
+			<p v-if="list.source" style="text-align:center;font-size: 14px;color: #999;line-height: 50px;margin:0;">发布时间: {{list.publishTime}} <span style="padding-left: 20px;"></span>来源: {{list.source}}</p>
+      <p v-else style="text-align:center;font-size: 14px;color: #999;line-height: 50px;margin:0;">发布时间: {{list.publishTime}}</p>
 			<a-tabs default-active-key="1" v-if="list.picList||list.videoList">
 			  <a-tab-pane key="1" tab="图片" v-if="list.picList&&list.picList.length>0">
 			    <a-carousel arrows>

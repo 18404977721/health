@@ -1,6 +1,6 @@
 <template>
   <a-card :bordered="false" style="padding:40px 60px;">
-    <div style="width:1200px;margin:0 auto;border:1px solid #bb261a;border-radius:10px;padding:35px 40px;">
+    <div style="width:80%;margin:0 auto;border:1px solid #bb261a;border-radius:10px;padding:35px 40px;">
       <!-- 查询区域 -->
       <div style="padding:0 0 10px;box-sizing:border-box;display: flex;">
         <div style="flex: 1;">
@@ -18,10 +18,10 @@
             <a-icon type="clock-circle" style="color:#666;margin-right:10px;" />{{ item.publishTime }}
           </a-row>
         </div>
-      </div>
-      <div style="margin-top: 15px;text-align: right;">
-        <a-pagination show-quick-jumper @change="pageChange" v-model="currentNo" :defaultPageSize=5 :total="total" />
-      </div>
+      </div>     
+    </div>
+    <div style="text-align: right;width:80%;margin:0 auto;">
+      <a-pagination show-quick-jumper @change="pageChange" v-model="currentNo" :defaultPageSize=5 :total="total"  style="margin-top: 10px;"/>
     </div>
   </a-card>
 </template>
