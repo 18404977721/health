@@ -119,7 +119,14 @@
 		            <ul class="r-list">
 		              <li v-for="(item, index) in newList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
 		                <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><span style="float:right;padding-right: 10px;"><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></span></div>
-		                <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span><span class="_span">阅读量:</span>{{item.clientNum?item.clientNum:0}}人</span><span style="text-align:right;"><span class="_span">发布人:</span>{{item.createBy}}</span></div>
+		                <div class="news-list-txt">
+                      <span v-if="item.typeValue == '公益'" class="news-list-txt1 news-list-txt-color1">{{item.typeValue}}</span>
+                      <span v-else-if="item.typeValue == '展会'" class="news-list-txt1 news-list-txt-color2">{{item.typeValue}}</span>
+                      <span v-else-if="item.typeValue == '高峰'" class="news-list-txt1 news-list-txt-color3">{{item.typeValue}}</span>
+                      <span v-else-if="item.typeValue == '考察'" class="news-list-txt1 news-list-txt-color4">{{item.typeValue}}</span>
+                      <span v-else class="news-list-txt1 news-list-txt-color5">{{item.typeValue}}</span>
+                    
+                    <span><span class="_span">阅读量:</span>{{item.clientNum?item.clientNum:0}}人</span><span style="text-align:right;"><span class="_span">发布人:</span>{{item.createBy}}</span></div>
 		              </li>
 		            </ul>
 		          </div>
@@ -137,7 +144,13 @@
 		            <ul class="r-list">
                   <li v-for="(item, index) in hotList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
                     <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><span style="float:right;padding-right: 10px;"><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></span></div>
-                    <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span style="text-align:right;">发布人:{{item.createBy}}</span></div>
+                    <div class="news-list-txt">
+                      <span v-if="item.typeValue == '公益'" class="news-list-txt1 news-list-txt-color1">{{item.typeValue}}</span>
+                      <span v-else-if="item.typeValue == '展会'" class="news-list-txt1 news-list-txt-color2">{{item.typeValue}}</span>
+                      <span v-else-if="item.typeValue == '高峰'" class="news-list-txt1 news-list-txt-color3">{{item.typeValue}}</span>
+                      <span v-else-if="item.typeValue == '考察'" class="news-list-txt1 news-list-txt-color4">{{item.typeValue}}</span>
+                      <span v-else class="news-list-txt1 news-list-txt-color5">{{item.typeValue}}</span>
+                      <span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span style="text-align:right;">发布人:{{item.createBy}}</span></div>
                   </li>
 		              <!-- <li>
 		                <a href="#123" target="_blank">
@@ -167,7 +180,13 @@
 		            <ul class="r-list">
                   <li v-for="(item, index) in recommendList" :key="index" @click="clickDetail(item.id,'xxq')" style="cursor:pointer;">
                     <div class="news-list-tit"><i class="port"></i> <span class="news-list-title">{{item.title}}</span><span style="float:right;padding-right: 10px;"><i v-if="item.isTop=='1'" class="top"></i><i v-if="item.isRecommend=='1'" class="jian"></i></span></div>
-                    <div class="news-list-txt"><span class="news-list-txt1">{{item.typeValue}}</span><span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span style="text-align:right;">发布人:{{item.createBy}}</span></div>
+                    <div class="news-list-txt">
+                      <span v-if="item.typeValue == '公益'" class="news-list-txt1 news-list-txt-color1">{{item.typeValue}}</span>
+                      <span v-else-if="item.typeValue == '展会'" class="news-list-txt1 news-list-txt-color2">{{item.typeValue}}</span>
+                      <span v-else-if="item.typeValue == '高峰'" class="news-list-txt1 news-list-txt-color3">{{item.typeValue}}</span>
+                      <span v-else-if="item.typeValue == '考察'" class="news-list-txt1 news-list-txt-color4">{{item.typeValue}}</span>
+                      <span v-else class="news-list-txt1 news-list-txt-color5">{{item.typeValue}}</span>
+                      <span>阅读量:{{item.clientNum?item.clientNum:0}}人</span><span style="text-align:right;">发布人:{{item.createBy}}</span></div>
                   </li>
 		            </ul>
 		          </div>
