@@ -6,7 +6,7 @@
           <li class="footer-top-item Fl" style="padding-right:30px">
             <div class="footer-logo"></div>
             <p class="footer-tit">大健康产业联盟</p>
-            <img class="_img" src="@assets/er_img.png">
+            <img class="_img" src="@assets/er_img.jpg">
           </li>
           <li class="footer-top-item Fl">
             <ul>

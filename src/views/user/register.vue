@@ -10,16 +10,17 @@
 					我是个人用户
 				</a-radio>
 			</a-radio-group>
-			<img src="@assets/step.png" alt="" style="width:100%;margin:20px 0;">
+			<img v-if="userType == 0" src="@assets/stepUser.png" alt="" style="width:100%;margin:20px 0;">
+      <img v-if="userType == 1" src="@assets/step.png" alt="" style="width:100%;margin:20px 0;">
 			<div style="border-top:1px solid #959595;position:relative;width:290px;margin:20px auto;"><span style="display:inline-block;width:90px;height:20px;text-align:center;line-height:20px;position:absolute;top:-13px;left:50%;margin-left:-45px;background:#fff;color:#959595;">{{userType==0?'个人用户':'企业用户'}}</span></div>
 			<a-form :form="form" @submit="handleSubmit">
 				<!-- 个人 -->
 				<div v-if="userType==0">
 					<a-form-item label="姓名" v-bind="formItemLayout">
-						<a-input v-decorator="['username', { rules: [{ required: true, message: '请输入姓名' }] }]" />
+						<a-input v-decorator="['workNo', { rules: [{ required: true, message: '请输入姓名' }] }]" />
 					</a-form-item>
           <a-form-item label="账号" v-bind="formItemLayout">
-          	<a-input :maxLength="15" v-decorator="['workNo', { rules: [{ required: true, message: '请输入账号' }] }]" />
+          	<a-input :maxLength="15" v-decorator="['username', { rules: [{ required: true, message: '请输入账号' }] }]" />
           </a-form-item>
 					<a-form-item v-bind="formItemLayout" label="手机号">
 						<a-row :gutter="8">
@@ -100,10 +101,10 @@
 						 addonAfter="万" />
 					</a-form-item>
 					<a-form-item label="联系人姓名" v-bind="formItemLayout1">
-						<a-input v-decorator="['usernameQy', { rules: [{ required: true, message: '请输入联系人姓名' }] }]" />
+						<a-input v-decorator="['workNoQy', { rules: [{ required: true, message: '请输入联系人姓名' }] }]" />
 					</a-form-item>
           <a-form-item label="账号" v-bind="formItemLayout1">
-          	<a-input :maxLength="15" v-decorator="['workNoQy', { rules: [{ required: true, message: '请输入账号' }] }]" />
+          	<a-input :maxLength="15" v-decorator="['usernameQy', { rules: [{ required: true, message: '请输入账号' }] }]" />
           </a-form-item>
 					<a-form-item label="个人住址" v-bind="formItemLayout1">
 						<a-input
@@ -210,7 +211,7 @@
 					height: '30px',
 					lineHeight: '30px',
 				},
-				userType: 0,
+				userType: 1,
 				readValue: false,
 				formItemLayout: {
 					labelCol: {
@@ -346,6 +347,11 @@
 			onReadChange(e) {
 				this.readValue = !this.readValue
 			},
+      gotoHome() {
+        // let routeData = this.$router.resolve({path: '/dashboard/analysis'});
+        // window.open(routeData.href, '_blank');
+        this.$router.push({path: '/dashboard/analysis'})
+      },
 			// 提交数据
 			handleSubmit(e) {
 				var that = this;
@@ -415,7 +421,9 @@
 						let url = "/sys/user/register";
 						postAction(url, obj).then((res) => {
 							if (res.success) {
-								that.$message.success(res.message);
+                that.$message.success("注册信息提交成功，请留意手机短信或公众号消息通知。");
+                setTimeout(this.gotoHome, 3000);
+								// that.$message.success(res.message);
 							} else {
 								that.$message.error(res.message);
 							}

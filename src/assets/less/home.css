@@ -254,11 +254,30 @@ ul.r-list li {
   text-align: center;
   margin-top: 4px;
   height: 18px;
-  line-height: 18px;
-  background-color: #ff8500;
+  line-height: 18px;  
   color: #fff;
   border-radius: 4px;
   font-size: 12px;
+}
+/* 公益 */
+.news-list-txt-color1 {
+  background-color: #f16663;
+}
+/* 展会 */
+.news-list-txt-color2 {
+  background-color: #f47747;
+}
+/* 高峰 */
+.news-list-txt-color3 {
+  background-color: #ffbf27;
+}
+/* 考察 */
+.news-list-txt-color4 {
+  background-color: #f57f01;
+}
+/* 路演 */
+.news-list-txt-color5 {
+  background-color: #f65a4e;
 }
 
 .news-list-txt2 {

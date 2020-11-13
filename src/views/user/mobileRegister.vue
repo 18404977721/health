@@ -9,7 +9,8 @@
 		      我是个人用户
 		    </a-radio>
 		  </a-radio-group>
-			<img src="@assets/step_yd.png" alt="" style="width:100%;margin:20px 0;">
+      <img  v-if="userType == 1" src="@assets/step_yd.png" alt="" style="width:100%;margin:20px 0;">
+			<img  v-if="userType == 0" src="@assets/step_ydUser.png" alt="" style="width:100%;margin:20px 0;">
 		 <a-form :form="form" @submit="handleSubmit">
 			<!-- 个人 -->
 			<div v-if="userType==0">
@@ -18,11 +19,11 @@
 					v-bind="formItemLayout"
 				>
 					<a-input
-						v-decorator="['username', { rules: [{ required: true, message: '请输入姓名' }] }]"
+						v-decorator="['workNo', { rules: [{ required: true, message: '请输入姓名' }] }]"
 					/>
 				</a-form-item>
         <a-form-item label="账号" v-bind="formItemLayout">
-        	<a-input :maxLength="15" v-decorator="['workNo', { rules: [{ required: true, message: '请输入账号' }] }]" />
+        	<a-input :maxLength="15" v-decorator="['username', { rules: [{ required: true, message: '请输入账号' }] }]" />
         </a-form-item>
 				<a-form-item
 					v-bind="formItemLayout"
@@ -181,11 +182,11 @@
 					v-bind="formItemLayout1"
 				>
 					<a-input
-						v-decorator="['usernameQy', { rules: [{ required: true, message: '请输入联系人姓名' }] }]"
+						v-decorator="['workNoQy', { rules: [{ required: true, message: '请输入联系人姓名' }] }]"
 					/>
 				</a-form-item>
         <a-form-item label="账号" v-bind="formItemLayout1">
-        	<a-input :maxLength="15" v-decorator="['workNoQy', { rules: [{ required: true, message: '请输入账号' }] }]" />
+        	<a-input :maxLength="15" v-decorator="['usernameQy', { rules: [{ required: true, message: '请输入账号' }] }]" />
         </a-form-item>
 				<a-form-item
 				  label="个人住址"
@@ -309,7 +310,8 @@
 				</a-form-item>
 			</div>
 			<a-radio v-model="readValue" @click="onReadChange" style="margin-top:10px;">我已阅读并同意<span style="color:#e40005;" @click="clickTip"><<大健康产业联盟>></span></a-radio>
-			<a-form-item style="margin:0 auto;width:90%;position:fixed;bottom:10px;">
+			<!-- <a-form-item style="margin:0 auto;width:90%;position:fixed;bottom:10px;"> -->
+      <a-form-item style="text-align:center;">
 				<a-button type="primary" html-type="submit" style="width:100%;height:50px;font-size:18px;">
 					同意条款并提交
 				</a-button>
@@ -335,7 +337,7 @@
 					height: '30px',
 					lineHeight: '30px',
 				},
-				userType:0,
+				userType:1,
 				readValue:false,
 				formItemLayout: {
 					labelCol: {
@@ -479,6 +481,11 @@
 			onReadChange(e) {
 				this.readValue = !this.readValue 
 			},
+      gotoHome() {
+        // let routeData = this.$router.resolve({path: '/dashboard/analysis'});
+        // window.open(routeData.href, '_blank');
+        this.$router.push({path: '/dashboard/analysis'})
+      },
 			// 提交数据
 			handleSubmit (e) {
 			  var that = this;
@@ -548,7 +555,8 @@
 			      let url = "/sys/user/register";
 			      postAction(url,obj).then((res) => {
 			        if (res.success) {
-			        	that.$message.success(res.message);
+			        	that.$message.success("注册信息提交成功，请留意手机短信或公众号消息通知。");
+                setTimeout(this.gotoHome, 3000);
 			        }else{
 			          that.$message.error(res.message);
 			        }
