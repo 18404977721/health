@@ -1,30 +1,32 @@
 <template>
   <a-card :bordered="false">
-    <div style="width:80%;margin:0 auto;border:1px solid #bb261a;border-radius:20px;padding:30px 40px 20px 40px;">
-      <!-- 查询区域 -->
-      <div style="padding:0 0 10px;box-sizing:border-box;display: flex;">
-        <div style="flex: 1;">
-          <label style="width: 90px;">问题：</label>
-          <a-input placeholder="请输入问题" v-model="question" style="width:350px;margin-right:20px;"></a-input>
-          <a-button type="primary" @click="getList">搜索</a-button>
-          <a-button type="primary" @click="clickQuestion('')" style="margin-left:20px;">新建</a-button>
-        </div>
+    <!-- 查询区域 -->
+    <div style="width:80%;margin:0 auto;padding:0 0 10px;box-sizing:border-box;display: flex;">
+      <div style="flex: 1;">
+        <label style="width: 90px;">问题：</label>
+        <a-input placeholder="请输入问题" v-model="question" style="width:350px;margin-right:20px;"></a-input>
+        <a-button type="primary" @click="getList">搜索</a-button>
+        <a-button type="primary" @click="clickQuestion('')" style="margin-left:20px;">新建</a-button>
       </div>
+    </div>
+    <div style="margin-top: 20px;"></div>
+    <div style="width:80%;margin:0 auto;border:1px solid #D3D3D3;border-radius:20px;padding:30px 40px 20px 40px;">
+     
       <div style="display:flex;cursor:pointer;border-bottom:1px solid #efefef;padding:10px 0;"  v-for="(item,index) in list">
         <div style="flex:1;" @click="clickDetail(item.id)">
           <a-row :gutter="8">
-            <a-col :span="2">
-              问题：
+            <a-col :span="2" style="color:red">
+              Q：
             </a-col>
-            <a-col :span="22">
+            <a-col :span="22" style="font-size: 19px; font-weight: bold; color:#333333">
               {{ item.question }}
             </a-col>
           </a-row>
-          <a-row :gutter="8" v-if="item.reply">
-            <a-col :span="2">
-              回答：
+          <a-row :gutter="8" v-if="item.reply" style="margin-top: 23px;">
+            <a-col :span="2" style="color:#0000FF;">
+              A：
             </a-col>
-            <a-col :span="22">
+            <a-col :span="22" style=" color:#808080;font-size: 12px;">
               {{ item.reply }}
             </a-col>
           </a-row>

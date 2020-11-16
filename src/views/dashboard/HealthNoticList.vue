@@ -1,20 +1,22 @@
 <template>
   <a-card :bordered="false" >
-    <div style="width:80%;margin:0 auto;border:1px solid #bb261a;border-radius:20px;padding:30px 40px 20px 40px;">
-      <!-- 查询区域 -->
-      <div style="padding:0 0 10px;box-sizing:border-box;display: flex;">
-        <div style="flex: 1;">
-          <label style="width: 90px;">标题：</label>
-          <a-input placeholder="请输入标题" v-model="titleContent" style="width:350px;margin-right:20px;"></a-input>
-          <a-button type="primary" @click="getList">搜索</a-button>
-        </div>
+    <!-- 查询区域 -->
+    <div style="width:80%;margin:0 auto;padding:0 0 10px;box-sizing:border-box;display: flex;">
+      <div style="flex: 1;">
+        <label style="width: 90px;">标题：</label>
+        <a-input placeholder="请输入标题" v-model="titleContent" style="width:350px;margin-right:20px;"></a-input>
+        <a-button type="primary" @click="getList">搜索</a-button>
       </div>
+    </div>
+    <div style="margin-top: 20px;"></div>
+    <div style="width:80%;margin:0 auto;border:1px solid #D3D3D3;border-radius:20px;padding:30px 40px 20px 40px;">
+     
       <div style="cursor:pointer;border-bottom:1px solid #efefef;padding:10px 0;display:flex;" @click="clickDetail(item.id)"  v-for="(item,index) in list">
         <div style="flex:1;">
           <a-row   style="font-size: 19px; font-weight: bold; color:#333333">
             {{ item.title }}
           </a-row>
-          <a-row>
+          <a-row style="color:#D3D3D3;">
             <a-icon type="clock-circle" style="color:#666;margin-right:10px;margin-top:12px;" />{{ item.publishTime }}
           </a-row>
         </div>

@@ -1,5 +1,5 @@
 <template>
-	<div class="wrap">
+	<div class="wrapHome">
 		<div class="topWrap">
 			<!-- 登录 -->
 			<div v-if="userInfo==null" class="login-index-con Center Abs">

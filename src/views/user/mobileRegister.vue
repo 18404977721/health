@@ -1,6 +1,6 @@
 <template>
 	<div class="wrap">
-		<img src="@assets/tab.png" alt="" style="width:100%;margin:0 0 20px;">
+		<!-- <img src="@assets/tab.png" alt="" style="width:100%;margin:0 0 20px;"> -->
 		<a-radio-group v-model="userType">
 		    <a-radio :style="radioStyle" :value="1">
 		      我是企业用户
@@ -9,8 +9,8 @@
 		      我是个人用户
 		    </a-radio>
 		  </a-radio-group>
-      <img  v-if="userType == 1" src="@assets/step_yd.png" alt="" style="width:100%;margin:20px 0;">
-			<img  v-if="userType == 0" src="@assets/step_ydUser.png" alt="" style="width:100%;margin:20px 0;">
+     <!-- <img  v-if="userType == 1" src="@assets/step_yd.png" alt="" style="width:100%;margin:20px 0;">
+			<img  v-if="userType == 0" src="@assets/step_ydUser.png" alt="" style="width:100%;margin:20px 0;"> -->
 		 <a-form :form="form" @submit="handleSubmit">
 			<!-- 个人 -->
 			<div v-if="userType==0">
@@ -44,28 +44,29 @@
 						</a-col>
 					</a-row>
 				</a-form-item>
+        <a-form-item
+          label="验证码"
+        	v-bind="formItemLayout"
+        >
+        	<a-input
+        		v-decorator="['code', { rules: [{ required: true, message: '请输入验证码' }] }]"
+        	/>
+        </a-form-item>
 				<a-form-item
 				  label="个人住址"
 					v-bind="formItemLayout"
 				>
           <a-input
-          	v-decorator="['userRegion', { rules: [{ required: true, message: '请输入个人住址' }] }]"
+          	v-decorator="['userRegion']"
           />
 				</a-form-item>
-				<a-form-item
-				  label="验证码"
-					v-bind="formItemLayout"
-				>
-					<a-input
-						v-decorator="['code', { rules: [{ required: true, message: '请输入验证码' }] }]"
-					/>
-				</a-form-item>
+				
 				<a-form-item
 				  label="密码"
 					v-bind="formItemLayout"
 				>
-					<a-input
-						v-model="password"
+					<a-input-password
+						v-model="password" autocomplete="new-password"
 						v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }] }]"
 					/>
 				</a-form-item>
@@ -73,13 +74,13 @@
 				  label="确认密码"
 					v-bind="formItemLayout"
 				>
-					<a-input
-						v-model="password1"
+					<a-input-password
+						v-model="password1" autocomplete="new-password"
 						@blur="inputBlur('个人')"
 						v-decorator="['password1', { rules: [{ required: true, message: '请输入确认密码' }] }]"
 					/>
 				</a-form-item>
-				<a-form-item
+				<!-- <a-form-item
 				  label="认证邀请"
 					v-bind="formItemLayout"
 				>
@@ -90,7 +91,7 @@
 							{ rules: [{ required: false, message: '请输入正确的手机号码' ,pattern: /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/}] },
 						]"
 					/>
-				</a-form-item>
+				</a-form-item> -->
 			</div>
 			<!-- 企业 -->
 			<div v-if="userType==1">
@@ -193,7 +194,7 @@
 					v-bind="formItemLayout1"
 				>
           <a-input
-          	v-decorator="['userRegionQy', { rules: [{ required: true, message: '请输入个人住址' }] }]"
+          	v-decorator="['userRegionQy']"
           />
 				</a-form-item>
 				<a-form-item
@@ -227,7 +228,8 @@
 				  label="输入密码"
 					v-bind="formItemLayout1"
 				>
-					<a-input
+					<a-input-password
+           autocomplete="new-password"
 						v-model="passwordQy"
 						v-decorator="['passwordQy', { rules: [{ required: true, message: '请输入密码' }] }]"
 					/>
@@ -236,8 +238,9 @@
 				  label="确认密码"
 					v-bind="formItemLayout1"
 				>
-					<a-input
-						v-model="password1Qy"
+					<a-input-password
+          autocomplete="new-password"
+						v-model="password1Qy" 
 						@blur="inputBlur('企业')"
 						v-decorator="['password1Qy', { rules: [{ required: true, message: '请输入确认密码' }] }]"
 					/>
@@ -505,7 +508,7 @@
 							obj.phone = values.phone
 							obj.code = values.code
 							obj.password = values.password
-							obj.recommend = values.recommend
+							// obj.recommend = values.recommend
 						}else{//企业
 							obj.industryClass  = values.industryClass[values.industryClass.length-1]
 							obj.businessName = values.businessName
