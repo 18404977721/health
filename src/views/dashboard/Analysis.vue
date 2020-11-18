@@ -1123,7 +1123,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.wrap {
+	.wrapHome {
 		background: #fff;
 
 		.topWrap {
